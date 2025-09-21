@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\zenha\\source\\repos\\ArcadeApp\\",
+  "WorkspaceRootPath": "C:\\Users\\zenha\\source\\repos\\ArcadeGameEngine\\ArcadeApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B22653EA-B7EC-4AC6-A2DE-FDF24037F158}|ArcadeApp\\ArcadeApp.vcxproj|C:\\Users\\zenha\\source\\repos\\ArcadeApp\\ArcadeApp\\ArcadeApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{B22653EA-B7EC-4AC6-A2DE-FDF24037F158}|ArcadeApp\\ArcadeApp.vcxproj|C:\\Users\\zenha\\source\\repos\\ArcadeGameEngine\\ArcadeApp\\ArcadeApp\\ArcadeApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B22653EA-B7EC-4AC6-A2DE-FDF24037F158}|ArcadeApp\\ArcadeApp.vcxproj|solutionrelative:ArcadeApp\\ArcadeApp.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -20,9 +20,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "ArcadeApp.cpp",
-              "DocumentMoniker": "C:\\Users\\zenha\\source\\repos\\ArcadeApp\\ArcadeApp\\ArcadeApp.cpp",
+              "DocumentMoniker": "C:\\Users\\zenha\\source\\repos\\ArcadeGameEngine\\ArcadeApp\\ArcadeApp\\ArcadeApp.cpp",
               "RelativeDocumentMoniker": "ArcadeApp\\ArcadeApp.cpp",
-              "ToolTip": "C:\\Users\\zenha\\source\\repos\\ArcadeApp\\ArcadeApp\\ArcadeApp.cpp",
+              "ToolTip": "C:\\Users\\zenha\\source\\repos\\ArcadeGameEngine\\ArcadeApp\\ArcadeApp\\ArcadeApp.cpp",
               "RelativeToolTip": "ArcadeApp\\ArcadeApp.cpp",
               "ViewState": "AQIAAAMAAAAAAAAAAAAswBUAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",

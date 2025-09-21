@@ -1,9 +1,21 @@
-﻿  Screen.cpp
-C:\Users\zenha\source\repos\ArcadeApp\ArcadeApp\Star2D.h(23,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\zenha\source\repos\ArcadeApp\ArcadeApp\Screen.cpp(96,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeApp\ArcadeApp\Screen.cpp(96,41): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeApp\ArcadeApp\Screen.cpp(109,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeApp\ArcadeApp\Screen.cpp(110,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeApp\ArcadeApp\Screen.cpp(111,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeApp\ArcadeApp\Screen.cpp(112,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  ArcadeApp.vcxproj -> C:\Users\zenha\source\repos\ArcadeApp\x64\Debug\ArcadeApp.exe
+﻿  ArcadeApp.cpp
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.h(23,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeApp.cpp(38,22): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Color.cpp
+  Line2D.cpp
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Line2D.cpp(44,16): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Screen.cpp
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.h(23,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(96,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(96,41): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(109,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(110,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(111,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(112,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  ScreenBuffer.cpp
+  Star2D.cpp
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.h(23,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
+  Utils.cpp
+  Vec2D.cpp
+  Generating Code...
+  ArcadeApp.vcxproj -> C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\x64\Debug\ArcadeApp.exe
