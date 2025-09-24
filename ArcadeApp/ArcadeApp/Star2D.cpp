@@ -15,7 +15,7 @@ Star2D::Star2D(float OuterRadius,float InnerRadius ,Vec2D Center, int Sections):
 	float angleStep = ((pi * 2.0f) / doubleSections);
 
 
-	std::vector<Vec2D> vertices;
+	//std::vector<Vec2D> vertices;
 
 	for(int i = 0; i < doubleSections; i++)
 	{
@@ -25,13 +25,13 @@ Star2D::Star2D(float OuterRadius,float InnerRadius ,Vec2D Center, int Sections):
 		float x = mCenter.GetX() + r * cosf(angle);
 		float y = mCenter.GetY() + r * sinf(angle);
 
-		vertices.push_back(Vec2D(x, y));
+		mPoints.push_back(Vec2D(x, y)); //
 	}
 
-	for(int i = 0; i < vertices.size(); i++)
+	for(int i = 0; i < mPoints.size(); i++) //
 	{
-		Vec2D p0 = vertices[i];
-		Vec2D p1 = vertices[(i + 1) % vertices.size()];
+		Vec2D p0 = mPoints[i]; //
+		Vec2D p1 = mPoints[(i + 1) % mPoints.size()]; //
 		mStarLines.push_back(Line2D(p0, p1));
 	}
 

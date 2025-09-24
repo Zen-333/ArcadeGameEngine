@@ -2,9 +2,10 @@
 
 #include "Vec2D.h"
 #include "Line2D.h"
+#include "Shape.h"
 #include <vector>
 
-class Star2D
+class Star2D : public Shape
 {
 
 public:
@@ -13,6 +14,8 @@ public:
 	Star2D(float OuterRadius,float InnerRadius ,Vec2D Center, int Sections);
 
 	void RotateStar(float angle, Vec2D rotationPoint);
+
+	virtual Vec2D GetCenterPoint() const override { return mCenter; };
 
 	float mOuterRadius, mInnerRadius;
 	int mSections;
