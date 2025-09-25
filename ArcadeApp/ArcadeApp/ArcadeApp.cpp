@@ -19,13 +19,13 @@ int main(int argc, char * argv[])
 
 	Vec2D MiddleScreen(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-	Line2D line = { Vec2D(0,0), Vec2D(SCREEN_WIDTH/2, SCREEN_HEIGHT - 50) };
+	//Line2D line = { Vec2D(0,0), Vec2D(SCREEN_WIDTH/2, SCREEN_HEIGHT - 50) };
 
-	//Star2D star(100.0f, 65.0f, MiddleScreen, 5);
+	Star2D star(100.0f, 65.0f, MiddleScreen, 5);
 
 	//theScreen.Draw(star, Color::Green());
 
-	theScreen.Draw(line, Color::Cyan());
+	//theScreen.Draw(line, Color::Cyan());
 	theScreen.SwapScreen();
 
 	SDL_Event sdlEvent;
@@ -56,11 +56,11 @@ int main(int argc, char * argv[])
 		//line.Rotate(rotationSpeed * deltaTime, MiddleScreen);
 		
 		
-		//star.RotateStar(rotationSpeed * deltaTime, MiddleScreen);
-		//theScreen.Draw(star, Color::Green());
+		star.RotateStar(rotationSpeed * deltaTime, MiddleScreen);
+		theScreen.Draw(star, Color::Green());
 
 		//theScreen.Draw(line, Color::Cyan());
-		theScreen.Draw(line, Color::Cyan());
+		//theScreen.Draw(line, Color::Cyan());
 		theScreen.SwapScreen();
 
 		cout << deltaTime << endl;
