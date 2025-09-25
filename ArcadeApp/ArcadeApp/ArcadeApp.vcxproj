@@ -158,6 +158,7 @@
     <ClCompile Include="ScreenBuffer.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Star2D.cpp" />
+    <ClCompile Include="Trinagle.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vec2D.cpp" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClInclude Include="ScreenBuffer.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Star2D.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vec2D.h" />
   </ItemGroup>
