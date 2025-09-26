@@ -64,6 +64,8 @@ int main(int argc, char * argv[])
 		theScreen.SwapScreen();
 
 		cout << deltaTime << endl;
+
+		// TESTING BRANCH RECTANGLE //
 	}
 
 	return 0;
