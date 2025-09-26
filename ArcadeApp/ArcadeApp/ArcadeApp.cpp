@@ -4,6 +4,7 @@
 #include "Screen.h"
 #include "Line2D.h"
 #include "Star2D.h"
+#include "Triangle.h"
 
 using namespace std;
 
@@ -24,6 +25,11 @@ int main(int argc, char * argv[])
 	//Line2D line = { Vec2D(0,0), Vec2D(SCREEN_WIDTH/2, SCREEN_HEIGHT - 50) };
 
 	Star2D star(100.0f, 65.0f, MiddleScreen, 5);
+	Vec2D point1 = MiddleScreen - Vec2D(30, -30);
+	Vec2D point2 = MiddleScreen + Vec2D(30, 30);
+
+	Triangle triangle(MiddleScreen, point1, point2);
+
 
 	//theScreen.Draw(star, Color::Green());
 
@@ -58,8 +64,8 @@ int main(int argc, char * argv[])
 		//line.Rotate(rotationSpeed * deltaTime, MiddleScreen);
 		
 		
-		star.RotateStar(rotationSpeed * deltaTime, MiddleScreen);
-		theScreen.Draw(star, Color::Green());
+		//star.RotateStar(rotationSpeed * deltaTime, MiddleScreen);
+		theScreen.Draw(triangle, Color::Green());
 
 		//theScreen.Draw(line, Color::Cyan());
 		//theScreen.Draw(line, Color::Cyan());

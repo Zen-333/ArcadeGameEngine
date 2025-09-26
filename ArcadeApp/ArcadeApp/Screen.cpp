@@ -4,6 +4,7 @@
 #include <cassert>
 #include "Line2D.h"
 #include "Star2D.h"
+#include "Triangle.h"
 #include <cmath> 
 
 
@@ -172,6 +173,17 @@ void Screen::Draw(const Star2D& star, const Color& color)
 		Draw(star.mStarLines[i], color);
 	}
 
+}
+
+void Screen::Draw(const Triangle& triangle, const Color& color)
+{
+	Line2D line0(triangle.GetP0(), triangle.GetP1());
+	Line2D line1(triangle.GetP1(), triangle.GetP2());
+	Line2D line2(triangle.GetP2(), triangle.GetP0());
+
+	Draw(line0, color);
+	Draw(line1, color);
+	Draw(line2, color);
 }
 
 void Screen::ClearScreen() 

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AARectangle.cpp" />
     <ClCompile Include="ArcadeApp.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Line2D.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="Vec2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AARectangle.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Line2D.h" />
     <ClInclude Include="Screen.h" />
