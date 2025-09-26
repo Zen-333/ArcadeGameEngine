@@ -14,6 +14,8 @@ const int MAGNIFICATION = 3;
 int main(int argc, char * argv[])
 {
 
+	// TESTING BRANCH MAIN //
+
 	Screen theScreen;
 	theScreen.Init(SCREEN_WIDTH, SCREEN_HEIGHT, MAGNIFICATION);
 
