@@ -6,6 +6,7 @@
 #include "Star2D.h"
 #include "Triangle.h"
 #include <cmath> 
+#include <array>
 
 
 Screen::Screen() : mWidth(0), mHeight(0), moptrWindow(nullptr), mnoptrWindowSurface(nullptr)
@@ -184,6 +185,7 @@ void Screen::Draw(const Triangle& triangle, const Color& color)
 	Draw(line0, color);
 	Draw(line1, color);
 	Draw(line2, color);
+
 }
 
 void Screen::ClearScreen() 

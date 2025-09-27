@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="AARectangle.cpp" />
     <ClCompile Include="ArcadeApp.cpp" />
+    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Line2D.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -165,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AARectangle.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Line2D.h" />
     <ClInclude Include="Screen.h" />

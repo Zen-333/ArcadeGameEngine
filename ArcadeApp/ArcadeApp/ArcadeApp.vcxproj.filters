@@ -60,6 +60,9 @@
     <ClCompile Include="AARectangle.cpp">
       <Filter>Source Files\Shapes</Filter>
     </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Source Files\Shapes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -90,6 +93,9 @@
       <Filter>Source Files\Shapes</Filter>
     </ClInclude>
     <ClInclude Include="AARectangle.h">
+      <Filter>Source Files\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
       <Filter>Source Files\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
