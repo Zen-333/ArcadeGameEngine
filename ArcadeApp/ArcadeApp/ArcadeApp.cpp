@@ -24,8 +24,13 @@ int main(int argc, char * argv[])
 
 	Vec2D MiddleScreen(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-	//AARectangle rect(MiddleScreen, 40, 40);
+	AARectangle rect(MiddleScreen, 40, 50);
+	Star2D star(40, 20, MiddleScreen, 4);
 	Circle circle(MiddleScreen, 50);
+
+	Vec2D Trp1(MiddleScreen.GetX() + 20, MiddleScreen.GetY() + 20);
+	Vec2D Trp2(MiddleScreen.GetX() - 20, MiddleScreen.GetY() + 20);
+	Triangle triangle(MiddleScreen, Trp1, Trp2);
 	
 
 	theScreen.SwapScreen();
@@ -56,7 +61,10 @@ int main(int argc, char * argv[])
 		deltaTime = (double)((NOW - LAST) / (double)SDL_GetPerformanceFrequency());
 
 		//line.Rotate(rotationSpeed * deltaTime, MiddleScreen);
-		theScreen.Draw(circle, Color::Green());
+		//theScreen.Draw(circle, Color::Green(), true);
+		//theScreen.Draw(rect, Color::Green(), true, Color::Red());
+		theScreen.Draw(star, Color::Green(), true, Color::Red());
+		//theScreen.Draw(triangle, Color::Green(), true, Color::Red());
 		theScreen.SwapScreen();
 
 		cout << deltaTime << endl;
