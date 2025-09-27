@@ -5,6 +5,8 @@
 #include "Line2D.h"
 #include "Star2D.h"
 #include "Triangle.h"
+#include "AARectangle.h"
+#include "Circle.h"
 
 using namespace std;
 
@@ -22,18 +24,10 @@ int main(int argc, char * argv[])
 
 	Vec2D MiddleScreen(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-	//Line2D line = { Vec2D(0,0), Vec2D(SCREEN_WIDTH/2, SCREEN_HEIGHT - 50) };
+	//AARectangle rect(MiddleScreen, 40, 40);
+	Circle circle(MiddleScreen, 50);
+	
 
-	Star2D star(100.0f, 65.0f, MiddleScreen, 5);
-	Vec2D point1 = MiddleScreen - Vec2D(30, -30);
-	Vec2D point2 = MiddleScreen + Vec2D(30, 30);
-
-	Triangle triangle(MiddleScreen, point1, point2);
-
-
-	//theScreen.Draw(star, Color::Green());
-
-	//theScreen.Draw(line, Color::Cyan());
 	theScreen.SwapScreen();
 
 	SDL_Event sdlEvent;
@@ -62,13 +56,7 @@ int main(int argc, char * argv[])
 		deltaTime = (double)((NOW - LAST) / (double)SDL_GetPerformanceFrequency());
 
 		//line.Rotate(rotationSpeed * deltaTime, MiddleScreen);
-		
-		
-		//star.RotateStar(rotationSpeed * deltaTime, MiddleScreen);
-		theScreen.Draw(triangle, Color::Green());
-
-		//theScreen.Draw(line, Color::Cyan());
-		//theScreen.Draw(line, Color::Cyan());
+		theScreen.Draw(circle, Color::Green());
 		theScreen.SwapScreen();
 
 		cout << deltaTime << endl;

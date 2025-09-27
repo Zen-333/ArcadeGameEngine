@@ -5,8 +5,10 @@
 #include "Line2D.h"
 #include "Star2D.h"
 #include "Triangle.h"
+#include "AARectangle.h"
+#include "Circle.h"
+#include "Utils.h"
 #include <cmath> 
-#include <array>
 
 
 Screen::Screen() : mWidth(0), mHeight(0), moptrWindow(nullptr), mnoptrWindowSurface(nullptr)
@@ -186,6 +188,47 @@ void Screen::Draw(const Triangle& triangle, const Color& color)
 	Draw(line1, color);
 	Draw(line2, color);
 
+}
+
+void Screen::Draw(const AARectangle& rectangle, const Color& color)
+{
+	const std::vector<Vec2D> points = rectangle.GetPoints();
+
+	Line2D top(points[0], points[1]);
+	Line2D left(points[1], points[2]);
+	Line2D bottom(points[2], points[3]);
+	Line2D right(points[3], points[0]);
+
+	Draw(top, color);
+	Draw(bottom, color);
+	Draw(right, color);
+	Draw(left, color);
+
+}
+
+void Screen::Draw(const Circle& circle, const Color& color)
+{
+	const float radian = 6.28319;
+	const int sections = 30;
+	const float angleSteps = (radian / sections);
+	const float radius = circle.GetRadius();
+
+	const float Cx = circle.GetCenterPoint().GetX() + radius;
+	const float Cy = circle.GetCenterPoint().GetY();
+
+	Vec2D p0(Cx, Cy);
+	Vec2D p1 = p0;
+	Line2D nextLineToDraw;
+
+	for (int i = 0; i < sections; i++)
+	{
+		p1.Rotate(angleSteps, circle.GetCenterPoint());
+		nextLineToDraw.SetP01(p1);
+		nextLineToDraw.SetP0(p0);
+
+		Draw(nextLineToDraw, color);
+		p0 = p1;
+	}
 }
 
 void Screen::ClearScreen() 
