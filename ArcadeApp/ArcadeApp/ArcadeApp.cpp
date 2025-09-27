@@ -24,14 +24,11 @@ int main(int argc, char * argv[])
 
 	Vec2D MiddleScreen(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-	AARectangle rect(MiddleScreen, 40, 50);
-	Star2D star(40, 20, MiddleScreen, 4);
-	Circle circle(MiddleScreen, 50);
 
-	Vec2D Trp1(MiddleScreen.GetX() + 20, MiddleScreen.GetY() + 20);
-	Vec2D Trp2(MiddleScreen.GetX() - 20, MiddleScreen.GetY() + 20);
-	Triangle triangle(MiddleScreen, Trp1, Trp2);
-	
+
+	AARectangle rect = {Vec2D(SCREEN_WIDTH/ 2 - 25, SCREEN_HEIGHT/2 - 25), 50, 50};
+	Star2D star(40, 20, MiddleScreen, 4);
+	Circle circle = {Vec2D(SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/2 + 50), 50};
 
 	theScreen.SwapScreen();
 
@@ -61,9 +58,9 @@ int main(int argc, char * argv[])
 		deltaTime = (double)((NOW - LAST) / (double)SDL_GetPerformanceFrequency());
 
 		//line.Rotate(rotationSpeed * deltaTime, MiddleScreen);
-		//theScreen.Draw(circle, Color::Green(), true);
-		//theScreen.Draw(rect, Color::Green(), true, Color::Red());
-		theScreen.Draw(star, Color::Green(), true, Color::Red());
+		theScreen.Draw(rect, Color::Blue(), true, Color::Blue());
+		theScreen.Draw(circle, Color(0, 255, 0, 150), true, Color(0, 255, 0, 150));
+		//theScreen.Draw(star, Color(0, 255, 0, 150), true, Color(0, 255, 0, 150));
 		//theScreen.Draw(triangle, Color::Green(), true, Color::Red());
 		theScreen.SwapScreen();
 

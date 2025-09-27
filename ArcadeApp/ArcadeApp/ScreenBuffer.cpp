@@ -1,5 +1,6 @@
 
 #include "ScreenBuffer.h"
+#include "Color.h"
 #include <SDL.h>
 #include <cassert>
 
@@ -72,8 +73,10 @@ void ScreenBuffer::SetPixel(const Color& color, int x, int y)
 		uint32_t* pixels = (uint32_t*)mSurface->pixels; // 1D array of all the pixels
 
 		size_t index = GetIndex(y, x);
+		Color surfaceColor = Color(pixels[index]); // destinationColor
+		pixels[index] = Color::Evaluate1MinueSourceAlpha(color, surfaceColor).GetPixelColor();
 
-		pixels[index] = color.GetPixelColor();
+
 
 		SDL_UnlockSurface(mSurface); // Unlocks the surface so SDL (or the GPU) can use it again
 	}

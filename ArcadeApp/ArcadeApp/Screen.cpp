@@ -43,7 +43,8 @@ SDL_Window* Screen::Init(uint32_t w, uint32_t h, uint32_t mag)
 	if (moptrWindow)
 	{
 		mnoptrWindowSurface = SDL_GetWindowSurface(moptrWindow); // front buffer
-		SDL_PixelFormat* pixelFormat = mnoptrWindowSurface->format;
+		//SDL_PixelFormat* pixelFormat = mnoptrWindowSurface->format;
+		SDL_PixelFormat* pixelFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888); // to allow alpha
 
 		Color::InitColorFormat(pixelFormat);
 

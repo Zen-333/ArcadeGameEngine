@@ -1,20 +1,16 @@
-﻿  ArcadeApp.cpp
+﻿  Screen.cpp
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.h(26,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeApp.cpp(45,22): warning C4305: 'initializing': truncation from 'double' to 'float'
-  Screen.cpp
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.h(26,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(101,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(101,41): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(114,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(102,55): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(102,41): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(115,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(116,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(117,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(230,23): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(309,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(358,22): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(358,22): warning C4244:         with
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(358,22): warning C4244:         [
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(358,22): warning C4244:             _Ty=float
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(358,22): warning C4244:         ]
-  Generating Code...
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(118,10): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(231,23): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(310,19): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(359,22): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(359,22): warning C4244:         with
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(359,22): warning C4244:         [
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(359,22): warning C4244:             _Ty=float
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp(359,22): warning C4244:         ]
   ArcadeApp.vcxproj -> C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\x64\Debug\ArcadeApp.exe
