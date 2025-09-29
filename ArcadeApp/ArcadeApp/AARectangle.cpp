@@ -10,7 +10,7 @@ AARectangle::AARectangle(): AARectangle(Vec2D::Zero, Vec2D::Zero)
 AARectangle::AARectangle(const Vec2D& topLeft, unsigned int width, unsigned int height)
 {
 	mPoints.push_back(topLeft);
-	mPoints.push_back(Vec2D(topLeft.GetX() + width - 1, topLeft.GetY() + height - 1));
+	mPoints.push_back(Vec2D(topLeft.GetX() + width - 1, topLeft.GetY() + height - 1)); // grid starts from 0 just like array so we do -1
 }
 
 AARectangle::AARectangle(const Vec2D& topLeft, const Vec2D& bottomRight)
@@ -37,7 +37,7 @@ void AARectangle::MoveTo(const Vec2D& position)
 	float height = GetHeight();
 
 	SetTopLeftPoint(position);
-	SetTopBottomPoint(Vec2D(position.GetX() + width - 1, position.GetY() + height - 1));
+	SetBottomRightPoint(Vec2D(position.GetX() + width - 1, position.GetY() + height - 1));
 
 }
 
@@ -49,6 +49,7 @@ Vec2D AARectangle::GetCenterPoint() const
 
 bool AARectangle::Intersects(const AARectangle& otherRect) const
 {
+	// we return true only if none of these are true
 	return !(otherRect.GetBottomRightPoint().GetX() < GetTopLeftPoint().GetX() ||
 		otherRect.GetTopLeftPoint().GetX() > GetBottomRightPoint().GetX() || 
 		otherRect.GetBottomRightPoint().GetY() < GetTopLeftPoint().GetY() || 
@@ -65,6 +66,8 @@ bool AARectangle::ContainsPoint(const Vec2D& point)
 
 AARectangle AARectangle::Inset(const AARectangle& rect, Vec2D& insets)
 {
+
+	// this is a shrink function we do 2 * because we consider the 2 sides
 	return AARectangle(rect.GetTopLeftPoint() + insets, rect.GetWidth() - 2 * insets.GetX(), rect.GetHeight() - 2 * insets.GetY());
 
 }

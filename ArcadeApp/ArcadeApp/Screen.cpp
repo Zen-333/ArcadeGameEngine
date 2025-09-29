@@ -43,8 +43,8 @@ SDL_Window* Screen::Init(uint32_t w, uint32_t h, uint32_t mag)
 	if (moptrWindow)
 	{
 		mnoptrWindowSurface = SDL_GetWindowSurface(moptrWindow); // front buffer
-		//SDL_PixelFormat* pixelFormat = mnoptrWindowSurface->format;
-		SDL_PixelFormat* pixelFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888); // to allow alpha
+		//SDL_PixelFormat* pixelFormat = mnoptrWindowSurface->format; // That surface usually uses the native pixel format of your display (often RGB888 or BGR888, i.e. no alpha channel).
+		SDL_PixelFormat* pixelFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888); // to allow alpha. This explicitly tells SDL: “use a pixel format that has 32 bits per pixel with alpha.”
 
 		Color::InitColorFormat(pixelFormat);
 
@@ -363,9 +363,5 @@ void Screen::FillPoly(const std::vector<Vec2D>& points, const Color& color)
 				}
 			}
 		}
-
-
-
-
 	}
 }

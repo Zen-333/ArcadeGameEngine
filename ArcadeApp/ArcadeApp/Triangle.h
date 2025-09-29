@@ -24,5 +24,5 @@ public:
 
 private:
 
-	float Area(const Vec2D& p0, const Vec2D& p1, const Vec2D & p2) const;
+	float Area(const Vec2D& p0, const Vec2D& p1, const Vec2D& p2) const;
 };

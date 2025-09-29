@@ -10,7 +10,7 @@ public:
 	AARectangle(const Vec2D& topLeft, const Vec2D& bottomRight);
 
 	void SetTopLeftPoint(const Vec2D& topLeft) { mPoints[0] = topLeft; }
-	void SetTopBottomPoint(const Vec2D& bottomLeft) { mPoints[1] = bottomLeft; }
+	void SetBottomRightPoint(const Vec2D& bottomRight) { mPoints[1] = bottomRight; }
 
 	Vec2D GetTopLeftPoint() const { return mPoints[0]; }
 	Vec2D GetBottomRightPoint() const { return mPoints[1]; }

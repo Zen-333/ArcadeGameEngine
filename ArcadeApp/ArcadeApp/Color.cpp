@@ -10,10 +10,23 @@ void Color::InitColorFormat(const SDL_PixelFormat* format)
 
 Color Color::Evaluate1MinueSourceAlpha(const Color& source, const Color& destination)
 {
+    // The goal = blend them together into a new outColor.
+
+    //Visual intuition
+
+    //    Think of each pixel as a glass :
+
+    //    If the source has 70 % opacity(? = 0.7), it fills 70 % of the glass.
+
+    //    That leaves 30 % room(1 - 0.7 = 0.3) for the destination to still show through.
+
+    //    So the weights always balance :
+    //    sourceAlpha + destAlpha = 1.0.
+
     uint8_t alpha = source.GetAlpha();
 
     float sourceAlpha = float(alpha) / 255.0f;
-    float destAlpha = 1.0f - sourceAlpha;
+    float destAlpha = 1.0f - sourceAlpha; // needs to add up to 1
 
     Color outColor;
 
