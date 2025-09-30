@@ -7,6 +7,7 @@
 #include "Triangle.h"
 #include "AARectangle.h"
 #include "Circle.h"
+#include <vector>
 
 using namespace std;
 
@@ -19,16 +20,39 @@ int main(int argc, char * argv[])
 
 	// TESTING BRANCH MAIN //
 
+	const int chessBoardLength = 8;
+	const int squareLength = 12;
+	const int squareCount = chessBoardLength * chessBoardLength;
+	const Vec2D startPos(50, 50);
+
+	std::vector<AARectangle> chessBoard;
+
+
+	
+	for(int i = 0; i != chessBoardLength; i++)
+	{
+		float x = 0;
+		float y = 0;
+
+		for(int j = 0; j != chessBoardLength; j++)
+		{
+			x = startPos.GetX() + (j * squareLength);
+			y = startPos.GetY() + (i * squareLength);
+
+			Vec2D newPos(x, y);
+
+			AARectangle chessSquare(newPos, squareLength, squareLength);
+			chessBoard.push_back(chessSquare);
+		}
+		
+	}
+
 	Screen theScreen;
 	theScreen.Init(SCREEN_WIDTH, SCREEN_HEIGHT, MAGNIFICATION);
 
 	Vec2D MiddleScreen(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
-
-
-	AARectangle rect = {Vec2D(SCREEN_WIDTH/ 2 - 25, SCREEN_HEIGHT/2 - 25), 50, 50};
-	Star2D star(40, 20, MiddleScreen, 4);
-	Circle circle = {Vec2D(SCREEN_WIDTH/2 + 50, SCREEN_HEIGHT/2 + 50), 50};
+	AARectangle rect = { startPos, 12, 12};
 
 	theScreen.SwapScreen();
 
@@ -40,6 +64,8 @@ int main(int argc, char * argv[])
 	double deltaTime = 0;
 
 	float rotationSpeed = 6.283 / 5;
+
+	bool c = false;
 
 	while (running)
 	{
@@ -53,18 +79,33 @@ int main(int argc, char * argv[])
 			}
 		}
 
-		LAST = NOW;
-		NOW = SDL_GetPerformanceCounter();
-		deltaTime = (double)((NOW - LAST) / (double)SDL_GetPerformanceFrequency());
+		//LAST = NOW;
+		//NOW = SDL_GetPerformanceCounter();
+		//deltaTime = (double)((NOW - LAST) / (double)SDL_GetPerformanceFrequency());
 
 		//line.Rotate(rotationSpeed * deltaTime, MiddleScreen);
-		theScreen.Draw(rect, Color::Blue(), true, Color::Blue());
-		theScreen.Draw(circle, Color(0, 255, 0, 150), true, Color(0, 255, 0, 150));
-		//theScreen.Draw(star, Color(0, 255, 0, 150), true, Color(0, 255, 0, 150));
-		//theScreen.Draw(triangle, Color::Green(), true, Color::Red());
+
+		
+		for(int i = 0; i < chessBoard.size(); i++)
+		{
+			if(i % chessBoardLength == 0 && i != 0)
+			{
+				c = c;
+			} else
+			{
+				c = !c;
+			}
+
+			const Color cc = c ? Color::White() : Color::Black();
+			theScreen.Draw(chessBoard[i], Color::White(), true, cc);
+			
+		}
+
+		c = false;
+
+		//theScreen.Draw(rect, Color::Blue(), true, Color::Blue());
 		theScreen.SwapScreen();
 
-		cout << deltaTime << endl;
 
 		// TESTING BRANCH RECTANGLE //
 	}
