@@ -96,8 +96,8 @@ int main(int argc, char * argv[])
 				c = !c;
 			}
 
-			const Color cc = c ? Color::White() : Color::Black();
-			theScreen.Draw(chessBoard[i], Color::White(), true, cc);
+			const Color cc = c ? Color::Gray() : Color::Black();
+			theScreen.Draw(chessBoard[i], Color::Gray(), true, cc);
 			
 		}
 
