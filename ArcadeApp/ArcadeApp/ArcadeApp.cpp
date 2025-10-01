@@ -27,6 +27,10 @@ int main(int argc, char * argv[])
 
 	std::vector<AARectangle> chessBoard;
 
+	const float pawnRadius = 2.0f;
+	std::vector<Vec2D> whitePawnsPos;
+	std::vector<Vec2D> blackPawnsPos;
+
 
 	
 	for(int i = 0; i != chessBoardLength; i++)
@@ -43,6 +47,15 @@ int main(int argc, char * argv[])
 
 			AARectangle chessSquare(newPos, squareLength, squareLength);
 			chessBoard.push_back(chessSquare);
+
+			if(i % chessBoardLength == 6)
+			{
+				whitePawnsPos.push_back(chessSquare.GetCenterPoint());
+			}
+			else if(i % chessBoardLength == 1)
+			{
+				blackPawnsPos.push_back(chessSquare.GetCenterPoint());
+			}
 		}
 		
 	}
@@ -99,6 +112,18 @@ int main(int argc, char * argv[])
 			const Color cc = c ? Color::Gray() : Color::Black();
 			theScreen.Draw(chessBoard[i], Color::Gray(), true, cc);
 			
+		}
+
+		for(Vec2D pos : whitePawnsPos)
+		{
+			Circle pawn(pos, pawnRadius);
+			theScreen.Draw(pawn, Color::White(), true, Color::White());
+		}
+
+		for (Vec2D pos : blackPawnsPos)
+		{
+			Circle pawn(pos, pawnRadius);
+			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
 		}
 
 		c = false;
