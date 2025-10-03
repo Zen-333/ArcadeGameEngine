@@ -31,8 +31,12 @@ int main(int argc, char * argv[])
 	std::vector<Vec2D> whitePawnsPos;
 	std::vector<Vec2D> blackPawnsPos;
 
+	std::vector<Vec2D> whiteCastelPos;
+	std::vector<Vec2D> blackCastelPos;
 
-	
+	bool setWhitePiecePos = false;
+	bool setBlackPiecePos = false;
+
 	for(int i = 0; i != chessBoardLength; i++)
 	{
 		float x = 0;
@@ -56,9 +60,27 @@ int main(int argc, char * argv[])
 			{
 				blackPawnsPos.push_back(chessSquare.GetCenterPoint());
 			}
+			
+			if(!setBlackPiecePos)
+			{
+				blackCastelPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2), newPos.GetY() + (squareLength / 2)));
+				blackCastelPos.push_back(Vec2D((newPos.GetX() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1)), newPos.GetY() + (squareLength / 2)));
+
+				setBlackPiecePos = true;
+			}
+
+			if(!setWhitePiecePos)
+			{
+				whiteCastelPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2), (newPos.GetY() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1))));
+				whiteCastelPos.push_back(Vec2D((newPos.GetX() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1)), (newPos.GetY() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1))));
+
+				setWhitePiecePos = true;
+			}
 		}
 		
 	}
+
+
 
 	Screen theScreen;
 	theScreen.Init(SCREEN_WIDTH, SCREEN_HEIGHT, MAGNIFICATION);
@@ -126,9 +148,20 @@ int main(int argc, char * argv[])
 			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
 		}
 
+		for (Vec2D pos : blackCastelPos)
+		{
+			Circle pawn(pos, pawnRadius);
+			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
+		}
+
+		for (Vec2D pos : whiteCastelPos)
+		{
+			Circle pawn(pos, pawnRadius);
+			theScreen.Draw(pawn, Color::White(), true, Color::White());
+		}
+
 		c = false;
 
-		//theScreen.Draw(rect, Color::Blue(), true, Color::Blue());
 		theScreen.SwapScreen();
 
 
