@@ -45,6 +45,8 @@ int main(int argc, char * argv[])
 	bool setWhitePiecePos = false;
 	bool setBlackPiecePos = false;
 
+	
+
 	for(int i = 0; i != chessBoardLength; i++)
 	{
 		float x = 0;
@@ -71,40 +73,48 @@ int main(int argc, char * argv[])
 			
 			if(!setBlackPiecePos)
 			{
-				blackCastelPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2), newPos.GetY() + (squareLength / 2)));
-				blackCastelPos.push_back(Vec2D((newPos.GetX() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1)), newPos.GetY() + (squareLength / 2)));
+				const Vec2D startPosCenter(newPos.GetX() + (squareLength / 2), newPos.GetY() + (squareLength / 2));
+				const float centerX = startPosCenter.GetX();
+				const float centerY = startPosCenter.GetY();
 
-				blackHorsePos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + squareLength, newPos.GetY() + (squareLength / 2)));
-				blackHorsePos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * (chessBoardLength - 2)), newPos.GetY() + (squareLength / 2)));
+				blackCastelPos.push_back(startPosCenter);
+				blackCastelPos.push_back(Vec2D(centerX + (squareLength * (chessBoardLength - 1)), centerY));
 
-				blackElephantPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * 2), newPos.GetY() + (squareLength / 2)));
-				blackElephantPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * (chessBoardLength - 3)), newPos.GetY() + (squareLength / 2)));
+				blackHorsePos.push_back(Vec2D(centerX + squareLength, centerY));
+				blackHorsePos.push_back(Vec2D(centerX + (squareLength * (chessBoardLength - 2)), centerY));
 
-				blackQueen.SetX(newPos.GetX() + (squareLength / 2) + (squareLength * 3));
-				blackQueen.SetY(newPos.GetY() + (squareLength / 2));
+				blackElephantPos.push_back(Vec2D(centerX + (squareLength * 2), centerY));
+				blackElephantPos.push_back(Vec2D(centerX + (squareLength * (chessBoardLength - 3)), centerY));
 
-				blackKing.SetX(newPos.GetX() + (squareLength / 2) + (squareLength * 4));
-				blackKing.SetY(newPos.GetY() + (squareLength / 2));
+				blackQueen.SetX(centerX + (squareLength * 3));
+				blackQueen.SetY(centerY);
+
+				blackKing.SetX(centerX + (squareLength * 4));
+				blackKing.SetY(centerY);
 
 				setBlackPiecePos = true;
 			}
 
 			if(!setWhitePiecePos)
 			{
-				whiteCastelPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2), (newPos.GetY() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1))));
-				whiteCastelPos.push_back(Vec2D((newPos.GetX() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1)), (newPos.GetY() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1))));
+				const Vec2D startPosCenter(newPos.GetX() + (squareLength / 2), newPos.GetY() + (squareLength / 2));
+				const float centerX = startPosCenter.GetX();
+				const float centerY = startPosCenter.GetY();
 
-				whiteHorsePos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + squareLength, newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1))));
-				whiteHorsePos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * (chessBoardLength - 2)), newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1))));
+				whiteCastelPos.push_back(Vec2D(centerX, centerY + (squareLength * (chessBoardLength - 1))));
+				whiteCastelPos.push_back(Vec2D(centerX + (squareLength * (chessBoardLength - 1)), centerY + (squareLength * (chessBoardLength - 1))));
 
-				whiteElephantPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * 2), newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1))));
-				whiteElephantPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * (chessBoardLength - 3)), newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1))));
+				whiteHorsePos.push_back(Vec2D(centerX + squareLength, centerY + (squareLength * (chessBoardLength - 1))));
+				whiteHorsePos.push_back(Vec2D(centerX + (squareLength * (chessBoardLength - 2)), centerY + (squareLength * (chessBoardLength - 1))));
 
-				whiteQueen.SetX(newPos.GetX() + (squareLength / 2) + (squareLength * 3));
-				whiteQueen.SetY(newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1)));
+				whiteElephantPos.push_back(Vec2D(centerX + (squareLength * 2), centerY + (squareLength * (chessBoardLength - 1))));
+				whiteElephantPos.push_back(Vec2D(centerX + (squareLength * (chessBoardLength - 3)), centerY + (squareLength * (chessBoardLength - 1))));
 
-				whiteKing.SetX(newPos.GetX() + (squareLength / 2) + (squareLength * 4));
-				whiteKing.SetY(newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1)));
+				whiteQueen.SetX(centerX + (squareLength * 3));
+				whiteQueen.SetY(centerY + (squareLength * (chessBoardLength - 1)));
+
+				whiteKing.SetX(centerX + (squareLength * 4));
+				whiteKing.SetY(centerY + (squareLength * (chessBoardLength - 1)));
 
 				setWhitePiecePos = true;
 			}

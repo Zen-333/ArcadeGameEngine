@@ -1,4 +1,4 @@
 ﻿  ArcadeApp.cpp
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.h(26,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeApp.cpp(133,22): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeApp.cpp(143,22): warning C4305: 'initializing': truncation from 'double' to 'float'
   ArcadeApp.vcxproj -> C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\x64\Debug\ArcadeApp.exe
