@@ -28,11 +28,19 @@ int main(int argc, char * argv[])
 	std::vector<AARectangle> chessBoard;
 
 	const float pawnRadius = 2.0f;
-	std::vector<Vec2D> whitePawnsPos;
 	std::vector<Vec2D> blackPawnsPos;
-
-	std::vector<Vec2D> whiteCastelPos;
 	std::vector<Vec2D> blackCastelPos;
+	std::vector<Vec2D> blackHorsePos;
+	std::vector<Vec2D> blackElephantPos;
+	Vec2D blackQueen;
+	Vec2D blackKing;
+
+	std::vector<Vec2D> whitePawnsPos;
+	std::vector<Vec2D> whiteCastelPos;
+	std::vector<Vec2D> whiteHorsePos;
+	std::vector<Vec2D> whiteElephantPos;
+	Vec2D whiteQueen;
+	Vec2D whiteKing;
 
 	bool setWhitePiecePos = false;
 	bool setBlackPiecePos = false;
@@ -66,6 +74,18 @@ int main(int argc, char * argv[])
 				blackCastelPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2), newPos.GetY() + (squareLength / 2)));
 				blackCastelPos.push_back(Vec2D((newPos.GetX() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1)), newPos.GetY() + (squareLength / 2)));
 
+				blackHorsePos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + squareLength, newPos.GetY() + (squareLength / 2)));
+				blackHorsePos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * (chessBoardLength - 2)), newPos.GetY() + (squareLength / 2)));
+
+				blackElephantPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * 2), newPos.GetY() + (squareLength / 2)));
+				blackElephantPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * (chessBoardLength - 3)), newPos.GetY() + (squareLength / 2)));
+
+				blackQueen.SetX(newPos.GetX() + (squareLength / 2) + (squareLength * 3));
+				blackQueen.SetY(newPos.GetY() + (squareLength / 2));
+
+				blackKing.SetX(newPos.GetX() + (squareLength / 2) + (squareLength * 4));
+				blackKing.SetY(newPos.GetY() + (squareLength / 2));
+
 				setBlackPiecePos = true;
 			}
 
@@ -73,6 +93,18 @@ int main(int argc, char * argv[])
 			{
 				whiteCastelPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2), (newPos.GetY() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1))));
 				whiteCastelPos.push_back(Vec2D((newPos.GetX() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1)), (newPos.GetY() + (squareLength / 2)) + (squareLength * (chessBoardLength - 1))));
+
+				whiteHorsePos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + squareLength, newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1))));
+				whiteHorsePos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * (chessBoardLength - 2)), newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1))));
+
+				whiteElephantPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * 2), newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1))));
+				whiteElephantPos.push_back(Vec2D(newPos.GetX() + (squareLength / 2) + (squareLength * (chessBoardLength - 3)), newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1))));
+
+				whiteQueen.SetX(newPos.GetX() + (squareLength / 2) + (squareLength * 3));
+				whiteQueen.SetY(newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1)));
+
+				whiteKing.SetX(newPos.GetX() + (squareLength / 2) + (squareLength * 4));
+				whiteKing.SetY(newPos.GetY() + (squareLength / 2) + (squareLength * (chessBoardLength - 1)));
 
 				setWhitePiecePos = true;
 			}
@@ -101,6 +133,12 @@ int main(int argc, char * argv[])
 	float rotationSpeed = 6.283 / 5;
 
 	bool c = false;
+
+	Circle bKing(blackKing, pawnRadius);
+	Circle bQueen(blackQueen, pawnRadius);
+
+	Circle wKing(whiteKing, pawnRadius);
+	Circle wQueen(whiteQueen, pawnRadius);
 
 	while (running)
 	{
@@ -159,6 +197,38 @@ int main(int argc, char * argv[])
 			Circle pawn(pos, pawnRadius);
 			theScreen.Draw(pawn, Color::White(), true, Color::White());
 		}
+
+		for (Vec2D pos : blackHorsePos)
+		{
+			Circle pawn(pos, pawnRadius);
+			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
+		}
+
+		for (Vec2D pos : whiteHorsePos)
+		{
+			Circle pawn(pos, pawnRadius);
+			theScreen.Draw(pawn, Color::White(), true, Color::White());
+		}
+
+		for (Vec2D pos : blackElephantPos)
+		{
+			Circle pawn(pos, pawnRadius);
+			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
+		}
+
+		for (Vec2D pos : whiteElephantPos)
+		{
+			Circle pawn(pos, pawnRadius);
+			theScreen.Draw(pawn, Color::White(), true, Color::White());
+		}
+
+
+
+		theScreen.Draw(bKing, Color::Green(), true, Color::Green());
+		theScreen.Draw(bQueen, Color::Green(), true, Color::Green());
+
+		theScreen.Draw(wKing, Color::White(), true, Color::White());
+		theScreen.Draw(wQueen, Color::White(), true, Color::White());
 
 		c = false;
 
