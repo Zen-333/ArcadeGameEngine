@@ -17,7 +17,6 @@ const int MAGNIFICATION = 3;
 
 int main(int argc, char * argv[])
 {
-
 	// TESTING BRANCH MAIN //
 
 	const int chessBoardLength = 8;
@@ -184,7 +183,7 @@ int main(int argc, char * argv[])
 			
 		}
 
-		for(Vec2D pos : whitePawnsPos)
+		for (Vec2D pos : whitePawnsPos)
 		{
 			Circle pawn(pos, pawnRadius);
 			theScreen.Draw(pawn, Color::White(), true, Color::White());
@@ -240,6 +239,8 @@ int main(int argc, char * argv[])
 		theScreen.Draw(wKing, Color::White(), true, Color::White());
 		theScreen.Draw(wQueen, Color::White(), true, Color::White());
 
+
+
 		c = false;
 
 		theScreen.SwapScreen();
@@ -248,6 +249,7 @@ int main(int argc, char * argv[])
 		// TESTING BRANCH RECTANGLE //
 	}
 
+
+
 	return 0;
 }
-

@@ -156,6 +156,7 @@
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Line2D.cpp" />
+    <ClCompile Include="Note.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenBuffer.cpp" />
     <ClCompile Include="Shape.cpp" />
