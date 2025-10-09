@@ -149,6 +149,8 @@ int main(int argc, char * argv[])
 	Circle wKing(whiteKing, pawnRadius);
 	Circle wQueen(whiteQueen, pawnRadius);
 
+	Star2D star(2.0f, 1.0f, MiddleScreen, 3, true);
+
 	while (running)
 	{
 		while(SDL_PollEvent(&sdlEvent))
@@ -168,78 +170,78 @@ int main(int argc, char * argv[])
 		//line.Rotate(rotationSpeed * deltaTime, MiddleScreen);
 
 		
-		for(int i = 0; i < chessBoard.size(); i++)
-		{
-			if(i % chessBoardLength == 0 && i != 0)
-			{
-				c = c;
-			} else
-			{
-				c = !c;
-			}
+		//for(int i = 0; i < chessBoard.size(); i++)
+		//{
+		//	if(i % chessBoardLength == 0 && i != 0)
+		//	{
+		//		c = c;
+		//	} else
+		//	{
+		//		c = !c;
+		//	}
 
-			const Color cc = c ? Color::Gray() : Color::Black();
-			theScreen.Draw(chessBoard[i], Color::Gray(), true, cc);
-			
-		}
+		//	const Color cc = c ? Color::Gray() : Color::Black();
+		//	theScreen.Draw(chessBoard[i], Color::Gray(), true, cc);
+		//	
+		//}
 
-		for (Vec2D pos : whitePawnsPos)
-		{
-			Circle pawn(pos, pawnRadius);
-			theScreen.Draw(pawn, Color::White(), true, Color::White());
-		}
+		//for (Vec2D pos : whitePawnsPos)
+		//{
+		//	Circle pawn(pos, pawnRadius);
+		//	theScreen.Draw(pawn, Color::White(), true, Color::White());
+		//}
 
-		for (Vec2D pos : blackPawnsPos)
-		{
-			Circle pawn(pos, pawnRadius);
-			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
-		}
+		//for (Vec2D pos : blackPawnsPos)
+		//{
+		//	Circle pawn(pos, pawnRadius);
+		//	theScreen.Draw(pawn, Color::Green(), true, Color::Green());
+		//}
 
-		for (Vec2D pos : blackCastelPos)
-		{
-			Circle pawn(pos, pawnRadius);
-			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
-		}
+		//for (Vec2D pos : blackCastelPos)
+		//{
+		//	Circle pawn(pos, pawnRadius);
+		//	theScreen.Draw(pawn, Color::Green(), true, Color::Green());
+		//}
 
-		for (Vec2D pos : whiteCastelPos)
-		{
-			Circle pawn(pos, pawnRadius);
-			theScreen.Draw(pawn, Color::White(), true, Color::White());
-		}
+		//for (Vec2D pos : whiteCastelPos)
+		//{
+		//	Circle pawn(pos, pawnRadius);
+		//	theScreen.Draw(pawn, Color::White(), true, Color::White());
+		//}
 
-		for (Vec2D pos : blackHorsePos)
-		{
-			Circle pawn(pos, pawnRadius);
-			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
-		}
+		//for (Vec2D pos : blackHorsePos)
+		//{
+		//	Circle pawn(pos, pawnRadius);
+		//	theScreen.Draw(pawn, Color::Green(), true, Color::Green());
+		//}
 
-		for (Vec2D pos : whiteHorsePos)
-		{
-			Circle pawn(pos, pawnRadius);
-			theScreen.Draw(pawn, Color::White(), true, Color::White());
-		}
+		//for (Vec2D pos : whiteHorsePos)
+		//{
+		//	Circle pawn(pos, pawnRadius);
+		//	theScreen.Draw(pawn, Color::White(), true, Color::White());
+		//}
 
-		for (Vec2D pos : blackElephantPos)
-		{
-			Circle pawn(pos, pawnRadius);
-			theScreen.Draw(pawn, Color::Green(), true, Color::Green());
-		}
+		//for (Vec2D pos : blackElephantPos)
+		//{
+		//	Circle pawn(pos, pawnRadius);
+		//	theScreen.Draw(pawn, Color::Green(), true, Color::Green());
+		//}
 
-		for (Vec2D pos : whiteElephantPos)
-		{
-			Circle pawn(pos, pawnRadius);
-			theScreen.Draw(pawn, Color::White(), true, Color::White());
-		}
-
-
-
-		theScreen.Draw(bKing, Color::Green(), true, Color::Green());
-		theScreen.Draw(bQueen, Color::Green(), true, Color::Green());
-
-		theScreen.Draw(wKing, Color::White(), true, Color::White());
-		theScreen.Draw(wQueen, Color::White(), true, Color::White());
+		//for (Vec2D pos : whiteElephantPos)
+		//{
+		//	Circle pawn(pos, pawnRadius);
+		//	theScreen.Draw(pawn, Color::White(), true, Color::White());
+		//}
 
 
+
+		//theScreen.Draw(bKing, Color::Green(), true, Color::Green());
+		//theScreen.Draw(bQueen, Color::Green(), true, Color::Green());
+
+		//theScreen.Draw(wKing, Color::White(), true, Color::White());
+		//theScreen.Draw(wQueen, Color::White(), true, Color::White());
+
+		theScreen.Draw(star, Color::Cyan());
 
 		c = false;
 

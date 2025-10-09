@@ -1,14 +1,33 @@
 
 #include "Star2D.h"
 #include "Vec2D.h"
+#include <random>
 
 Star2D::Star2D(): mOuterRadius(2.0f),mInnerRadius(1.0f), mCenter(0, 0), mSections(0)
 {
 
 }
 
-Star2D::Star2D(float OuterRadius,float InnerRadius ,Vec2D Center, int Sections): mOuterRadius(OuterRadius),mInnerRadius(InnerRadius), mCenter(Center), mSections(Sections)
+Star2D::Star2D(float OuterRadius,float InnerRadius ,Vec2D Center, int Sections, bool randomStarSize): mOuterRadius(OuterRadius),mInnerRadius(InnerRadius), mCenter(Center), mSections(Sections)
 {
+	if(randomStarSize)
+	{
+
+		std::random_device r; 
+		std::default_random_engine el(r()); 
+		std::uniform_int_distribution<int> uniform_InRadius(5, 50); 
+		InnerRadius = uniform_InRadius(el);
+		std::uniform_int_distribution<int> uniform_OutRadius(InnerRadius, 100);
+		OuterRadius = uniform_OutRadius(el);
+		std::uniform_int_distribution<int> uniform_Sections(3, 12);
+		Sections = uniform_Sections(el);
+
+
+		SetInnerRadius(InnerRadius);
+		SetOuterRadius(OuterRadius);
+		SetSections(Sections);
+	}
+
 	if (InnerRadius >= OuterRadius) OuterRadius = InnerRadius * InnerRadius;
 
 	int doubleSections = mSections * 2;

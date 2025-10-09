@@ -11,11 +11,16 @@ class Star2D : public Shape
 public:
 
 	Star2D();
-	Star2D(float OuterRadius,float InnerRadius ,Vec2D Center, int Sections);
+	Star2D(float OuterRadius,float InnerRadius ,Vec2D Center, int Sections, bool randomStarSize = false);
 
 	void RotateStar(float angle, Vec2D rotationPoint);
 
 	virtual Vec2D GetCenterPoint() const override { return mCenter; };
+	
+	inline void SetOuterRadius(const float outerRadius) { mOuterRadius = outerRadius; }
+	inline void SetInnerRadius(const float innerRadius) { mInnerRadius = innerRadius; }
+	inline void SetSections(const int Sections) { mSections = Sections; }
+
 
 	float mOuterRadius, mInnerRadius;
 	int mSections;

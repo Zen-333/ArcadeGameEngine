@@ -1,3 +1,5 @@
+/*
+
 #include <vector>
 #include <algorithm>
 #include <functional>
@@ -65,10 +67,10 @@ int main()
 
 	lambdaFunc(10);
 
-	DoSomthing([y, x]()
-	{
-	
-	});
+	//DoSomthing([y, x]()
+	//{
+	//		cout << x << " " << y << endl;
+	//});
 
 	// random
 
@@ -93,3 +95,5 @@ void DoSomthing(std::function<void()> doSomthingElse)
 	cout << "DOING SOMTHING" << endl;
 	doSomthingElse();
 }
+
+*/
