@@ -8,6 +8,7 @@
 #include "AARectangle.h"
 #include "Circle.h"
 #include <vector>
+#include <random>
 
 using namespace std;
 
@@ -15,9 +16,38 @@ const int SCREEN_WIDTH = 224;
 const int SCREEN_HEIGHT = 288;
 const int MAGNIFICATION = 3;
 
+std::vector<Star2D> TenRandomStars()
+{
+	std::vector<Star2D> stars;
+
+	std::random_device r;
+	std::default_random_engine el(r());
+
+	std::uniform_int_distribution<int> uniform_x(50, SCREEN_WIDTH);
+	std::uniform_int_distribution<int> uniform_y(50, SCREEN_HEIGHT);
+	std::uniform_real_distribution<float> uniform_speed(0.5f, 3.0f);
+
+	for(int i = 0; i < 3; i++)
+	{
+		float x = uniform_x(el);
+		float y = uniform_y(el);
+
+
+		float angle = uniform_speed(el);
+
+		Star2D s(1.0f, 1.0f, Vec2D(x, y), 10, true);
+		s.SetRotationAngle(angle);
+		stars.push_back(s);
+	}
+
+	return stars;
+}
+
 int main(int argc, char * argv[])
 {
 	// TESTING BRANCH MAIN //
+
+	std::vector<Star2D> Stars = TenRandomStars();
 
 	const int chessBoardLength = 8;
 	const int squareLength = 12;
@@ -151,6 +181,9 @@ int main(int argc, char * argv[])
 
 	Star2D star(2.0f, 1.0f, MiddleScreen, 3, true);
 
+
+
+
 	while (running)
 	{
 		while(SDL_PollEvent(&sdlEvent))
@@ -161,6 +194,16 @@ int main(int argc, char * argv[])
 				running = false;
 				break;
 			}
+		}
+
+		LAST = NOW;
+		NOW = SDL_GetPerformanceCounter();
+		deltaTime = (double)((NOW - LAST) / (double)SDL_GetPerformanceFrequency());
+
+		for(Star2D& s : Stars)
+		{
+			theScreen.Draw(s, Color::Cyan());
+			s.RotateStar(s.GetRotationAngle() * deltaTime, s.GetCenterPoint());
 		}
 
 		//LAST = NOW;
@@ -241,7 +284,7 @@ int main(int argc, char * argv[])
 		//theScreen.Draw(wKing, Color::White(), true, Color::White());
 		//theScreen.Draw(wQueen, Color::White(), true, Color::White());
 
-		theScreen.Draw(star, Color::Cyan());
+		//theScreen.Draw(star, Color::Cyan());
 
 		c = false;
 

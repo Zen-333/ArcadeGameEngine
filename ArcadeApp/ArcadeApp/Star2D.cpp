@@ -15,9 +15,9 @@ Star2D::Star2D(float OuterRadius,float InnerRadius ,Vec2D Center, int Sections, 
 
 		std::random_device r; 
 		std::default_random_engine el(r()); 
-		std::uniform_int_distribution<int> uniform_InRadius(5, 50); 
+		std::uniform_int_distribution<int> uniform_InRadius(5, 30); 
 		InnerRadius = uniform_InRadius(el);
-		std::uniform_int_distribution<int> uniform_OutRadius(InnerRadius, 100);
+		std::uniform_int_distribution<int> uniform_OutRadius(InnerRadius, 50);
 		OuterRadius = uniform_OutRadius(el);
 		std::uniform_int_distribution<int> uniform_Sections(3, 12);
 		Sections = uniform_Sections(el);

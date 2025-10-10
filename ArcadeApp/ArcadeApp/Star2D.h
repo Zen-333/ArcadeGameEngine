@@ -20,11 +20,14 @@ public:
 	inline void SetOuterRadius(const float outerRadius) { mOuterRadius = outerRadius; }
 	inline void SetInnerRadius(const float innerRadius) { mInnerRadius = innerRadius; }
 	inline void SetSections(const int Sections) { mSections = Sections; }
+	inline void SetRotationAngle(const float rot) { mRotationAngle = rot; }
 
+	inline float GetRotationAngle() { return mRotationAngle; }
 
 	float mOuterRadius, mInnerRadius;
 	int mSections;
 	Vec2D mCenter;
+	float mRotationAngle;
 
 	std::vector<Line2D> mStarLines;
 
