@@ -9,6 +9,7 @@
 #include "Circle.h"
 #include <vector>
 #include <random>
+#include <algorithm>
 
 using namespace std;
 
@@ -23,8 +24,8 @@ std::vector<Star2D> TenRandomStars()
 	std::random_device r;
 	std::default_random_engine el(r());
 
-	std::uniform_int_distribution<int> uniform_x(50, SCREEN_WIDTH);
-	std::uniform_int_distribution<int> uniform_y(50, SCREEN_HEIGHT);
+	std::uniform_int_distribution<int> uniform_x(50, SCREEN_WIDTH - 50);
+	std::uniform_int_distribution<int> uniform_y(50, SCREEN_HEIGHT - 50);
 	std::uniform_real_distribution<float> uniform_speed(0.5f, 3.0f);
 
 	for(int i = 0; i < 3; i++)
@@ -48,6 +49,11 @@ int main(int argc, char * argv[])
 	// TESTING BRANCH MAIN //
 
 	std::vector<Star2D> Stars = TenRandomStars();
+
+	std::sort(Stars.begin(), Stars.end(), [](Star2D& s1, Star2D& s2)
+	{
+			return s1.GetOuterRadius() > s2.GetOuterRadius();
+	});
 
 	const int chessBoardLength = 8;
 	const int squareLength = 12;
@@ -181,8 +187,27 @@ int main(int argc, char * argv[])
 
 	Star2D star(2.0f, 1.0f, MiddleScreen, 3, true);
 
+	float offset_x = 70;
+	float offset_y = 70;
 
+	float x = offset_x;
+	float y = offset_y;
 
+	for (Star2D& s : Stars)
+	{
+		// Set the position of the current star
+		s.SetCenterPoint(Vec2D(x, y));
+
+		// Move to next position
+		x += offset_x;
+
+		// If next x would go off the screen, wrap to a new row
+		if (x + offset_x >= SCREEN_WIDTH)
+		{
+			x = offset_x;
+			y += offset_y;
+		}
+	}
 
 	while (running)
 	{
@@ -203,8 +228,9 @@ int main(int argc, char * argv[])
 		for(Star2D& s : Stars)
 		{
 			theScreen.Draw(s, Color::Cyan());
-			s.RotateStar(s.GetRotationAngle() * deltaTime, s.GetCenterPoint());
+			//s.RotateStar(s.GetRotationAngle() * deltaTime, s.GetCenterPoint());
 		}
+
 
 		//LAST = NOW;
 		//NOW = SDL_GetPerformanceCounter();

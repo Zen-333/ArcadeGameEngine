@@ -21,8 +21,13 @@ public:
 	inline void SetInnerRadius(const float innerRadius) { mInnerRadius = innerRadius; }
 	inline void SetSections(const int Sections) { mSections = Sections; }
 	inline void SetRotationAngle(const float rot) { mRotationAngle = rot; }
+	void SetCenterPoint(const Vec2D center);
 
 	inline float GetRotationAngle() { return mRotationAngle; }
+	inline float GetOuterRadius() { return mOuterRadius; }
+
+	bool operator==(const Star2D& star) const;
+	Star2D& operator=(const Star2D& other);
 
 	float mOuterRadius, mInnerRadius;
 	int mSections;

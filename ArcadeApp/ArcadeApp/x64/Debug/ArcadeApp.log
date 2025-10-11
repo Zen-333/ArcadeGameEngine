@@ -1,7 +1,10 @@
-﻿  ArcadeApp.cpp
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.h(34,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeApp.cpp(32,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeApp.cpp(33,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeApp.cpp(172,22): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeApp.cpp(206,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  Star2D.cpp
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.h(39,19): warning C4305: 'initializing': truncation from 'double' to 'const float'
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.cpp(19,33): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.cpp(20,56): warning C4244: 'argument': conversion from 'float' to '_Ty', possible loss of data
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.cpp(20,56): warning C4244:         with
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.cpp(20,56): warning C4244:         [
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.cpp(20,56): warning C4244:             _Ty=int
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.cpp(20,56): warning C4244:         ]
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Star2D.cpp(21,34): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   ArcadeApp.vcxproj -> C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\x64\Debug\ArcadeApp.exe
