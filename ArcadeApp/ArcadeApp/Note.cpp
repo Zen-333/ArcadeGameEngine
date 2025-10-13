@@ -1,4 +1,4 @@
-/*
+///*
 
 #include <vector>
 #include <algorithm>
@@ -19,6 +19,16 @@ using namespace std;
 //Typically 64 bits on 64 - bit systems.
 //Returned by functions like sizeof() or vector::size().
 
+// L and R values and R values reference
+class BigObject{
+};
+
+void Consume(std::vector<BigObject>&& myVecOfBigObjects)
+{
+
+}
+
+
 class A
 {
 public:
@@ -36,6 +46,16 @@ public:
 
 int main()
 {
+	// BigObjects
+
+	std::vector<BigObject> myVecOfBigObjects = {};
+	Consume(std::move(myVecOfBigObjects));  // std::move is a cast to R value
+
+
+
+
+	// A
+
 	A a;
 
 	vector<int> intVec = { 1, 2, 3, 4, 5, 6 };
@@ -96,4 +116,4 @@ void DoSomthing(std::function<void()> doSomthingElse)
 	doSomthingElse();
 }
 
-*/
+//*/

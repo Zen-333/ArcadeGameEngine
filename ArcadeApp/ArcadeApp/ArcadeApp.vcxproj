@@ -155,6 +155,7 @@
     <ClCompile Include="ArcadeApp.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="DynamicIntArray.cpp" />
     <ClCompile Include="Line2D.cpp" />
     <ClCompile Include="Note.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="AARectangle.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="DynamicIntArray.h" />
     <ClInclude Include="Line2D.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenBuffer.h" />

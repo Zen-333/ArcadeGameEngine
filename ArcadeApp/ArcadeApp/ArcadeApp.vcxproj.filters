@@ -66,6 +66,9 @@
     <ClCompile Include="Note.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DynamicIntArray.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -100,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="Circle.h">
       <Filter>Source Files\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicIntArray.h">
+      <Filter>Source Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -228,7 +228,7 @@ int main(int argc, char * argv[])
 		for(Star2D& s : Stars)
 		{
 			theScreen.Draw(s, Color::Cyan());
-			//s.RotateStar(s.GetRotationAngle() * deltaTime, s.GetCenterPoint());
+			s.RotateStar(s.GetRotationAngle() * deltaTime, s.GetCenterPoint());
 		}
 
 
