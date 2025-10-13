@@ -19,7 +19,22 @@ using namespace std;
 //Typically 64 bits on 64 - bit systems.
 //Returned by functions like sizeof() or vector::size().
 
+
+
 // L and R values and R values reference
+
+// Ownership Transfer and Invalid State after Move
+//-------------------------------------------------
+//
+// When an object is passed to a function taking a T&& (rvalue reference),
+// you are giving up ownership of its internal resources.
+//
+// After moving, the original object is still *valid* (it can be destroyed safely),
+// but its internal data is typically *empty* or *unspecified*.
+// You should NOT rely on its old values or use it as if it still holds data.
+//
+// Example:
+
 class BigObject{
 };
 
@@ -27,6 +42,13 @@ void Consume(std::vector<BigObject>&& myVecOfBigObjects)
 {
 
 }
+
+// Why noexcept?
+// --------------
+// • noexcept tells the compiler that the function will NOT throw exceptions.
+// • STL containers (like std::vector) only use move constructors if they are noexcept.
+// • If the move constructor might throw, STL will fallback to the slower copy version.
+
 
 
 class A
@@ -46,13 +68,22 @@ public:
 
 int main()
 {
-	// BigObjects
+	std::vector<BigObject> data;
+	Consume(std::move(data));  // Moves ownership of data into Consume()
 
-	std::vector<BigObject> myVecOfBigObjects = {};
-	Consume(std::move(myVecOfBigObjects));  // std::move is a cast to R value
+	//  After std::move, 'data' is still valid but its contents are unspecified.
+	std::cout << "After move, data.size() = " << data.size() << "\n"; // Typically 0
+
+	// Don't do this: using moved-from objects as if they still hold data is undefined behavior.
+	// data.push_back(4); // May work, but logically meaningless here.
 
 
-
+	// Key takeaways:
+	//  After std::move(x), treat x as an empty shell.
+	//  You can assign a new value to x later, but don’t use its previous data.
+	//  The destructor will still be called safely when x goes out of scope.
+	//
+	// Think of std::move() as: “I’m done with this object — someone else can take it.”
 
 	// A
 
