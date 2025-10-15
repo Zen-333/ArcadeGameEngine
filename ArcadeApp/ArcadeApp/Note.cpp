@@ -1,4 +1,4 @@
-///*
+/*
 
 #include <vector>
 #include <algorithm>
@@ -147,4 +147,4 @@ void DoSomthing(std::function<void()> doSomthingElse)
 	doSomthingElse();
 }
 
-//*/
+*/

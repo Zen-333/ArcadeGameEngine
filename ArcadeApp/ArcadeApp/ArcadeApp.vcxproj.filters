@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Shapes">
       <UniqueIdentifier>{6466a5be-effa-421e-8645-839e3c70b05f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\App">
+      <UniqueIdentifier>{6eaea578-a051-4960-a9fa-ac608e409518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{e79af59a-ec7e-43a9-a9d0-9c1cb13c698b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArcadeApp.cpp">
@@ -69,6 +75,9 @@
     <ClCompile Include="DynamicIntArray.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Source Files\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -106,6 +115,12 @@
     </ClInclude>
     <ClInclude Include="DynamicIntArray.h">
       <Filter>Source Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Source Files\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
