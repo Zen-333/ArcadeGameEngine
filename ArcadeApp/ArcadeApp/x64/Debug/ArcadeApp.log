@@ -1,2 +1,5 @@
 ﻿  App.cpp
+  ArcadeApp.cpp
+  ArcadeScene.cpp
+  Generating Code...
   ArcadeApp.vcxproj -> C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\x64\Debug\ArcadeApp.exe
