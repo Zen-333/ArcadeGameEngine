@@ -159,6 +159,7 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="DynamicIntArray.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="InputController.cpp" />
     <ClCompile Include="Line2D.cpp" />
     <ClCompile Include="Note.cpp" />
     <ClCompile Include="Screen.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="DynamicIntArray.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="InputAction.h" />
+    <ClInclude Include="InputController.h" />
     <ClInclude Include="Line2D.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Screen.h" />

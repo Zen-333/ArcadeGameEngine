@@ -3,6 +3,8 @@
 #include "Vec2D.h"
 #include "Screen.h"
 #include "Color.h"
+#include "GameController.h"
+#include <iostream>
 
 ArcadeScene::ArcadeScene()
 {
@@ -10,6 +12,17 @@ ArcadeScene::ArcadeScene()
 
 void ArcadeScene::Init()
 {
+	ButtonAction action;
+	action.Key = GameController::ActionKey();
+	action.action = [](uint32_t dt, InputState state)
+	{
+		if (GameController::IsPressed(state))
+		{
+			std::cout << "Action button pressed!" << std::endl;
+		}
+	};
+
+	mGameController.AddInputActionForKey(action);
 }
 
 void ArcadeScene::Update(uint32_t dt)

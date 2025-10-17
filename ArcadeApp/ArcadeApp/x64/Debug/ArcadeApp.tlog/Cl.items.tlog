@@ -5,6 +5,8 @@ C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\ArcadeScene.cpp
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Circle.cpp;C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\x64\Debug\Circle.obj
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Color.cpp;C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\x64\Debug\Color.obj
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\DynamicIntArray.cpp;C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\x64\Debug\DynamicIntArray.obj
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\GameController.cpp;C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\x64\Debug\GameController.obj
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\InputController.cpp;C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\x64\Debug\InputController.obj
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Line2D.cpp;C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\x64\Debug\Line2D.obj
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Note.cpp;C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\x64\Debug\Note.obj
 C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\Screen.cpp;C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\x64\Debug\Screen.obj

@@ -36,6 +36,11 @@ void App::Run()
 		uint32_t dt = 10; // update the app rate 10 milliseconds 10ms means 100 updates per second (dt = delta time)
 		uint32_t accumulator = 0; // it stores leftover time between frames
 
+		mInputController.Init([&running](uint32_t dt, InputState state) {
+			
+			running = false;
+			
+		});
 
 
 		while (running)
@@ -56,15 +61,7 @@ void App::Run()
 
 
 			// Input
-			while (SDL_PollEvent(&sdlEvent))
-			{
-				switch (sdlEvent.type)
-				{
-				case SDL_QUIT:
-					running = false;
-					break;
-				}
-			}
+			mInputController.Update(dt);
 
 			//Update
 			Scene* topScene = App::TopScene();
@@ -75,7 +72,7 @@ void App::Run()
 				{
 					// update current scene by dt
 					topScene->Update(dt);
-					std::cout << "Delta time step: " << accumulator << std::endl;
+					//std::cout << "Delta time step: " << accumulator << std::endl;
 					accumulator -= dt;
 				}
 				topScene->Draw(mScreen);
@@ -96,6 +93,7 @@ void App::PushScene(std::unique_ptr<Scene> scene)
 	if(scene)
 	{
 		scene->Init();
+		mInputController.SetGameController(scene->GetGameController());
 		mSceneStack.emplace_back(std::move(scene));
 		SDL_SetWindowTitle(mnoptrWindow, TopScene()->GetSceneName().c_str());
 	}
@@ -110,6 +108,7 @@ void App::PopScene()
 
 	if(TopScene())
 	{
+		mInputController.SetGameController(TopScene()->GetGameController());
 		SDL_SetWindowTitle(mnoptrWindow, TopScene()->GetSceneName().c_str());
 
 	}

@@ -87,6 +87,9 @@
     <ClCompile Include="GameController.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
+    <ClCompile Include="InputController.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utils.h">
@@ -138,6 +141,9 @@
       <Filter>Source Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="GameController.h">
+      <Filter>Source Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,4 @@
 ﻿  App.cpp
-  ArcadeApp.cpp
-  ArcadeScene.cpp
-  Generating Code...
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\InputController.h(5,8): warning C4099: 'GameController': type name first seen using 'class' now seen using 'struct'
+C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\ArcadeApp\App.cpp(30,13): warning C4101: 'sdlEvent': unreferenced local variable
   ArcadeApp.vcxproj -> C:\Users\zenha\source\repos\ArcadeGameEngine\ArcadeApp\x64\Debug\ArcadeApp.exe
