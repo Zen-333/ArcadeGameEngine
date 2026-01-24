@@ -1,0 +1,24 @@
+# Ignore Visual Studio cache and settings
+.vs/
+*.db
+*.suo
+
+# Visual Studio build output
+x64/
+Debug/
+Release/
+
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.exe
+*.log
+*.tlog
+
+.vs/
+*.vcxproj.user
+
+# OS junk
+Thumbs.db
+.DS_Store
