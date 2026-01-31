@@ -31,6 +31,30 @@ TetrisShapes::TetrisShapes(TetrisShapeType InType, Vec2D InStartPos) : mShapeTyp
 
 	mDirection = 0;
 
+	// Rotation 0  (horizontal)
+	mTetrisSRotations[0].push_back(Vec2D(10, 10));
+	mTetrisSRotations[0].push_back(Vec2D(0, 0));
+	mTetrisSRotations[0].push_back(Vec2D(-10, 10));
+	mTetrisSRotations[0].push_back(Vec2D(-20, 0));
+
+	// Rotation 1 (vertical)
+	mTetrisSRotations[1].push_back(Vec2D(10, -10));
+	mTetrisSRotations[1].push_back(Vec2D(0, 0));
+	mTetrisSRotations[1].push_back(Vec2D(10, 10));
+	mTetrisSRotations[1].push_back(Vec2D(0, 20));
+
+	// Rotation 2 (same as 0)
+	mTetrisSRotations[2].push_back(Vec2D(10, -10));
+	mTetrisSRotations[2].push_back(Vec2D(0, 0));
+	mTetrisSRotations[2].push_back(Vec2D(10, 10));
+	mTetrisSRotations[2].push_back(Vec2D(0, 20));
+
+	// Rotation 3 (same as 1)
+	mTetrisSRotations[3].push_back(Vec2D(-10, -10));
+	mTetrisSRotations[3].push_back(Vec2D(0, 0));
+	mTetrisSRotations[3].push_back(Vec2D(-10, 10));
+	mTetrisSRotations[3].push_back(Vec2D(0, -20));
+
 }
 
 void TetrisShapes::Update(uint32_t dt)
@@ -75,12 +99,22 @@ void TetrisShapes::Update(uint32_t dt)
 
 	if (mRotateRequested)
 	{
-		mTetrisShapes[0].MoveBy(Vec2D(10, 10));
-		//mTetrisShapes[1].MoveBy();
-		mTetrisShapes[2].MoveBy(Vec2D(-10, 10));
-		mTetrisShapes[3].MoveBy(Vec2D(-20, 0));
+		for(int i = 0; i < mTetrisShapes.size(); i++)
+		{
+			Vec2D Movement = mTetrisSRotations[mShapeRotationState][i];
+			mTetrisShapes[i].MoveBy(mTetrisSRotations[mShapeRotationState][i]);
+		
+		}
 		
 		mRotateRequested = false;
+
+		if (mShapeRotationState == 3)
+		{
+			mShapeRotationState = 0;
+		}else
+		{
+			mShapeRotationState++;
+		}
 	}
 
 }
