@@ -58,6 +58,8 @@ private:
 	void MoveBy(const Vec2D Amount);
 	void MoveTo(const Vec2D Amount);
 
+	bool CanRotate() const;
+
 	static const std::unordered_map<TetrisShapeType, void (TetrisShapes::*)()> ShapeMap;
 
 	std::vector<AARectangle> mTetrisShapes;

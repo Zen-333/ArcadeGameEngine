@@ -44,15 +44,15 @@ TetrisShapes::TetrisShapes(TetrisShapeType InType, Vec2D InStartPos) : mShapeTyp
 	mTetrisSRotations[1].push_back(Vec2D(0, 20));
 
 	// Rotation 2 (same as 0)
-	mTetrisSRotations[2].push_back(Vec2D(10, -10));
+	mTetrisSRotations[2].push_back(Vec2D(-10, -10));
 	mTetrisSRotations[2].push_back(Vec2D(0, 0));
-	mTetrisSRotations[2].push_back(Vec2D(10, 10));
-	mTetrisSRotations[2].push_back(Vec2D(0, 20));
+	mTetrisSRotations[2].push_back(Vec2D(10, -10));
+	mTetrisSRotations[2].push_back(Vec2D(20, 0));
 
 	// Rotation 3 (same as 1)
-	mTetrisSRotations[3].push_back(Vec2D(-10, -10));
-	mTetrisSRotations[3].push_back(Vec2D(0, 0));
 	mTetrisSRotations[3].push_back(Vec2D(-10, 10));
+	mTetrisSRotations[3].push_back(Vec2D(0, 0));
+	mTetrisSRotations[3].push_back(Vec2D(-10, -10));
 	mTetrisSRotations[3].push_back(Vec2D(0, -20));
 
 }
@@ -99,22 +99,26 @@ void TetrisShapes::Update(uint32_t dt)
 
 	if (mRotateRequested)
 	{
-		for(int i = 0; i < mTetrisShapes.size(); i++)
+		if(CanRotate())
 		{
-			Vec2D Movement = mTetrisSRotations[mShapeRotationState][i];
-			mTetrisShapes[i].MoveBy(mTetrisSRotations[mShapeRotationState][i]);
-		
-		}
-		
-		mRotateRequested = false;
+			for (int i = 0; i < mTetrisShapes.size(); i++)
+			{
+				Vec2D Movement = mTetrisSRotations[mShapeRotationState][i];
+				mTetrisShapes[i].MoveBy(mTetrisSRotations[mShapeRotationState][i]);
 
-		if (mShapeRotationState == 3)
-		{
-			mShapeRotationState = 0;
-		}else
-		{
-			mShapeRotationState++;
+			}
+
+			if (mShapeRotationState == 3)
+			{
+				mShapeRotationState = 0;
+			}
+			else
+			{
+				mShapeRotationState++;
+			}
 		}
+
+		mRotateRequested = false;
 	}
 
 }
@@ -126,7 +130,7 @@ void TetrisShapes::Draw(Screen& screen)
 		screen.Draw(rect, Color::Black(), true, Color::Cyan());
 	}
 
-	screen.Draw(mTetrisShapes[3], Color::Black(), true, Color::Red());
+	//screen.Draw(mTetrisShapes[3], Color::Black(), true, Color::Red());
 
 }
 
@@ -304,3 +308,30 @@ void TetrisShapes::MoveTo(const Vec2D Amount)
 {
 
 }
+
+bool TetrisShapes::CanRotate() const
+{
+	std::vector<AARectangle> rotation = mTetrisShapes;
+
+	for (int i = 0; i < mTetrisShapes.size(); i++)
+	{
+		Vec2D Movement = mTetrisSRotations[mShapeRotationState][i];
+		rotation[i].MoveBy(mTetrisSRotations[mShapeRotationState][i]);
+
+	}
+
+	for (auto& Rect : rotation)
+	{
+		if (IsGreaterThanOrEual(mBoundary.GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() + (-10)))
+		{
+			return false;
+		}
+		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX(), mBoundary.GetBottomRightPoint().GetX() + 10))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
