@@ -208,10 +208,10 @@ void TetrisShapes::TShape()
 	mTetrisRotations[0].push_back(Vec2D(10, -10));
 
 	// Rotation 1 ? 2 (pointing right to pointing up)
-	mTetrisRotations[1].push_back(Vec2D(-10, 10));
-	mTetrisRotations[1].push_back(Vec2D(0, 0));
 	mTetrisRotations[1].push_back(Vec2D(10, -10));
-	mTetrisRotations[1].push_back(Vec2D(10, 10));
+	mTetrisRotations[1].push_back(Vec2D(0, 0));
+	mTetrisRotations[1].push_back(Vec2D(-10, 10));
+	mTetrisRotations[1].push_back(Vec2D(-10, -10));
 
 	// Rotation 2 ? 3 (pointing up to pointing left)
 	mTetrisRotations[2].push_back(Vec2D(-10, -10));
@@ -220,10 +220,10 @@ void TetrisShapes::TShape()
 	mTetrisRotations[2].push_back(Vec2D(-10, 10));
 
 	// Rotation 3 ? 0 (pointing left to pointing down)
-	mTetrisRotations[3].push_back(Vec2D(10, -10));
-	mTetrisRotations[3].push_back(Vec2D(0, 0));
 	mTetrisRotations[3].push_back(Vec2D(-10, 10));
-	mTetrisRotations[3].push_back(Vec2D(-10, -10));
+	mTetrisRotations[3].push_back(Vec2D(0, 0));
+	mTetrisRotations[3].push_back(Vec2D(10, -10));
+	mTetrisRotations[3].push_back(Vec2D(10, 10));
 }
 
 void TetrisShapes::OShape()
@@ -320,10 +320,10 @@ void TetrisShapes::JShape()
 	mTetrisRotations[0].push_back(Vec2D(0, -20));
 
 	// Rotation 1 ? 2
-	mTetrisRotations[1].push_back(Vec2D(-10, 10));
-	mTetrisRotations[1].push_back(Vec2D(0, 0));
 	mTetrisRotations[1].push_back(Vec2D(10, -10));
-	mTetrisRotations[1].push_back(Vec2D(20, 0));
+	mTetrisRotations[1].push_back(Vec2D(0, 0));
+	mTetrisRotations[1].push_back(Vec2D(-10, 10));
+	mTetrisRotations[1].push_back(Vec2D(-20, 0));
 
 	// Rotation 2 ? 3
 	mTetrisRotations[2].push_back(Vec2D(-10, -10));
@@ -332,10 +332,10 @@ void TetrisShapes::JShape()
 	mTetrisRotations[2].push_back(Vec2D(0, 20));
 
 	// Rotation 3 ? 0
-	mTetrisRotations[3].push_back(Vec2D(10, -10));
-	mTetrisRotations[3].push_back(Vec2D(0, 0));
 	mTetrisRotations[3].push_back(Vec2D(-10, 10));
-	mTetrisRotations[3].push_back(Vec2D(-20, 0));
+	mTetrisRotations[3].push_back(Vec2D(0, 0));
+	mTetrisRotations[3].push_back(Vec2D(10, -10));
+	mTetrisRotations[3].push_back(Vec2D(20, 0));
 }
 
 void TetrisShapes::LShape()
@@ -367,10 +367,10 @@ void TetrisShapes::LShape()
 	mTetrisRotations[0].push_back(Vec2D(20, 0));
 
 	// Rotation 1 ? 2
-	mTetrisRotations[1].push_back(Vec2D(-10, 10));
-	mTetrisRotations[1].push_back(Vec2D(0, 0));
 	mTetrisRotations[1].push_back(Vec2D(10, -10));
-	mTetrisRotations[1].push_back(Vec2D(0, 20));
+	mTetrisRotations[1].push_back(Vec2D(0, 0));
+	mTetrisRotations[1].push_back(Vec2D(-10, 10));
+	mTetrisRotations[1].push_back(Vec2D(0, -20));
 
 	// Rotation 2 ? 3
 	mTetrisRotations[2].push_back(Vec2D(-10, -10));
@@ -379,10 +379,10 @@ void TetrisShapes::LShape()
 	mTetrisRotations[2].push_back(Vec2D(-20, 0));
 
 	// Rotation 3 ? 0
-	mTetrisRotations[3].push_back(Vec2D(10, -10));
-	mTetrisRotations[3].push_back(Vec2D(0, 0));
 	mTetrisRotations[3].push_back(Vec2D(-10, 10));
-	mTetrisRotations[3].push_back(Vec2D(0, -20));
+	mTetrisRotations[3].push_back(Vec2D(0, 0));
+	mTetrisRotations[3].push_back(Vec2D(10, -10));
+	mTetrisRotations[3].push_back(Vec2D(0, 20));
 }
 
 void TetrisShapes::IShape()

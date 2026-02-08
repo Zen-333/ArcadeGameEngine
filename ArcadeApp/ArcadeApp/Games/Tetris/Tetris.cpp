@@ -3,7 +3,7 @@
 #include "App.h"
 
 Tetris::Tetris(): SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)), 
-mCurrentTetrisShape({ TetrisShapeType::TT_I, Vec2D(20,20)})
+mCurrentTetrisShape({ TetrisShapeType::TT_L, Vec2D(20,20)})
 {
 
 }
