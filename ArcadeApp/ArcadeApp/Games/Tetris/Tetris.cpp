@@ -82,6 +82,11 @@ void Tetris::Init(GameController& controller)
 void Tetris::Update(uint32_t dt)
 {
 	mCurrentTetrisShape.Update(dt);
+
+	if(!mCurrentTetrisShape.GetCanMoveDown())
+	{
+		// TODO: Spawn next shape
+	}
 }
 
 void Tetris::Draw(Screen& screen)
@@ -98,7 +103,7 @@ const std::string& Tetris::GetName() const
 
 void Tetris::ResetGame()
 {
-	AARectangle levelBoundary = { Vec2D::Zero, PLAYEBALE_AREA_WIDTH, PLAYEBALE_AREA_WIDTH };
+	AARectangle levelBoundary = { Vec2D::Zero, PLAYEBALE_AREA_WIDTH, PLAYEBALE_AREA_HEIGHT };
 
 	mLevelBoundary = { levelBoundary };
 	mCurrentTetrisShape.InitLevelBoundary(levelBoundary);

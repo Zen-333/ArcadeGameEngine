@@ -35,6 +35,9 @@ TetrisShapes::TetrisShapes(TetrisShapeType InType, Vec2D InStartPos) : mShapeTyp
 
 void TetrisShapes::Update(uint32_t dt)
 {
+
+	if (!mCanMoveDown) return;
+
 	bool bCanMoveLeft = true;
 	bool bCanMoveRight = true;
 
@@ -59,6 +62,12 @@ void TetrisShapes::Update(uint32_t dt)
 		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX(), mBoundary.GetBottomRightPoint().GetX() + 10))
 		{
 			bCanMoveRight = false;
+		}
+
+		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mBoundary.GetBottomRightPoint().GetY() + 10)) 
+		{
+			mCanMoveDown = false;
+			return;
 		}
 	}
 

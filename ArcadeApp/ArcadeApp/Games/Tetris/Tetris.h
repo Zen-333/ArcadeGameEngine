@@ -36,6 +36,6 @@ private:
 	Vec2D SHAPE_START_POS;
 
 	const uint32_t PLAYEBALE_AREA_WIDTH = 100;
-	const uint32_t PLAYEBALE_AREA_HEIGHT = 200;
+	const uint32_t PLAYEBALE_AREA_HEIGHT = 270;
 
 };

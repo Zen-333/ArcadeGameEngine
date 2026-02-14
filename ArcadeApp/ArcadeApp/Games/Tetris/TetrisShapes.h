@@ -44,6 +44,7 @@ public:
 	void RequestMoveRight() { mMoveRightRequested = true; }
 	void RequestRotate() { mRotateRequested = true; }
 
+	const bool GetCanMoveDown() { return mCanMoveDown; }
 
 private:
 
@@ -86,6 +87,7 @@ private:
 	bool mMoveLeftRequested = false;
 	bool mMoveRightRequested = false;
 	bool mRotateRequested = false;
+	bool mCanMoveDown = true;
 	float mFallTimer = 0.0f;
 
 	static constexpr float FALL_INTERVAL = 0.5f;
