@@ -34,6 +34,7 @@ public:
 	Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 	inline bool operator==(const Color& c) const { return mColor == c.mColor; }
+	void operator=(const Color& c);
 	inline bool operator!=(const Color& c) const { return !(*this == c); }
 	inline uint32_t GetPixelColor() const { return mColor; }
 

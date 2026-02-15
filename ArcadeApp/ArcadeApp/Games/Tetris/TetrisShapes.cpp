@@ -2,7 +2,6 @@
 #include "BoundaryEdge.h"
 #include "Utils.h"
 #include "Screen.h"
-#include "Color.h"
 
 
 
@@ -31,6 +30,21 @@ TetrisShapes::TetrisShapes(TetrisShapeType InType, Vec2D InStartPos) : mShapeTyp
 
 	mDirection = 0;
 
+}
+
+void TetrisShapes::Reset()
+{
+	mTopLeftPoint = { mStartPos.GetX() - (BOX_WIDTH / 2), mStartPos.GetY() - (BOX_HEIGHT / 2) };
+
+	auto it = ShapeMap.find(mShapeType);
+
+	if (it != ShapeMap.end())
+	{
+		auto func = it->second;
+		(this->*func)();
+	}
+
+	mDirection = 0;
 }
 
 void TetrisShapes::Update(uint32_t dt)
@@ -112,10 +126,8 @@ void TetrisShapes::Draw(Screen& screen)
 {
 	for (auto& rect : mTetrisShapes)
 	{
-		screen.Draw(rect, Color::Black(), true, Color::Cyan());
+		screen.Draw(rect, Color::Black(), true, mColor);
 	}
-
-	//screen.Draw(mTetrisShapes[3], Color::Black(), true, Color::Red());
 
 }
 
@@ -124,22 +136,27 @@ void TetrisShapes::InitLevelBoundary(const AARectangle& Boundary)
 	mBoundary = Boundary;
 }
 
+void TetrisShapes::operator=(const TetrisShapes& TetrisShape)
+{
+	mShapeType = TetrisShape.mShapeType;
+	mStartPos = TetrisShape.mStartPos;
+
+	mMoveLeftRequested = false;
+	mMoveRightRequested = false;
+	mRotateRequested = false;
+	mCanMoveDown = true;
+	mFallTimer = 0.0f;
+
+	Reset();
+
+}
+
 void TetrisShapes::SShape()
 {
 
-	//mTetrisShapes.clear();
-
-	//// S shape layout:
-	////   [1][2]
-	//// [3][4]
-
-	//mTetrisShapes.push_back({ mTopLeftPoint + Vec2D(10 * 1, 0),      10, 10 });
-	//mTetrisShapes.push_back({ mTopLeftPoint + Vec2D(10 * 2, 0),      10, 10 });
-
-	//mTetrisShapes.push_back({ mTopLeftPoint + Vec2D(10 * 0, 10),     10, 10 });
-	//mTetrisShapes.push_back({ mTopLeftPoint + Vec2D(10 * 1, 10),     10, 10 });
-
 	DefaultShapeSetup();
+
+	mColor = Color::Blue();
 
 	int s = 1;
 	for (int i = 0; i < 4; i++)
@@ -190,6 +207,7 @@ void TetrisShapes::SShape()
 void TetrisShapes::TShape()
 {
 	DefaultShapeSetup();
+	mColor = Color::Yellow();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -238,6 +256,7 @@ void TetrisShapes::TShape()
 void TetrisShapes::OShape()
 {
 	DefaultShapeSetup();
+	mColor = Color::Green();
 
 	AARectangle rect0 = { mTopLeftPoint, BOX_WIDTH, BOX_HEIGHT };
 	AARectangle rect1 = { mTopLeftPoint + Vec2D(BOX_HEIGHT, 0), BOX_WIDTH, BOX_HEIGHT };
@@ -253,6 +272,7 @@ void TetrisShapes::OShape()
 void TetrisShapes::ZShape()
 {
 	DefaultShapeSetup();
+	mColor = Color::Cyan();
 
 	int z = 1;
 	for (int i = 0; i < 4; i++)
@@ -304,6 +324,7 @@ void TetrisShapes::ZShape()
 void TetrisShapes::JShape()
 {
 	DefaultShapeSetup();
+	mColor = Color::Magenta();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -350,6 +371,7 @@ void TetrisShapes::JShape()
 void TetrisShapes::LShape()
 {
 	DefaultShapeSetup();
+	mColor = Color::Red();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -397,6 +419,7 @@ void TetrisShapes::LShape()
 void TetrisShapes::IShape()
 {
 	DefaultShapeSetup();
+	mColor = Color::Orange();
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -448,6 +471,7 @@ void TetrisShapes::MoveTo(const Vec2D Amount)
 void TetrisShapes::DefaultShapeSetup()
 {
 	mTetrisShapes.clear();
+	mShapeRotationState = 0;
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -473,6 +497,11 @@ bool TetrisShapes::CanRotate() const
 			return false;
 		}
 		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX(), mBoundary.GetBottomRightPoint().GetX() + 10))
+		{
+			return false;
+		}
+
+		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mBoundary.GetBottomRightPoint().GetY() + 10))
 		{
 			return false;
 		}

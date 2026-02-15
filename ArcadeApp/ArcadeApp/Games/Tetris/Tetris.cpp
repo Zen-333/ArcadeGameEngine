@@ -1,9 +1,10 @@
 #include "Tetris.h"
 #include "AARectangle.h"
 #include "App.h"
+#include <random>
 
 Tetris::Tetris(): SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)), 
-mCurrentTetrisShape({ TetrisShapeType::TT_L, Vec2D(20,20)})
+mCurrentTetrisShape({ GetRandomShape(), Vec2D(20,20)})
 {
 
 }
@@ -86,6 +87,11 @@ void Tetris::Update(uint32_t dt)
 	if(!mCurrentTetrisShape.GetCanMoveDown())
 	{
 		// TODO: Spawn next shape
+		TetrisShapes OldShape = mCurrentTetrisShape;
+		mArrayTetrisShapes.push_back(OldShape);
+
+		mCurrentTetrisShape = TetrisShapes({ GetRandomShape(), Vec2D(20,20) });
+		
 	}
 }
 
@@ -93,6 +99,10 @@ void Tetris::Draw(Screen& screen)
 {
 	mCurrentTetrisShape.Draw(screen);
 
+	for(auto& shapes : mArrayTetrisShapes)
+	{
+		shapes.Draw(screen);
+	}
 }
 
 const std::string& Tetris::GetName() const
@@ -112,4 +122,17 @@ void Tetris::ResetGame()
 bool Tetris::IsGameOver() const
 {
 	return false;
+}
+
+TetrisShapeType Tetris::GetRandomShape()
+{
+	int Length = static_cast<int>(TetrisShapeType::Count);
+
+	std::random_device r; 
+	std::default_random_engine el(r()); 
+	std::uniform_int_distribution<int> uniform_dist(0, Length); 
+
+	int randomNumber = uniform_dist(el);
+
+	return static_cast<TetrisShapeType>(randomNumber);
 }

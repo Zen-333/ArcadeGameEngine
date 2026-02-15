@@ -2,6 +2,7 @@
 #include <vector>
 #include <unordered_map>
 #include "AARectangle.h"
+#include "Color.h"
 
 
 class Screen;
@@ -14,7 +15,8 @@ enum TetrisShapeType
 	TT_Z,
 	TT_J,
 	TT_O,
-	TT_T
+	TT_T,
+	Count
 };
 
 enum TetrisDirection
@@ -46,6 +48,8 @@ public:
 
 	const bool GetCanMoveDown() { return mCanMoveDown; }
 
+	void operator=(const TetrisShapes& TetrisShape);
+
 private:
 
 	void SShape();
@@ -58,6 +62,8 @@ private:
 
 	void MoveBy(const Vec2D Amount);
 	void MoveTo(const Vec2D Amount);
+
+	void Reset();
 
 	void DefaultShapeSetup();
 
@@ -74,10 +80,11 @@ private:
 	Vec2D mStartPos;
 	Vec2D mTopLeftPoint;
 
-	// TODO: Set mBoundary
 	AARectangle mBoundary;
 	AARectangle mMiddleSquare;
 	uint32_t mDirection;
+
+	Color mColor;
 
 	std::vector<Vec2D> mTetrisRotations[4];
 	int mShapeRotationState = 0;

@@ -27,6 +27,7 @@ private:
 
 	void ResetGame();
 	bool IsGameOver() const;
+	TetrisShapeType GetRandomShape();
 
 	TetrisShapes mCurrentTetrisShape;
 
@@ -34,6 +35,8 @@ private:
 	LevelBoundary mLevelBoundary; 
 
 	Vec2D SHAPE_START_POS;
+	std::vector<TetrisShapes> mArrayTetrisShapes;
+	std::vector<AARectangle> mTetrisShapeMap[10][25];
 
 	const uint32_t PLAYEBALE_AREA_WIDTH = 100;
 	const uint32_t PLAYEBALE_AREA_HEIGHT = 270;

@@ -44,6 +44,14 @@ Color::Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
     SetRGBA(r, g, b, a);
 }
 
+void Color::operator=(const Color& c)
+{
+    SetRed(c.GetRed());
+    SetGreen(c.GetGreen());
+    SetBlue(c.GetBlue());
+    SetAlpha(c.GetAlpha());
+}
+
 void Color::SetRGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
     mColor = SDL_MapRGBA(mFormat, r, g, b, a);
