@@ -38,7 +38,7 @@ private:
 	std::vector<TetrisShapes> mArrayTetrisShapes;
 	std::vector<AARectangle> mTetrisShapeMap[10][25];
 
-	const uint32_t PLAYEBALE_AREA_WIDTH = 100;
-	const uint32_t PLAYEBALE_AREA_HEIGHT = 270;
+	const uint32_t PLAYEBALE_AREA_WIDTH = 150;
+	const uint32_t PLAYEBALE_AREA_HEIGHT = 280;
 
 };

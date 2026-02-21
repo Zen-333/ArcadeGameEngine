@@ -65,20 +65,18 @@ void TetrisShapes::Update(uint32_t dt)
 	}
 
 
-	const AARectangle& aaRect = mTetrisShapes[mTetrisShapes.size() - 1];
-
 	for (auto& Rect : mTetrisShapes)
 	{
-		if (IsGreaterThanOrEual(mBoundary.GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() + (-10)))
+		if (IsGreaterThanOrEual(mBoundary.GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() - 5))
 		{
 			bCanMoveLeft = false;
 		}
-		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX(), mBoundary.GetBottomRightPoint().GetX() + 10))
+		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX(), mBoundary.GetBottomRightPoint().GetX() - 5))
 		{
 			bCanMoveRight = false;
 		}
 
-		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mBoundary.GetBottomRightPoint().GetY() + 10)) 
+		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mBoundary.GetBottomRightPoint().GetY() - 5)) 
 		{
 			mCanMoveDown = false;
 			return;

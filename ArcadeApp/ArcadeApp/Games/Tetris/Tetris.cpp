@@ -97,6 +97,8 @@ void Tetris::Update(uint32_t dt)
 
 void Tetris::Draw(Screen& screen)
 {
+	screen.Draw(mLevelBoundary.GetAARectangle(), Color::White(), false);
+
 	mCurrentTetrisShape.Draw(screen);
 
 	for(auto& shapes : mArrayTetrisShapes)
