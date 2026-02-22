@@ -68,6 +68,7 @@ private:
 	void DefaultShapeSetup();
 
 	bool CanRotate() const;
+	bool CollideWithTetris(const std::vector<TetrisShapes> TetrisShapes, const Vec2D MovingPos);
 
 	static const std::unordered_map<TetrisShapeType, void (TetrisShapes::*)()> ShapeMap;
 

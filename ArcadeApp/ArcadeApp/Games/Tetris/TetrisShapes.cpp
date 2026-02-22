@@ -508,3 +508,9 @@ bool TetrisShapes::CanRotate() const
 	return true;
 }
 
+bool TetrisShapes::CollideWithTetris(const std::vector<TetrisShapes> TetrisShapes, const Vec2D MovingPos)
+{
+	//TODO: Algorithm to see if the player tetris shape will collide with another tetris shape if it moves by "MovingPos"
+
+	return false;
+}
