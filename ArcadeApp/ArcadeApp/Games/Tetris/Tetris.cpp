@@ -87,6 +87,12 @@ void Tetris::Update(uint32_t dt)
 	if(!mCurrentTetrisShape.GetCanMoveDown())
 	{
 		// TODO: Spawn next shape
+
+		for(auto& Rect : mCurrentTetrisShape.GetTetrisShape())
+		{
+			mTetrisShapeMap[Rect.][]
+		}
+
 		TetrisShapes OldShape = mCurrentTetrisShape;
 		mArrayTetrisShapes.push_back(OldShape);
 

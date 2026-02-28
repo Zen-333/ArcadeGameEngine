@@ -48,6 +48,7 @@ public:
 
 	const bool GetCanMoveDown() { return mCanMoveDown; }
 
+
 	void operator=(const TetrisShapes& TetrisShape);
 
 private:
