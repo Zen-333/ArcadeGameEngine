@@ -11,6 +11,13 @@ enum TetrisGameStates
 	TT_IN_GAME_OVER
 };
 
+enum MoveDirection
+{
+	TD_DOWN,
+	TD_LEFT,
+	TD_RIGHT
+};
+
 class Tetris: public Game
 {
 
@@ -28,6 +35,10 @@ private:
 	void ResetGame();
 	bool IsGameOver() const;
 	TetrisShapeType GetRandomShape();
+	bool WorldToBoard(const Vec2D& pixelPos, int& outCol, int& outRow);
+
+	void LockCurrentShape();
+	bool WouldCollideWithBoard(const std::vector<AARectangle>& rects, MoveDirection dir);
 
 	TetrisShapes mCurrentTetrisShape;
 
@@ -37,6 +48,13 @@ private:
 	Vec2D SHAPE_START_POS;
 	std::vector<TetrisShapes> mArrayTetrisShapes;
 	std::vector<AARectangle> mTetrisShapeMap[10][25];
+
+	static constexpr int BOARD_COLS = 15;
+	static constexpr int BOARD_ROWS = 28;
+	static constexpr int CELL_SIZE = 10;
+
+	Color mBoard[BOARD_ROWS][BOARD_COLS];
+	bool mBoardOccupied[BOARD_ROWS][BOARD_COLS];
 
 	const uint32_t PLAYEBALE_AREA_WIDTH = 150;
 	const uint32_t PLAYEBALE_AREA_HEIGHT = 280;

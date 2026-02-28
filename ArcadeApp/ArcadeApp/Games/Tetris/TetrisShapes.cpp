@@ -50,18 +50,28 @@ void TetrisShapes::Reset()
 void TetrisShapes::Update(uint32_t dt)
 {
 
-	if (!mCanMoveDown) return;
+	//if (!mCanMoveDown) return;
 
 	bool bCanMoveLeft = true;
 	bool bCanMoveRight = true;
+
+	//float dtSec = MillisecondsToSeconds(dt);
+	//mFallTimer += dtSec;
+
+	//if (mFallTimer >= FALL_INTERVAL)
+	//{
+	//	MoveBy(Vec2D(0, BOX_HEIGHT));
+	//	mFallTimer = 0.0f;
+	//}
+
+	if (!mCanMoveDown) return;
 
 	float dtSec = MillisecondsToSeconds(dt);
 	mFallTimer += dtSec;
 
 	if (mFallTimer >= FALL_INTERVAL)
 	{
-		MoveBy(Vec2D(0, BOX_HEIGHT));
-		mFallTimer = 0.0f;
+		mFallTickReady = true; // Signal intent, don't move yet
 	}
 
 
@@ -508,16 +518,3 @@ bool TetrisShapes::CanRotate() const
 	return true;
 }
 
-bool TetrisShapes::CollideWithTetris(const std::vector<TetrisShapes> TetrisShapes, const Vec2D MovingPos)
-{
-	//TODO: Algorithm to see if the player tetris shape will collide with another tetris shape if it moves by "MovingPos" 
-	for(int i = 0; i > TetrisShapes.size(); i++)
-	{
-		for(int j = 0; j > TetrisShapes[i].mTetrisShapes.size(); j++)
-		{
-
-		}
-	}
-
-	return false;
-}

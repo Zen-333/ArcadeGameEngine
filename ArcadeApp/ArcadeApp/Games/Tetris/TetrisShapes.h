@@ -47,11 +47,25 @@ public:
 	void RequestRotate() { mRotateRequested = true; }
 
 	const bool GetCanMoveDown() { return mCanMoveDown; }
+	void StopFalling() { mCanMoveDown = false; }
 
+	bool IsMoveLeftRequested()  const { return mMoveLeftRequested; }
+	bool IsMoveRightRequested() const { return mMoveRightRequested; }
+	void CancelMoveLeft() { mMoveLeftRequested = false; }
+	void CancelMoveRight() { mMoveRightRequested = false; }
 
 	void operator=(const TetrisShapes& TetrisShape);
 
+	Color GetColor() const { return mColor; };
+
+	bool IsFallTickReady() const { return mFallTickReady; }
+	void CancelFall() { mFallTickReady = false; mFallTimer = 0.0f; }
+	void ApplyFall() { MoveBy(Vec2D(0, BOX_HEIGHT)); mFallTickReady = false; mFallTimer = 0.0f; }
+
+
 private:
+
+	bool mFallTickReady = false;
 
 	void SShape();
 	void TShape();
@@ -69,7 +83,6 @@ private:
 	void DefaultShapeSetup();
 
 	bool CanRotate() const;
-	bool CollideWithTetris(const std::vector<TetrisShapes> TetrisShapes, const Vec2D MovingPos);
 
 	static const std::unordered_map<TetrisShapeType, void (TetrisShapes::*)()> ShapeMap;
 
