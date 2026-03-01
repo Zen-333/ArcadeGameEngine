@@ -50,28 +50,18 @@ void TetrisShapes::Reset()
 void TetrisShapes::Update(uint32_t dt)
 {
 
-	//if (!mCanMoveDown) return;
+	if (!mCanMoveDown) return;
 
 	bool bCanMoveLeft = true;
 	bool bCanMoveRight = true;
-
-	//float dtSec = MillisecondsToSeconds(dt);
-	//mFallTimer += dtSec;
-
-	//if (mFallTimer >= FALL_INTERVAL)
-	//{
-	//	MoveBy(Vec2D(0, BOX_HEIGHT));
-	//	mFallTimer = 0.0f;
-	//}
-
-	if (!mCanMoveDown) return;
 
 	float dtSec = MillisecondsToSeconds(dt);
 	mFallTimer += dtSec;
 
 	if (mFallTimer >= FALL_INTERVAL)
 	{
-		mFallTickReady = true; // Signal intent, don't move yet
+		MoveBy(Vec2D(0, BOX_HEIGHT));
+		mFallTimer = 0.0f;
 	}
 
 
@@ -86,7 +76,7 @@ void TetrisShapes::Update(uint32_t dt)
 			bCanMoveRight = false;
 		}
 
-		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mBoundary.GetBottomRightPoint().GetY() - 5)) 
+		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mBoundary.GetBottomRightPoint().GetY() - 5))
 		{
 			mCanMoveDown = false;
 			return;
@@ -106,7 +96,7 @@ void TetrisShapes::Update(uint32_t dt)
 
 	if (mRotateRequested && mShapeType != TT_O)
 	{
-		if(CanRotate())
+		if (CanRotate())
 		{
 			for (int i = 0; i < mTetrisShapes.size(); i++)
 			{
@@ -517,4 +507,3 @@ bool TetrisShapes::CanRotate() const
 
 	return true;
 }
-
