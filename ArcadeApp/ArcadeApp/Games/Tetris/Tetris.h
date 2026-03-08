@@ -23,6 +23,8 @@ public:
 	virtual void Draw(Screen& screen) override;
 	virtual const std::string& GetName() const override;
 
+	bool WorldToBoard(const Vec2D& pixelPos, int& outCol, int& outRow);
+
 private:
 
 	void ResetGame();
@@ -33,6 +35,15 @@ private:
 
 	TetrisGameStates mGameState;
 	LevelBoundary mLevelBoundary;
+
+	Vec2D SHAPE_START_POS;
+
+	static constexpr int BOARD_COLS = 15;
+	static constexpr int BOARD_ROWS = 28;
+
+	Color mBoard[BOARD_ROWS][BOARD_COLS];
+	bool mBoardOccupied[BOARD_ROWS][BOARD_COLS];
+	static constexpr int CELL_SIZE = 10;
 
 	Vec2D SHAPE_START_POS;
 	std::vector<TetrisShapes> mArrayTetrisShapes;

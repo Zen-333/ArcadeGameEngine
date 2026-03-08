@@ -47,6 +47,7 @@ public:
 	void RequestRotate() { mRotateRequested = true; }
 
 	const bool GetCanMoveDown() { return mCanMoveDown; }
+	Color GetColor() const { return mColor; }
 
 	void operator=(const TetrisShapes& TetrisShape);
 

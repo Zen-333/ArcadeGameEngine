@@ -87,6 +87,16 @@ void Tetris::Update(uint32_t dt)
 	if (!mCurrentTetrisShape.GetCanMoveDown())
 	{
 		// TODO: Spawn next shape
+
+		for(auto& rect : mCurrentTetrisShape.GetTetrisShape())
+		{
+			int col, row;
+			if(WorldToBoard(rect.GetTopLeftPoint(), col, row))
+
+			mBoardOccupied[row][col] = true;
+			mBoard[row][col] = mCurrentTetrisShape.GetColor();
+		}
+
 		TetrisShapes OldShape = mCurrentTetrisShape;
 		mArrayTetrisShapes.push_back(OldShape);
 
@@ -101,9 +111,26 @@ void Tetris::Draw(Screen& screen)
 
 	mCurrentTetrisShape.Draw(screen);
 
-	for (auto& shapes : mArrayTetrisShapes)
+	//for (auto& shapes : mArrayTetrisShapes)
+	//{
+	//	shapes.Draw(screen);
+	//}
+
+	Vec2D origin = mLevelBoundary.GetAARectangle().GetTopLeftPoint();
+
+	for (int row = 0; row < BOARD_ROWS; row++)
 	{
-		shapes.Draw(screen);
+		for (int col = 0; col < BOARD_COLS; col++)
+		{
+			if (mBoardOccupied[row][col])
+			{
+				AARectangle cell = {
+					origin + Vec2D(col * CELL_SIZE, row * CELL_SIZE),
+					CELL_SIZE, CELL_SIZE
+				};
+				screen.Draw(cell, Color::White(), true, mBoard[row][col]);
+			}
+		}
 	}
 }
 
@@ -111,6 +138,20 @@ const std::string& Tetris::GetName() const
 {
 	static std::string name = "Tetris <>";
 	return name;
+}
+
+bool Tetris::WorldToBoard(const Vec2D& pixelPos, int& outCol, int& outRow)
+{
+
+	Vec2D origin = mLevelBoundary.GetAARectangle().GetTopLeftPoint();
+
+	outCol = static_cast<int>((pixelPos.GetX() - origin.GetX()) / CELL_SIZE);
+	outRow = static_cast<int>((pixelPos.GetY() - origin.GetY()) / CELL_SIZE);
+
+	// Guard: reject out-of-bounds
+	return outCol >= 0 && outCol < BOARD_COLS &&
+		outRow >= 0 && outRow < BOARD_ROWS;
+
 }
 
 void Tetris::ResetGame()
