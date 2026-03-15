@@ -46,7 +46,11 @@ public:
 	void RequestMoveRight() { mMoveRightRequested = true; }
 	void RequestRotate() { mRotateRequested = true; }
 
+	void SetCanMoveLeft(const bool CanLeft) { AllowedLeft = CanLeft; };
+	void SetCanMoveRight(const bool CanRight) { AllowedRight - CanRight; };
+
 	const bool GetCanMoveDown() { return mCanMoveDown; }
+	void SetCanMoveDown(const bool MoveDown) { mCanMoveDown = MoveDown; }
 	Color GetColor() const { return mColor; }
 
 	void operator=(const TetrisShapes& TetrisShape);
@@ -77,6 +81,9 @@ private:
 
 	const uint32_t BOX_WIDTH = 10;
 	const uint32_t BOX_HEIGHT = 10;
+
+	bool AllowedLeft = true;
+	bool AllowedRight = true;
 
 	Vec2D mStartPos;
 	Vec2D mTopLeftPoint;

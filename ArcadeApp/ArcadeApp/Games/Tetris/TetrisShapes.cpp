@@ -83,12 +83,12 @@ void TetrisShapes::Update(uint32_t dt)
 		}
 	}
 
-	if (mMoveLeftRequested && bCanMoveLeft)
+	if (mMoveLeftRequested && bCanMoveLeft && AllowedLeft)
 	{
 		MoveBy(Vec2D(-10, 0));
 		mMoveLeftRequested = false;
 	}
-	else if (mMoveRightRequested && bCanMoveRight)
+	else if (mMoveRightRequested && bCanMoveRight && AllowedRight)
 	{
 		MoveBy(Vec2D(10, 0));
 		mMoveRightRequested = false;

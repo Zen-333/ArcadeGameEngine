@@ -45,7 +45,6 @@ private:
 	bool mBoardOccupied[BOARD_ROWS][BOARD_COLS];
 	static constexpr int CELL_SIZE = 10;
 
-	Vec2D SHAPE_START_POS;
 	std::vector<TetrisShapes> mArrayTetrisShapes;
 	std::vector<AARectangle> mTetrisShapeMap[10][25];
 

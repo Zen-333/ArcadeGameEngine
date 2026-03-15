@@ -23,7 +23,7 @@ void Tetris::Init(GameController& controller)
 		{
 			if (mGameState == TT_IN_PLAY)
 			{
-				if (GameController::IsReleased(state))
+				if (GameController::IsPressed(state))
 				{
 					mCurrentTetrisShape.SetMovementDirection(TetrisDirection::T_LEFT);
 					mCurrentTetrisShape.RequestMoveLeft();
@@ -45,7 +45,7 @@ void Tetris::Init(GameController& controller)
 		{
 			if (mGameState == TT_IN_PLAY)
 			{
-				if (GameController::IsReleased(state))
+				if (GameController::IsPressed(state))
 				{
 					mCurrentTetrisShape.SetMovementDirection(TetrisDirection::T_RIGHT);
 					mCurrentTetrisShape.RequestMoveRight();
@@ -82,6 +82,33 @@ void Tetris::Init(GameController& controller)
 
 void Tetris::Update(uint32_t dt)
 {
+	bool Left = true;
+	bool Right = true;
+
+	for(auto& rect : mCurrentTetrisShape.GetTetrisShape())
+	{
+		int col, row;
+		if(WorldToBoard(rect.GetTopLeftPoint(), col, row))
+		{
+			if(mBoardOccupied[row + 1][col] && row + 1 < BOARD_ROWS)
+			{
+				mCurrentTetrisShape.SetCanMoveDown(false);
+			}
+			if(mBoardOccupied[row][col + 1] && col + 1 < BOARD_COLS)
+			{
+				Right = false;
+			}
+			if (mBoardOccupied[row][col - 1] && col - 1 >= 0)
+			{
+				Left = false;
+			}
+		}
+
+	}
+
+	mCurrentTetrisShape.SetCanMoveLeft(Left);
+	mCurrentTetrisShape.SetCanMoveRight(Right);
+
 	mCurrentTetrisShape.Update(dt);
 
 	if (!mCurrentTetrisShape.GetCanMoveDown())
@@ -177,5 +204,7 @@ TetrisShapeType Tetris::GetRandomShape()
 
 	int randomNumber = uniform_dist(el);
 
-	return static_cast<TetrisShapeType>(randomNumber);
+	//return static_cast<TetrisShapeType>(randomNumber);
+
+	return TetrisShapeType::TT_I;
 }
