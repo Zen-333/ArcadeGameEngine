@@ -47,7 +47,7 @@ public:
 	void RequestRotate() { mRotateRequested = true; }
 
 	void SetCanMoveLeft(const bool CanLeft) { AllowedLeft = CanLeft; };
-	void SetCanMoveRight(const bool CanRight) { AllowedRight - CanRight; };
+	void SetCanMoveRight(const bool CanRight) { AllowedRight = CanRight; };
 
 	const bool GetCanMoveDown() { return mCanMoveDown; }
 	void SetCanMoveDown(const bool MoveDown) { mCanMoveDown = MoveDown; }

@@ -90,15 +90,15 @@ void Tetris::Update(uint32_t dt)
 		int col, row;
 		if(WorldToBoard(rect.GetTopLeftPoint(), col, row))
 		{
-			if(mBoardOccupied[row + 1][col] && row + 1 < BOARD_ROWS)
+			if(row + 1 < BOARD_ROWS && mBoardOccupied[row + 1][col] )
 			{
 				mCurrentTetrisShape.SetCanMoveDown(false);
 			}
-			if(mBoardOccupied[row][col + 1] && col + 1 < BOARD_COLS)
+			if(col + 1 < BOARD_COLS && mBoardOccupied[row][col + 1])
 			{
 				Right = false;
 			}
-			if (mBoardOccupied[row][col - 1] && col - 1 >= 0)
+			if (col - 1 >= 0 && mBoardOccupied[row][col - 1])
 			{
 				Left = false;
 			}
