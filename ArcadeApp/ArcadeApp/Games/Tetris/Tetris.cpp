@@ -129,6 +129,8 @@ void Tetris::Update(uint32_t dt)
 
 		mCurrentTetrisShape = TetrisShapes({ GetRandomShape(), Vec2D(20,20) });
 
+		CheckAndRemoveLine();
+
 	}
 }
 
@@ -192,6 +194,49 @@ void Tetris::ResetGame()
 bool Tetris::IsGameOver() const
 {
 	return false;
+}
+
+void Tetris::CheckAndRemoveLine()
+{
+	bool CompletedLine = false;
+	bool ThereIsACompletedLine = false;
+	int RemoveCol = 100;
+
+	for(int i = 0; i < BOARD_COLS; i++)
+	{
+		for(int j = 0; j < BOARD_ROWS; j++)
+		{
+			if(mBoardOccupied[j][i] == true)
+			{
+				CompletedLine = true;
+				RemoveCol = i;
+				std::cout << mBoardOccupied[j][i] << std::endl;
+			}else
+			{
+				CompletedLine = false;
+				break;
+			}
+
+		}
+
+		if(CompletedLine)
+		{
+			ThereIsACompletedLine = true;
+		}
+	}
+
+	//std::cout << RemoveCol << std::endl;
+	//std::cout << mBoardOccupied << std::endl;
+
+	if(RemoveCol < 100 && ThereIsACompletedLine)
+	{
+		for (int i = 0; i < BOARD_ROWS; i++)
+		{
+			mBoardOccupied[i][RemoveCol] = false;
+			mBoard[i][RemoveCol].SetRGBA(0,0,0,0);
+			std::cout << "REMOVE COL" << std::endl;
+		}
+	}
 }
 
 TetrisShapeType Tetris::GetRandomShape()

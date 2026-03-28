@@ -29,6 +29,7 @@ private:
 
 	void ResetGame();
 	bool IsGameOver() const;
+	void CheckAndRemoveLine();
 	TetrisShapeType GetRandomShape();
 
 	TetrisShapes mCurrentTetrisShape;
