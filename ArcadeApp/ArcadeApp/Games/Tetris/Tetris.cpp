@@ -200,17 +200,16 @@ void Tetris::CheckAndRemoveLine()
 {
 	bool CompletedLine = false;
 	bool ThereIsACompletedLine = false;
-	int RemoveCol = 100;
+	int RemoveRow = 100;
 
-	for(int i = 0; i < BOARD_COLS; i++)
+	for(int i = 0; i < BOARD_ROWS; i++)
 	{
-		for(int j = 0; j < BOARD_ROWS; j++)
+		for(int j = 0; j < BOARD_COLS; j++)
 		{
-			if(mBoardOccupied[j][i] == true)
+			if(mBoardOccupied[i][j] == true)
 			{
 				CompletedLine = true;
-				RemoveCol = i;
-				std::cout << mBoardOccupied[j][i] << std::endl;
+				RemoveRow = i;
 			}else
 			{
 				CompletedLine = false;
@@ -225,18 +224,31 @@ void Tetris::CheckAndRemoveLine()
 		}
 	}
 
-	//std::cout << RemoveCol << std::endl;
-	//std::cout << mBoardOccupied << std::endl;
-
-	if(RemoveCol < 100 && ThereIsACompletedLine)
+	if(RemoveRow < 100 && ThereIsACompletedLine)
 	{
-		for (int i = 0; i < BOARD_ROWS; i++)
+		for (int i = 0; i < BOARD_COLS; i++)
 		{
-			mBoardOccupied[i][RemoveCol] = false;
-			mBoard[i][RemoveCol].SetRGBA(0,0,0,0);
-			std::cout << "REMOVE COL" << std::endl;
+			mBoardOccupied[RemoveRow][i] = false;
+			mBoard[RemoveRow][i].SetRGBA(0,0,0,0);
 		}
+
+		for (int i = RemoveRow; i > 0; i--)
+		{
+
+			for (int j = 0; j < BOARD_COLS; j++)
+			{
+
+				mBoardOccupied[i][j] = mBoardOccupied[i - 1][j];
+				mBoard[i][j] = mBoard[i - 1][j];
+
+			}
+
+		}
+		
+		CheckAndRemoveLine();
 	}
+
+	
 }
 
 TetrisShapeType Tetris::GetRandomShape()
