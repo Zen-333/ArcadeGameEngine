@@ -70,8 +70,9 @@ void TetrisShapes::Update(uint32_t dt)
 		if (IsGreaterThanOrEual(mBoundary.GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() - 5))
 		{
 			bCanMoveLeft = false;
+			
 		}
-		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX(), mBoundary.GetBottomRightPoint().GetX() - 5))
+		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX() + 5, mBoundary.GetBottomRightPoint().GetX()))
 		{
 			bCanMoveRight = false;
 		}
@@ -494,7 +495,7 @@ bool TetrisShapes::CanRotate() const
 		{
 			return false;
 		}
-		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX(), mBoundary.GetBottomRightPoint().GetX() + 10))
+		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX() + 10, mBoundary.GetBottomRightPoint().GetX()))
 		{
 			return false;
 		}

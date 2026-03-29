@@ -39,8 +39,11 @@ private:
 
 	Vec2D SHAPE_START_POS;
 
-	static constexpr int BOARD_COLS = 15;
+	static constexpr int BOARD_COLS = 14;
 	static constexpr int BOARD_ROWS = 28;
+
+	static constexpr int BOARD_OFFSET_X = 5;
+	static constexpr int BOARD_OFFSET_Y = 5;
 
 	Color mBoard[BOARD_ROWS][BOARD_COLS];
 	bool mBoardOccupied[BOARD_ROWS][BOARD_COLS];

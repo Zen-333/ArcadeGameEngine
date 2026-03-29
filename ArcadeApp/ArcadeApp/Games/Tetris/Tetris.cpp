@@ -154,7 +154,7 @@ void Tetris::Draw(Screen& screen)
 			if (mBoardOccupied[row][col])
 			{
 				AARectangle cell = {
-					origin + Vec2D(col * CELL_SIZE, row * CELL_SIZE),
+					origin + Vec2D(col * CELL_SIZE + BOARD_OFFSET_X, row * CELL_SIZE - BOARD_OFFSET_Y),
 					CELL_SIZE, CELL_SIZE
 				};
 				screen.Draw(cell, Color::White(), true, mBoard[row][col]);
@@ -174,8 +174,8 @@ bool Tetris::WorldToBoard(const Vec2D& pixelPos, int& outCol, int& outRow)
 
 	Vec2D origin = mLevelBoundary.GetAARectangle().GetTopLeftPoint();
 
-	outCol = static_cast<int>((pixelPos.GetX() - origin.GetX()) / CELL_SIZE);
-	outRow = static_cast<int>((pixelPos.GetY() - origin.GetY()) / CELL_SIZE);
+	outCol = static_cast<int>((pixelPos.GetX() - origin.GetX() - BOARD_OFFSET_X) / CELL_SIZE);
+	outRow = static_cast<int>((pixelPos.GetY() - origin.GetY() + BOARD_OFFSET_Y) / CELL_SIZE);
 
 	// Guard: reject out-of-bounds
 	return outCol >= 0 && outCol < BOARD_COLS &&
