@@ -4,6 +4,7 @@
 #include "LevelBoundary.h"
 #include <vector>
 #include "TetrisShapes.h"
+#include "ShapeWindow.h"
 
 enum TetrisGameStates
 {
@@ -33,6 +34,7 @@ private:
 	TetrisShapeType GetRandomShape();
 
 	TetrisShapes mCurrentTetrisShape;
+	ShapeWindow mShapeWindow;
 
 	TetrisGameStates mGameState;
 	LevelBoundary mLevelBoundary;

@@ -160,6 +160,7 @@
     <ClCompile Include="Games\Breakout\Excluder.cpp" />
     <ClCompile Include="Games\Breakout\LevelBoundary.cpp" />
     <ClCompile Include="Games\Breakout\Paddle.cpp" />
+    <ClCompile Include="Games\Tetris\ShapeWindow.cpp" />
     <ClCompile Include="Games\Tetris\Tetris.cpp" />
     <ClCompile Include="Games\Tetris\TetrisShapes.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Games\Breakout\LevelBoundary.h" />
     <ClInclude Include="Games\Breakout\Paddle.h" />
     <ClInclude Include="Games\Game.h" />
+    <ClInclude Include="Games\Tetris\ShapeWindow.h" />
     <ClInclude Include="Games\Tetris\Tetris.h" />
     <ClInclude Include="Games\Tetris\TetrisShapes.h" />
     <ClInclude Include="Graphics\Color.h" />

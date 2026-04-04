@@ -4,9 +4,9 @@
 #include <random>
 
 Tetris::Tetris() : SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)),
-mCurrentTetrisShape({ GetRandomShape(), Vec2D(20,20) })
+mCurrentTetrisShape({ GetRandomShape(), Vec2D(20,20) }), mShapeWindow({ 65, 65, Vec2D(155, 5)})
 {
-
+	
 }
 
 void Tetris::Init(GameController& controller)
@@ -139,11 +139,7 @@ void Tetris::Draw(Screen& screen)
 	screen.Draw(mLevelBoundary.GetAARectangle(), Color::White(), false);
 
 	mCurrentTetrisShape.Draw(screen);
-
-	//for (auto& shapes : mArrayTetrisShapes)
-	//{
-	//	shapes.Draw(screen);
-	//}
+	mShapeWindow.Draw(screen);
 
 	Vec2D origin = mLevelBoundary.GetAARectangle().GetTopLeftPoint();
 

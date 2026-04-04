@@ -4,7 +4,6 @@
 #include "AARectangle.h"
 #include "Color.h"
 
-
 class Screen;
 
 enum TetrisShapeType

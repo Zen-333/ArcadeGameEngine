@@ -132,6 +132,9 @@
     <ClCompile Include="Games\Tetris\TetrisShapes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Games\Tetris\ShapeWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App\App.h">
@@ -228,6 +231,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Games\Tetris\TetrisShapes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Tetris\ShapeWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
