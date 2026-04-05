@@ -4,9 +4,9 @@
 #include <random>
 
 Tetris::Tetris() : SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)),
-mCurrentTetrisShape({ GetRandomShape(), Vec2D(20,20) }), mShapeWindow({ 65, 65, Vec2D(155, 5)})
+mCurrentTetromino({ GetRandomShape(), Vec2D(20,20) }), mNextShapeType(GetRandomShape()), mNextShapeWindow(65, 65, Vec2D(155, 5), mNextShapeType)
 {
-	
+
 }
 
 void Tetris::Init(GameController& controller)
@@ -25,13 +25,13 @@ void Tetris::Init(GameController& controller)
 			{
 				if (GameController::IsPressed(state))
 				{
-					mCurrentTetrisShape.SetMovementDirection(TetrisDirection::T_LEFT);
-					mCurrentTetrisShape.RequestMoveLeft();
+					mCurrentTetromino.SetMovementDirection(TetrisDirection::T_LEFT);
+					mCurrentTetromino.RequestMoveLeft();
 				}
 				else
 				{
-					mCurrentTetrisShape.UnsetMovementDirection(TetrisDirection::T_LEFT);
-					mCurrentTetrisShape.RequestMoveLeft();
+					mCurrentTetromino.UnsetMovementDirection(TetrisDirection::T_LEFT);
+					mCurrentTetromino.RequestMoveLeft();
 				}
 			}
 
@@ -47,13 +47,13 @@ void Tetris::Init(GameController& controller)
 			{
 				if (GameController::IsPressed(state))
 				{
-					mCurrentTetrisShape.SetMovementDirection(TetrisDirection::T_RIGHT);
-					mCurrentTetrisShape.RequestMoveRight();
+					mCurrentTetromino.SetMovementDirection(TetrisDirection::T_RIGHT);
+					mCurrentTetromino.RequestMoveRight();
 				}
 				else
 				{
-					mCurrentTetrisShape.UnsetMovementDirection(TetrisDirection::T_RIGHT);
-					mCurrentTetrisShape.RequestMoveRight();
+					mCurrentTetromino.UnsetMovementDirection(TetrisDirection::T_RIGHT);
+					mCurrentTetromino.RequestMoveRight();
 				}
 
 			}
@@ -71,7 +71,7 @@ void Tetris::Init(GameController& controller)
 			{
 				if (GameController::IsPressed(state))
 				{
-					mCurrentTetrisShape.RequestRotate();
+					mCurrentTetromino.RequestRotate();
 				}
 			}
 
@@ -85,14 +85,14 @@ void Tetris::Update(uint32_t dt)
 	bool Left = true;
 	bool Right = true;
 
-	for(auto& rect : mCurrentTetrisShape.GetTetrisShape())
+	for(auto& rect : mCurrentTetromino.GetTetrisRects())
 	{
 		int col, row;
 		if(WorldToBoard(rect.GetTopLeftPoint(), col, row))
 		{
 			if(row + 1 < BOARD_ROWS && mBoardOccupied[row + 1][col] )
 			{
-				mCurrentTetrisShape.SetCanMoveDown(false);
+				mCurrentTetromino.SetCanMoveDown(false);
 			}
 			if(col + 1 < BOARD_COLS && mBoardOccupied[row][col + 1])
 			{
@@ -106,31 +106,30 @@ void Tetris::Update(uint32_t dt)
 
 	}
 
-	mCurrentTetrisShape.SetCanMoveLeft(Left);
-	mCurrentTetrisShape.SetCanMoveRight(Right);
+	mCurrentTetromino.SetCanMoveLeft(Left);
+	mCurrentTetromino.SetCanMoveRight(Right);
 
-	mCurrentTetrisShape.Update(dt);
+	mCurrentTetromino.Update(dt);
 
-	if (!mCurrentTetrisShape.GetCanMoveDown())
+	if (!mCurrentTetromino.GetCanMoveDown())
 	{
-		// TODO: Spawn next shape
 
-		for(auto& rect : mCurrentTetrisShape.GetTetrisShape())
+		for(auto& rect : mCurrentTetromino.GetTetrisRects())
 		{
 			int col, row;
 			if(WorldToBoard(rect.GetTopLeftPoint(), col, row))
 
 			mBoardOccupied[row][col] = true;
-			mBoard[row][col] = mCurrentTetrisShape.GetColor();
+			mBoard[row][col] = mCurrentTetromino.GetColor();
 		}
 
-		TetrisShapes OldShape = mCurrentTetrisShape;
-		mArrayTetrisShapes.push_back(OldShape);
+		Tetromino OldShape = mCurrentTetromino;
 
-		mCurrentTetrisShape = TetrisShapes({ GetRandomShape(), Vec2D(20,20) });
+		mCurrentTetromino = Tetromino({ mNextShapeType, Vec2D(20,20) });
+		mNextShapeType = GetRandomShape();
+		mNextShapeWindow.ChangeShape(mNextShapeType);
 
 		CheckAndRemoveLine();
-
 	}
 }
 
@@ -138,8 +137,8 @@ void Tetris::Draw(Screen& screen)
 {
 	screen.Draw(mLevelBoundary.GetAARectangle(), Color::White(), false);
 
-	mCurrentTetrisShape.Draw(screen);
-	mShapeWindow.Draw(screen);
+	mCurrentTetromino.Draw(screen);
+	mNextShapeWindow.Draw(screen);
 
 	Vec2D origin = mLevelBoundary.GetAARectangle().GetTopLeftPoint();
 
@@ -184,7 +183,7 @@ void Tetris::ResetGame()
 	AARectangle levelBoundary = { Vec2D::Zero, PLAYEBALE_AREA_WIDTH, PLAYEBALE_AREA_HEIGHT };
 
 	mLevelBoundary = { levelBoundary };
-	mCurrentTetrisShape.InitLevelBoundary(levelBoundary);
+	mCurrentTetromino.InitLevelBoundary(levelBoundary);
 }
 
 bool Tetris::IsGameOver() const
@@ -257,7 +256,7 @@ TetrisShapeType Tetris::GetRandomShape()
 
 	int randomNumber = uniform_dist(el);
 
-	//return static_cast<TetrisShapeType>(randomNumber);
+	return static_cast<TetrisShapeType>(randomNumber);
 
-	return TetrisShapeType::TT_I;
+	//return TetrisShapeType::TT_I;
 }

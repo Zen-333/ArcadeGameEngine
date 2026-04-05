@@ -18,7 +18,7 @@ const std::unordered_map<TetrisShapeType, void (TetrisShapes::*)()> TetrisShapes
 
 TetrisShapes::TetrisShapes(TetrisShapeType InType, Vec2D InStartPos) : mShapeType(InType), mStartPos(InStartPos)
 {
-	mTopLeftPoint = { mStartPos.GetX() - (BOX_WIDTH / 2), mStartPos.GetY() - (BOX_HEIGHT / 2) };
+	mTopLeftPoint = { mStartPos.GetX() - (BOX_LENGTH / 2), mStartPos.GetY() - (BOX_LENGTH / 2) };
 
 	auto it = ShapeMap.find(mShapeType);
 
@@ -30,11 +30,81 @@ TetrisShapes::TetrisShapes(TetrisShapeType InType, Vec2D InStartPos) : mShapeTyp
 
 	mDirection = 0;
 
+}
+
+void TetrisShapes::DefaultShapeSetup()
+{
+	mTetrisShapes.clear();
+	mShapeRotationState = 0;
+
+	for (int i = 0; i < 4; i++)
+	{
+		mTetrisRotations[i].clear();
+	}
+}
+
+void TetrisShapes::MoveBy(const Vec2D Amount)
+{
+	for (auto& shape : mTetrisShapes)
+	{
+		shape.MoveBy(Amount);
+	}
+
+}
+
+void TetrisShapes::Rotate()
+{
+	for (int i = 0; i < mTetrisShapes.size(); i++)
+	{
+		Vec2D Movement = mTetrisRotations[mShapeRotationState][i];
+		mTetrisShapes[i].MoveBy(mTetrisRotations[mShapeRotationState][i]);
+
+	}
+
+	if (mShapeRotationState == 3)
+	{
+		mShapeRotationState = 0;
+	}
+	else
+	{
+		mShapeRotationState++;
+	}
+}
+
+bool TetrisShapes::CanRotate(AARectangle Boundary) const
+{
+	std::vector<AARectangle> rotation = mTetrisShapes;
+
+	for (int i = 0; i < mTetrisShapes.size(); i++)
+	{
+		Vec2D Movement = mTetrisRotations[mShapeRotationState][i];
+		rotation[i].MoveBy(mTetrisRotations[mShapeRotationState][i]);
+
+	}
+
+	for (auto& Rect : rotation)
+	{
+		if (IsGreaterThanOrEual(Boundary.GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() + (-10)))
+		{
+			return false;
+		}
+		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX() + 10, Boundary.GetBottomRightPoint().GetX()))
+		{
+			return false;
+		}
+
+		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), Boundary.GetBottomRightPoint().GetY() + 10))
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void TetrisShapes::Reset()
 {
-	mTopLeftPoint = { mStartPos.GetX() - (BOX_WIDTH / 2), mStartPos.GetY() - (BOX_HEIGHT / 2) };
+	mTopLeftPoint = { mStartPos.GetX() - (BOX_LENGTH / 2), mStartPos.GetY() - (BOX_LENGTH / 2) };
 
 	auto it = ShapeMap.find(mShapeType);
 
@@ -47,107 +117,20 @@ void TetrisShapes::Reset()
 	mDirection = 0;
 }
 
-void TetrisShapes::Update(uint32_t dt)
-{
-
-	if (!mCanMoveDown) return;
-
-	bool bCanMoveLeft = true;
-	bool bCanMoveRight = true;
-
-	float dtSec = MillisecondsToSeconds(dt);
-	mFallTimer += dtSec;
-
-	if (mFallTimer >= FALL_INTERVAL)
-	{
-		MoveBy(Vec2D(0, BOX_HEIGHT));
-		mFallTimer = 0.0f;
-	}
-
-
-	for (auto& Rect : mTetrisShapes)
-	{
-		if (IsGreaterThanOrEual(mBoundary.GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() - 5))
-		{
-			bCanMoveLeft = false;
-			
-		}
-		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX() + 5, mBoundary.GetBottomRightPoint().GetX()))
-		{
-			bCanMoveRight = false;
-		}
-
-		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mBoundary.GetBottomRightPoint().GetY() - 5))
-		{
-			mCanMoveDown = false;
-			return;
-		}
-	}
-
-	if (mMoveLeftRequested && bCanMoveLeft && AllowedLeft)
-	{
-		MoveBy(Vec2D(-10, 0));
-		mMoveLeftRequested = false;
-	}
-	else if (mMoveRightRequested && bCanMoveRight && AllowedRight)
-	{
-		MoveBy(Vec2D(10, 0));
-		mMoveRightRequested = false;
-	}
-
-	if (mRotateRequested && mShapeType != TT_O)
-	{
-		if (CanRotate())
-		{
-			for (int i = 0; i < mTetrisShapes.size(); i++)
-			{
-				Vec2D Movement = mTetrisRotations[mShapeRotationState][i];
-				mTetrisShapes[i].MoveBy(mTetrisRotations[mShapeRotationState][i]);
-
-			}
-
-			if (mShapeRotationState == 3)
-			{
-				mShapeRotationState = 0;
-			}
-			else
-			{
-				mShapeRotationState++;
-			}
-		}
-
-		mRotateRequested = false;
-	}
-
-}
-
-void TetrisShapes::Draw(Screen& screen)
+void TetrisShapes::Draw(Screen& screen, Color OutlineColor)
 {
 	for (auto& rect : mTetrisShapes)
 	{
-		screen.Draw(rect, Color::Black(), true, mColor);
+		screen.Draw(rect, OutlineColor, true, GetColor());
 	}
-
-}
-
-void TetrisShapes::InitLevelBoundary(const AARectangle& Boundary)
-{
-	mBoundary = Boundary;
 }
 
 void TetrisShapes::operator=(const TetrisShapes& TetrisShape)
 {
-	mShapeType = TetrisShape.mShapeType;
-	mStartPos = TetrisShape.mStartPos;
-
-	mMoveLeftRequested = false;
-	mMoveRightRequested = false;
-	mRotateRequested = false;
-	mCanMoveDown = true;
-	mFallTimer = 0.0f;
+	mShapeType = TetrisShape.GetType();
+	mStartPos = TetrisShape.GetStartPos();
 
 	Reset();
-
 }
 
 void TetrisShapes::SShape()
@@ -163,14 +146,14 @@ void TetrisShapes::SShape()
 		if (i < 2)
 		{
 
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_HEIGHT * s, BOX_WIDTH), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * s, BOX_LENGTH), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 			s++;
 
 		}
 		else
 		{
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_HEIGHT * i, 0), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * i, 0), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 		}
 
@@ -213,13 +196,13 @@ void TetrisShapes::TShape()
 		if (i == 3)
 		{
 
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_HEIGHT , BOX_WIDTH), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH , BOX_LENGTH), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 
 		}
 		else
 		{
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_HEIGHT * i, 0), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * i, 0), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 		}
 
@@ -257,10 +240,10 @@ void TetrisShapes::OShape()
 	DefaultShapeSetup();
 	mColor = Color::Green();
 
-	AARectangle rect0 = { mTopLeftPoint, BOX_WIDTH, BOX_HEIGHT };
-	AARectangle rect1 = { mTopLeftPoint + Vec2D(BOX_HEIGHT, 0), BOX_WIDTH, BOX_HEIGHT };
-	AARectangle rect2 = { mTopLeftPoint + Vec2D(0, BOX_HEIGHT), BOX_WIDTH, BOX_HEIGHT };
-	AARectangle rect3 = { mTopLeftPoint + Vec2D(BOX_HEIGHT, BOX_HEIGHT), BOX_WIDTH, BOX_HEIGHT };
+	AARectangle rect0 = { mTopLeftPoint, BOX_LENGTH, BOX_LENGTH };
+	AARectangle rect1 = { mTopLeftPoint + Vec2D(BOX_LENGTH, 0), BOX_LENGTH, BOX_LENGTH };
+	AARectangle rect2 = { mTopLeftPoint + Vec2D(0, BOX_LENGTH), BOX_LENGTH, BOX_LENGTH };
+	AARectangle rect3 = { mTopLeftPoint + Vec2D(BOX_LENGTH, BOX_LENGTH), BOX_LENGTH, BOX_LENGTH };
 
 	mTetrisShapes.push_back(rect0);
 	mTetrisShapes.push_back(rect1);
@@ -278,7 +261,7 @@ void TetrisShapes::ZShape()
 	{
 		if (i < 2)
 		{
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_HEIGHT * i, 0), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * i, 0), BOX_LENGTH, BOX_LENGTH };
 
 			mTetrisShapes.push_back(rect);
 
@@ -286,7 +269,7 @@ void TetrisShapes::ZShape()
 		else
 		{
 
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_HEIGHT * z, BOX_WIDTH), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * z, BOX_LENGTH), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 			z++;
 		}
@@ -329,12 +312,12 @@ void TetrisShapes::JShape()
 	{
 		if (i == 3)
 		{
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_WIDTH * 2, BOX_WIDTH), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * 2, BOX_LENGTH), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 		}
 		else
 		{
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_WIDTH * i, 0), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * i, 0), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 		}
 
@@ -377,12 +360,12 @@ void TetrisShapes::LShape()
 
 		if (i == 3)
 		{
-			AARectangle rect = { mTopLeftPoint + Vec2D(0, BOX_WIDTH), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(0, BOX_LENGTH), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 		}
 		else
 		{
-			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_WIDTH * i, 0), BOX_WIDTH, BOX_HEIGHT };
+			AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * i, 0), BOX_LENGTH, BOX_LENGTH };
 			mTetrisShapes.push_back(rect);
 		}
 
@@ -422,7 +405,7 @@ void TetrisShapes::IShape()
 
 	for (int i = 0; i < 4; i++)
 	{
-		AARectangle rect = { mTopLeftPoint + Vec2D(BOX_WIDTH * i, 0), BOX_WIDTH, BOX_HEIGHT };
+		AARectangle rect = { mTopLeftPoint + Vec2D(BOX_LENGTH * i, 0), BOX_LENGTH, BOX_LENGTH };
 		mTetrisShapes.push_back(rect);
 	}
 
@@ -451,60 +434,4 @@ void TetrisShapes::IShape()
 	mTetrisRotations[3].push_back(Vec2D(0, 0));
 	mTetrisRotations[3].push_back(Vec2D(10, -10));
 	mTetrisRotations[3].push_back(Vec2D(20, -20));
-}
-
-void TetrisShapes::MoveBy(const Vec2D Amount)
-{
-	for (auto& shape : mTetrisShapes)
-	{
-		shape.MoveBy(Amount);
-	}
-
-}
-
-void TetrisShapes::MoveTo(const Vec2D Amount)
-{
-
-}
-
-void TetrisShapes::DefaultShapeSetup()
-{
-	mTetrisShapes.clear();
-	mShapeRotationState = 0;
-
-	for (int i = 0; i < 4; i++)
-	{
-		mTetrisRotations[i].clear();
-	}
-}
-
-bool TetrisShapes::CanRotate() const
-{
-	std::vector<AARectangle> rotation = mTetrisShapes;
-
-	for (int i = 0; i < mTetrisShapes.size(); i++)
-	{
-		Vec2D Movement = mTetrisRotations[mShapeRotationState][i];
-		rotation[i].MoveBy(mTetrisRotations[mShapeRotationState][i]);
-
-	}
-
-	for (auto& Rect : rotation)
-	{
-		if (IsGreaterThanOrEual(mBoundary.GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() + (-10)))
-		{
-			return false;
-		}
-		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX() + 10, mBoundary.GetBottomRightPoint().GetX()))
-		{
-			return false;
-		}
-
-		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mBoundary.GetBottomRightPoint().GetY() + 10))
-		{
-			return false;
-		}
-	}
-
-	return true;
 }

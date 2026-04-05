@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "LevelBoundary.h"
 #include <vector>
-#include "TetrisShapes.h"
+#include "Tetromino.h"
 #include "ShapeWindow.h"
 
 enum TetrisGameStates
@@ -26,6 +26,7 @@ public:
 
 	bool WorldToBoard(const Vec2D& pixelPos, int& outCol, int& outRow);
 
+
 private:
 
 	void ResetGame();
@@ -33,8 +34,9 @@ private:
 	void CheckAndRemoveLine();
 	TetrisShapeType GetRandomShape();
 
-	TetrisShapes mCurrentTetrisShape;
-	ShapeWindow mShapeWindow;
+	Tetromino mCurrentTetromino;
+	TetrisShapeType mNextShapeType;
+	ShapeWindow mNextShapeWindow;
 
 	TetrisGameStates mGameState;
 	LevelBoundary mLevelBoundary;
@@ -51,7 +53,6 @@ private:
 	bool mBoardOccupied[BOARD_ROWS][BOARD_COLS];
 	static constexpr int CELL_SIZE = 10;
 
-	std::vector<TetrisShapes> mArrayTetrisShapes;
 	std::vector<AARectangle> mTetrisShapeMap[10][25];
 
 	const uint32_t PLAYEBALE_AREA_WIDTH = 150;

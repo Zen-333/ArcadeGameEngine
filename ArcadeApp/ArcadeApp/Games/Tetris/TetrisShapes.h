@@ -32,26 +32,26 @@ public:
 	TetrisShapes(TetrisShapeType InType, Vec2D InStartPos);
 	inline std::vector<AARectangle> GetTetrisShape() { return mTetrisShapes; }
 
-	void Update(uint32_t dt);
+	TetrisShapeType GetType() const { return mShapeType; };
+	uint32_t GetDirection() const { return mDirection; };
+	uint32_t GetBoxLength() const { return BOX_LENGTH; };
+	Color GetColor() const { return mColor; };
+	std::vector<AARectangle> GetShapeRects() const { return mTetrisShapes; };
+	Vec2D GetStartPos() const { return mStartPos; };
 
-	void Draw(Screen& screen);
-	void InitLevelBoundary(const AARectangle& Boundary);
-
+	void SetDirection(uint32_t NewDirection) { mDirection = NewDirection; };
+	void SetType(TetrisShapeType NewType) { mShapeType = NewType; };
+	void SetStartPos(Vec2D NewStartPos) { mStartPos = NewStartPos; };
 	inline void SetMovementDirection(TetrisDirection dir) { mDirection |= dir; }; // research |
 	inline void UnsetMovementDirection(TetrisDirection dir) { mDirection &= ~dir; }; // Research
-	inline void StopMovement() { mDirection = 0; }
 
-	void RequestMoveLeft() { mMoveLeftRequested = true; }
-	void RequestMoveRight() { mMoveRightRequested = true; }
-	void RequestRotate() { mRotateRequested = true; }
+	void MoveBy(const Vec2D Amount);
+	void Rotate();
+	bool CanRotate(AARectangle Boundary) const;
 
-	void SetCanMoveLeft(const bool CanLeft) { AllowedLeft = CanLeft; };
-	void SetCanMoveRight(const bool CanRight) { AllowedRight = CanRight; };
+	void Reset();
 
-	const bool GetCanMoveDown() { return mCanMoveDown; }
-	void SetCanMoveDown(const bool MoveDown) { mCanMoveDown = MoveDown; }
-	Color GetColor() const { return mColor; }
-
+	void Draw(Screen& screen, Color OutlineColor);
 	void operator=(const TetrisShapes& TetrisShape);
 
 private:
@@ -64,46 +64,23 @@ private:
 	void LShape();
 	void IShape();
 
-	void MoveBy(const Vec2D Amount);
-	void MoveTo(const Vec2D Amount);
-
-	void Reset();
-
 	void DefaultShapeSetup();
-
-	bool CanRotate() const;
 
 	static const std::unordered_map<TetrisShapeType, void (TetrisShapes::*)()> ShapeMap;
 
 	std::vector<AARectangle> mTetrisShapes;
 	TetrisShapeType mShapeType;
 
-	const uint32_t BOX_WIDTH = 10;
-	const uint32_t BOX_HEIGHT = 10;
+	const uint32_t BOX_LENGTH = 10;
 
-	bool AllowedLeft = true;
-	bool AllowedRight = true;
+	AARectangle mMiddleSquare;
+	Color mColor;
 
 	Vec2D mStartPos;
 	Vec2D mTopLeftPoint;
-
-	AARectangle mBoundary;
-	AARectangle mMiddleSquare;
-	uint32_t mDirection;
-
-	Color mColor;
-
 	std::vector<Vec2D> mTetrisRotations[4];
 	int mShapeRotationState = 0;
 
-	const float VELOCITY = 5.0f;
-
-	bool mMoveLeftRequested = false;
-	bool mMoveRightRequested = false;
-	bool mRotateRequested = false;
-	bool mCanMoveDown = true;
-	float mFallTimer = 0.0f;
-
-	static constexpr float FALL_INTERVAL = 0.5f;
+	uint32_t mDirection;
 
 };
