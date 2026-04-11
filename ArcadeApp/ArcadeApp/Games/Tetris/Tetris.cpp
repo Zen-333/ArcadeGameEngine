@@ -127,9 +127,12 @@ void Tetris::Update(uint32_t dt)
 		{
 			int col, row;
 			if (WorldToBoard(rect.GetTopLeftPoint(), col, row))
-			if (row <= 3) mGameState = TT_IN_GAME_OVER;
-			mBoardOccupied[row][col] = true;
-			mBoard[row][col] = mCurrentTetromino.GetColor();
+			{
+				if (row <= 3) mGameState = TT_IN_GAME_OVER;
+				mBoardOccupied[row][col] = true;
+				mBoard[row][col] = mCurrentTetromino.GetColor();
+
+			}
 		}
 
 		if (IsGameOver()) return;
@@ -200,9 +203,9 @@ void Tetris::ResetGame()
 	{
 		for (int i = 0; i < BOARD_ROWS; i++)
 		{
-			for (int j = 0; i < BOARD_COLS; j++)
+			for (int j = 0; j < BOARD_COLS; j++)
 			{
-				mBoard[i][j] = {};
+				mBoard[i][j] = Color::Black();
 				mBoardOccupied[i][j] = false;
 			}
 		}

@@ -24,11 +24,9 @@ public:
 	virtual void Draw(Screen& screen) override;
 	virtual const std::string& GetName() const override;
 
-	bool WorldToBoard(const Vec2D& pixelPos, int& outCol, int& outRow);
-
-
 private:
 
+	bool WorldToBoard(const Vec2D& pixelPos, int& outCol, int& outRow);
 	void ResetGame();
 	bool IsGameOver() const;
 	void CheckAndRemoveLine();
