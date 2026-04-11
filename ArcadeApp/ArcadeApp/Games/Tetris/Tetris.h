@@ -49,8 +49,8 @@ private:
 	static constexpr int BOARD_OFFSET_X = 5;
 	static constexpr int BOARD_OFFSET_Y = 5;
 
-	Color mBoard[BOARD_ROWS][BOARD_COLS];
-	bool mBoardOccupied[BOARD_ROWS][BOARD_COLS];
+	Color mBoard[BOARD_ROWS][BOARD_COLS] = {};
+	bool mBoardOccupied[BOARD_ROWS][BOARD_COLS] = {};
 	static constexpr int CELL_SIZE = 10;
 
 	std::vector<AARectangle> mTetrisShapeMap[10][25];

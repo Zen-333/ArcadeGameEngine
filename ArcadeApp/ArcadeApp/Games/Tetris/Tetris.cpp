@@ -2,6 +2,7 @@
 #include "AARectangle.h"
 #include "App.h"
 #include <random>
+#include "Color.h"
 
 Tetris::Tetris() : SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)),
 mCurrentTetromino({ GetRandomShape(), Vec2D(20,20) }), mNextShapeType(GetRandomShape()), mNextShapeWindow(65, 65, Vec2D(155, 5), mNextShapeType)
@@ -62,7 +63,6 @@ void Tetris::Init(GameController& controller)
 
 	controller.AddInputActionForKey(rightKeyAction);
 
-
 	ButtonAction rotateAction;
 	rotateAction.Key = GameController::ActionKey();
 	rotateAction.action = [this](uint32_t dt, InputState state)
@@ -73,6 +73,13 @@ void Tetris::Init(GameController& controller)
 				{
 					mCurrentTetromino.RequestRotate();
 				}
+			}else if(IsGameOver())
+			{
+				std::cout << "Reset Game" << std::endl;
+				if (GameController::IsPressed(state))
+				{
+					ResetGame();
+				}
 			}
 
 		};
@@ -82,6 +89,8 @@ void Tetris::Init(GameController& controller)
 
 void Tetris::Update(uint32_t dt)
 {
+	if (IsGameOver()) return;
+
 	bool Left = true;
 	bool Right = true;
 
@@ -117,11 +126,13 @@ void Tetris::Update(uint32_t dt)
 		for(auto& rect : mCurrentTetromino.GetTetrisRects())
 		{
 			int col, row;
-			if(WorldToBoard(rect.GetTopLeftPoint(), col, row))
-
+			if (WorldToBoard(rect.GetTopLeftPoint(), col, row))
+			if (row <= 3) mGameState = TT_IN_GAME_OVER;
 			mBoardOccupied[row][col] = true;
 			mBoard[row][col] = mCurrentTetromino.GetColor();
 		}
+
+		if (IsGameOver()) return;
 
 		Tetromino OldShape = mCurrentTetromino;
 
@@ -184,11 +195,31 @@ void Tetris::ResetGame()
 
 	mLevelBoundary = { levelBoundary };
 	mCurrentTetromino.InitLevelBoundary(levelBoundary);
+
+	if(IsGameOver())
+	{
+		for (int i = 0; i < BOARD_ROWS; i++)
+		{
+			for (int j = 0; i < BOARD_COLS; j++)
+			{
+				mBoard[i][j] = {};
+				mBoardOccupied[i][j] = false;
+			}
+		}
+
+		Tetromino OldShape = mCurrentTetromino;
+
+		mCurrentTetromino = Tetromino({ mNextShapeType, Vec2D(20,20) });
+		mNextShapeType = GetRandomShape();
+		mNextShapeWindow.ChangeShape(mNextShapeType);
+
+		mGameState = TT_IN_PLAY;
+	}
 }
 
 bool Tetris::IsGameOver() const
 {
-	return false;
+	return mGameState == TT_IN_GAME_OVER;
 }
 
 void Tetris::CheckAndRemoveLine()
@@ -252,7 +283,7 @@ TetrisShapeType Tetris::GetRandomShape()
 
 	std::random_device r;
 	std::default_random_engine el(r());
-	std::uniform_int_distribution<int> uniform_dist(0, Length);
+	std::uniform_int_distribution<int> uniform_dist(0, Length - 1);
 
 	int randomNumber = uniform_dist(el);
 
