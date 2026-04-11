@@ -2,7 +2,7 @@
 #include "AARectangle.h"
 #include "App.h"
 #include <random>
-#include "Color.h"
+#include "Utils.h"
 
 Tetris::Tetris() : SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)),
 mCurrentTetromino({ GetRandomShape(), Vec2D(20,20) }), mNextShapeType(GetRandomShape()), mNextShapeWindow(65, 65, Vec2D(155, 5), mNextShapeType)
@@ -71,7 +71,10 @@ void Tetris::Init(GameController& controller)
 			{
 				if (GameController::IsPressed(state))
 				{
-					mCurrentTetromino.RequestRotate();
+					if(CanRotate())
+					{
+						mCurrentTetromino.RequestRotate();
+					}
 				}
 			}else if(IsGameOver())
 			{
@@ -293,4 +296,39 @@ TetrisShapeType Tetris::GetRandomShape()
 	return static_cast<TetrisShapeType>(randomNumber);
 
 	//return TetrisShapeType::TT_I;
+}
+
+bool Tetris::CanRotate()
+{
+	std::vector<AARectangle> rotation = mCurrentTetromino.GetTetrisRects();
+	std::vector<AARectangle> CurrentShapeRects = mCurrentTetromino.GetTetrisRects();
+
+	for (int i = 0; i < CurrentShapeRects.size(); i++)
+	{
+		Vec2D Movement = mCurrentTetromino.GetTetrisShape().GetTetrisRotations(mCurrentTetromino.GetTetrisShape().GetShapeRotationState(), i);
+		rotation[i].MoveBy(mCurrentTetromino.GetTetrisShape().GetTetrisRotations(mCurrentTetromino.GetTetrisShape().GetShapeRotationState(), i));
+	}
+
+	for (auto& Rect : rotation)
+	{
+		int col, row;
+		if (!WorldToBoard(Rect.GetTopLeftPoint(), col, row)) return false;
+		if (mBoardOccupied[row][col]) return false;
+
+		if (IsGreaterThanOrEual(mLevelBoundary.GetAARectangle().GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() + (-10)))
+		{
+			return false;
+		}
+		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX() + 10, mLevelBoundary.GetAARectangle().GetBottomRightPoint().GetX()))
+		{
+			return false;
+		}
+
+		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), mLevelBoundary.GetAARectangle().GetBottomRightPoint().GetY() + 10))
+		{
+			return false;
+		}
+	}
+
+	return true;
 }

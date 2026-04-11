@@ -71,37 +71,6 @@ void TetrisShapes::Rotate()
 	}
 }
 
-bool TetrisShapes::CanRotate(AARectangle Boundary) const
-{
-	std::vector<AARectangle> rotation = mTetrisShapes;
-
-	for (int i = 0; i < mTetrisShapes.size(); i++)
-	{
-		Vec2D Movement = mTetrisRotations[mShapeRotationState][i];
-		rotation[i].MoveBy(mTetrisRotations[mShapeRotationState][i]);
-
-	}
-
-	for (auto& Rect : rotation)
-	{
-		if (IsGreaterThanOrEual(Boundary.GetTopLeftPoint().GetX(), Rect.GetTopLeftPoint().GetX() + (-10)))
-		{
-			return false;
-		}
-		else if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetX() + 10, Boundary.GetBottomRightPoint().GetX()))
-		{
-			return false;
-		}
-
-		if (IsGreaterThanOrEual(Rect.GetBottomRightPoint().GetY(), Boundary.GetBottomRightPoint().GetY() + 10))
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
-
 void TetrisShapes::Reset()
 {
 	mTopLeftPoint = { mStartPos.GetX() - (BOX_LENGTH / 2), mStartPos.GetY() - (BOX_LENGTH / 2) };

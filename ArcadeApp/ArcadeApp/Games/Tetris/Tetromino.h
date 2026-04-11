@@ -14,6 +14,7 @@ public:
 
 	Tetromino(TetrisShapeType InType, Vec2D InStartPos, bool Movable = true);
 	inline std::vector<AARectangle> GetTetrisRects() { return mTetrisShape.GetShapeRects(); }
+	TetrisShapes GetTetrisShape() const { return mTetrisShape; }
 
 	void Update(uint32_t dt);
 

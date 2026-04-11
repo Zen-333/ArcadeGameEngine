@@ -59,11 +59,8 @@ void Tetromino::Update(uint32_t dt)
 
 	if (mRotateRequested && mTetrisShape.GetType() != TT_O)
 	{
-		if (mTetrisShape.CanRotate(mBoundary))
-		{
-			mTetrisShape.Rotate();
-		}
 
+		mTetrisShape.Rotate();
 		mRotateRequested = false;
 	}
 

@@ -29,6 +29,7 @@ private:
 	bool WorldToBoard(const Vec2D& pixelPos, int& outCol, int& outRow);
 	void ResetGame();
 	bool IsGameOver() const;
+	bool CanRotate();
 	void CheckAndRemoveLine();
 	TetrisShapeType GetRandomShape();
 

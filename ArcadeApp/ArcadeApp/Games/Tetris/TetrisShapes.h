@@ -38,6 +38,8 @@ public:
 	Color GetColor() const { return mColor; };
 	std::vector<AARectangle> GetShapeRects() const { return mTetrisShapes; };
 	Vec2D GetStartPos() const { return mStartPos; };
+	int GetShapeRotationState() const { return mShapeRotationState; }
+	Vec2D GetTetrisRotations(int x, int y) { return mTetrisRotations[x][y]; }
 
 	void SetDirection(uint32_t NewDirection) { mDirection = NewDirection; };
 	void SetType(TetrisShapeType NewType) { mShapeType = NewType; };
@@ -47,7 +49,6 @@ public:
 
 	void MoveBy(const Vec2D Amount);
 	void Rotate();
-	bool CanRotate(AARectangle Boundary) const;
 
 	void Reset();
 
