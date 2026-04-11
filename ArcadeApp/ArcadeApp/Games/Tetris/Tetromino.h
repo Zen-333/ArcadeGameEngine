@@ -62,4 +62,10 @@ private:
 
 	static constexpr float FALL_INTERVAL = 0.5f;
 
+	float mDASTimer = 0.0f;
+	bool mDASActive = false;
+	bool mDelayMoveOver = false;
+	static constexpr float DAS_DELAY = 100.15f;
+	static constexpr float DAS_REPEAT = 0.05f;
+
 };

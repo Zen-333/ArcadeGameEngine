@@ -26,6 +26,19 @@ void Tetromino::Update(uint32_t dt)
 		mFallTimer = 0.0f;
 	}
 
+	if(mDASActive)
+	{
+		mDASTimer += dt;
+		if(mDASTimer >= DAS_DELAY)
+		{
+			mDelayMoveOver = true;
+			mDASActive = false;
+			mDASTimer = 0.0f;
+			return;
+		}
+		mDelayMoveOver = false;
+	}
+
 
 	for (auto& Rect : GetTetrisRects())
 	{
@@ -48,12 +61,14 @@ void Tetromino::Update(uint32_t dt)
 
 	if (mMoveLeftRequested && bCanMoveLeft && AllowedLeft)
 	{
-		mTetrisShape.MoveBy(Vec2D(-10, 0));
+		mDASActive = true;
+		if(mDelayMoveOver) 	mTetrisShape.MoveBy(Vec2D(-10, 0));
 		mMoveLeftRequested = false;
 	}
 	else if (mMoveRightRequested && bCanMoveRight && AllowedRight)
 	{
-		mTetrisShape.MoveBy(Vec2D(10, 0));
+		mDASActive = true;
+		if (mDelayMoveOver) mTetrisShape.MoveBy(Vec2D(10, 0));
 		mMoveRightRequested = false;
 	}
 
