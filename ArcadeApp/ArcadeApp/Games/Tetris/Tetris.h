@@ -33,9 +33,13 @@ private:
 	void CheckAndRemoveLine();
 	TetrisShapeType GetRandomShape();
 
+	void ResetGhostPos();
+	void MoveGhostDown();
+
 	Tetromino mCurrentTetromino;
 	TetrisShapeType mNextShapeType;
 	ShapeWindow mNextShapeWindow;
+	TetrisShapes mGhostTetromino;
 
 	TetrisGameStates mGameState;
 	LevelBoundary mLevelBoundary;

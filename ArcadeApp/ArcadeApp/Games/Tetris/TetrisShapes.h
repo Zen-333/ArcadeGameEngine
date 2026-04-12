@@ -52,7 +52,7 @@ public:
 
 	void Reset();
 
-	void Draw(Screen& screen, Color OutlineColor);
+	void Draw(Screen& screen, Color OutlineColor, bool NewFillColor = false ,Color FillColor = Color::Black());
 	void operator=(const TetrisShapes& TetrisShape);
 
 private:

@@ -86,11 +86,17 @@ void TetrisShapes::Reset()
 	mDirection = 0;
 }
 
-void TetrisShapes::Draw(Screen& screen, Color OutlineColor)
+void TetrisShapes::Draw(Screen& screen, Color OutlineColor, bool NewFillColor, Color FillColor)
 {
 	for (auto& rect : mTetrisShapes)
 	{
-		screen.Draw(rect, OutlineColor, true, GetColor());
+		if(NewFillColor)
+		{
+			screen.Draw(rect, OutlineColor, true, FillColor);
+		}else 
+		{
+			screen.Draw(rect, OutlineColor, true, GetColor());
+		}
 	}
 }
 

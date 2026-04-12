@@ -5,9 +5,9 @@
 #include "Utils.h"
 
 Tetris::Tetris() : SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)),
-mCurrentTetromino({ GetRandomShape(), Vec2D(20,20) }), mNextShapeType(GetRandomShape()), mNextShapeWindow(65, 65, Vec2D(155, 5), mNextShapeType)
+mCurrentTetromino({ GetRandomShape(), Vec2D(20,20) }), mNextShapeType(GetRandomShape()), mNextShapeWindow(65, 65, Vec2D(155, 5), mNextShapeType), mGhostTetromino(mCurrentTetromino.GetTetrisShape())
 {
-
+	
 }
 
 void Tetris::Init(GameController& controller)
@@ -88,6 +88,8 @@ void Tetris::Init(GameController& controller)
 		};
 
 	controller.AddInputActionForKey(rotateAction);
+
+	MoveGhostDown();
 }
 
 void Tetris::Update(uint32_t dt)
@@ -121,7 +123,15 @@ void Tetris::Update(uint32_t dt)
 	mCurrentTetromino.SetCanMoveLeft(Left);
 	mCurrentTetromino.SetCanMoveRight(Right);
 
+	if((Left && mCurrentTetromino.GetTetrisShape().GetDirection() == T_LEFT) || (Right && mCurrentTetromino.GetTetrisShape().GetDirection() == T_RIGHT))
+	{
+		ResetGhostPos();
+		MoveGhostDown();
+	}
+
 	mCurrentTetromino.Update(dt);
+
+	
 
 	if (!mCurrentTetromino.GetCanMoveDown())
 	{
@@ -143,6 +153,9 @@ void Tetris::Update(uint32_t dt)
 		Tetromino OldShape = mCurrentTetromino;
 
 		mCurrentTetromino = Tetromino({ mNextShapeType, Vec2D(20,20) });
+		mGhostTetromino.SetStartPos(Vec2D(20, 20));
+		mGhostTetromino.SetType(mNextShapeType);
+		mGhostTetromino.Reset();
 		mNextShapeType = GetRandomShape();
 		mNextShapeWindow.ChangeShape(mNextShapeType);
 
@@ -156,6 +169,7 @@ void Tetris::Draw(Screen& screen)
 
 	mCurrentTetromino.Draw(screen);
 	mNextShapeWindow.Draw(screen);
+	mGhostTetromino.Draw(screen, Color::White(), true, Color::Black());
 
 	Vec2D origin = mLevelBoundary.GetAARectangle().GetTopLeftPoint();
 
@@ -297,6 +311,40 @@ TetrisShapeType Tetris::GetRandomShape()
 
 	//return TetrisShapeType::TT_I;
 }
+
+void Tetris::ResetGhostPos()
+{
+
+	Vec2D Difference =  mCurrentTetromino.GetTetrisRects()[0].GetTopLeftPoint() - mGhostTetromino.GetShapeRects()[0].GetTopLeftPoint();
+
+	mGhostTetromino.MoveBy(Vec2D(Difference.GetX(), 0));
+
+}
+
+void Tetris::MoveGhostDown()
+{
+	bool CanMoveDown = true;
+	while(CanMoveDown)
+	{
+		for (auto& rect : mGhostTetromino.GetShapeRects())
+		{
+			int col, row;
+			if (WorldToBoard(rect.GetTopLeftPoint(), col, row))
+			{
+				if (row + 1 < BOARD_ROWS && (mBoardOccupied[row + 1][col] == true || IsGreaterThanOrEual(rect.GetBottomRightPoint().GetY(), mLevelBoundary.GetAARectangle().GetBottomRightPoint().GetY() - 5)))
+				{
+					CanMoveDown = false;
+				}
+			}
+		}
+
+		if(CanMoveDown)
+		{
+			mGhostTetromino.MoveBy(Vec2D(0, mGhostTetromino.GetBoxLength()));
+		}
+	}
+}
+
 
 bool Tetris::CanRotate()
 {
