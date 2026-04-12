@@ -35,6 +35,7 @@ private:
 
 	void ResetGhostPos();
 	void MoveGhostDown();
+	void RotateGhost();
 
 	Tetromino mCurrentTetromino;
 	TetrisShapeType mNextShapeType;
