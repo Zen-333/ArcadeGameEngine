@@ -18,6 +18,19 @@ void Tetris::Init(GameController& controller)
 
 	ResetGame();
 
+	ButtonAction SnapKeyAction;
+	SnapKeyAction.Key = GameController::LockKey();
+	SnapKeyAction.action = [this](uint32_t dt, InputState state) {
+		if (mGameState == TT_IN_PLAY)
+		{
+			if (GameController::IsPressed(state))
+			{
+				LockGhostPiece();
+			}
+		}
+	};
+	controller.AddInputActionForKey(SnapKeyAction);
+
 	ButtonAction leftKeyAction;
 	leftKeyAction.Key = GameController::LeftKey();
 	leftKeyAction.action = [this](uint32_t dt, InputState state)
@@ -360,6 +373,35 @@ void Tetris::MoveGhostDown()
 void Tetris::RotateGhost()
 {
 	mGhostTetromino.Rotate();
+}
+
+void Tetris::LockGhostPiece()
+{
+	for (auto& rect : mGhostTetromino.GetShapeRects())
+	{
+		int col, row;
+		if (WorldToBoard(rect.GetTopLeftPoint(), col, row))
+		{
+			if (row <= 3) mGameState = TT_IN_GAME_OVER;
+			mBoardOccupied[row][col] = true;
+			mBoard[row][col] = mCurrentTetromino.GetColor();
+
+		}
+	}
+
+	Tetromino OldShape = mCurrentTetromino;
+
+	mCurrentTetromino = Tetromino({ mNextShapeType, Vec2D(20,20) });
+	mGhostTetromino.SetStartPos(Vec2D(20, 20));
+	mGhostTetromino.SetType(mNextShapeType);
+	mGhostTetromino.Reset();
+	MoveGhostDown();
+	mNextShapeType = GetRandomShape();
+	mNextShapeWindow.ChangeShape(mNextShapeType);
+
+	CheckAndRemoveLine();
+
+
 }
 
 

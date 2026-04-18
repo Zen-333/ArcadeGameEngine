@@ -68,6 +68,11 @@ InputKey GameController::DownKey()
 	return static_cast<InputKey>(SDLK_DOWN);
 }
 
+InputKey GameController::LockKey()
+{
+	return static_cast<InputKey>(SDLK_e);
+}
+
 MouseInputAction GameController::GetMouseButtonActionForMouseButton(MouseButton button)
 {
 	for(const auto& buttonAction: mMouseButtonActions)
