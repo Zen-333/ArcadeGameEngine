@@ -5,7 +5,7 @@
 #include "Utils.h"
 
 Tetris::Tetris() : SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)),
-mCurrentTetromino({ GetRandomShape(), Vec2D(20,20) }), mNextShapeType(GetRandomShape()), mNextShapeWindow(65, 65, Vec2D(155, 5), mNextShapeType), mGhostTetromino(mCurrentTetromino.GetTetrisShape())
+mCurrentTetromino({ GetRandomShape(), Vec2D(20,20) }), mNextShapeType(GetRandomShape()), mNextShapeWindow(65, 65, Vec2D(155, 5), mNextShapeType), mGhostTetromino(mCurrentTetromino.GetTetrisShape()), mScoreTable(mFileName)
 {
 	
 }
@@ -166,7 +166,7 @@ void Tetris::Update(uint32_t dt)
 		}
 
 		CheckAndRemoveLine();
-		CompletedLines = 0;
+		mCompletedLines = 0;
 
 		if (IsGameOver()) return;
 
@@ -236,7 +236,7 @@ void Tetris::ResetGame()
 	mLevelBoundary = { levelBoundary };
 	mCurrentTetromino.InitLevelBoundary(levelBoundary);
 	mPoints = 0;
-	CompletedLines = 0;
+	mCompletedLines = 0;
 
 	if(IsGameOver())
 	{
@@ -313,9 +313,9 @@ void Tetris::CheckAndRemoveLine()
 
 		}
 		
-		CompletedLines++;
+		mCompletedLines++;
 
-		if (CompletedLine >= 4) 
+		if (mCompletedLines >= 4) 
 		{
 			mPoints += PointsPerLine * PointMultiplier;
 		}
@@ -324,7 +324,7 @@ void Tetris::CheckAndRemoveLine()
 		}
 
 		std::cout << "Points: " << mPoints << std::endl;
-		std::cout << "Completed lines: " << CompletedLine << std::endl;
+		std::cout << "Completed lines: " << mCompletedLines << std::endl;
 		CheckAndRemoveLine();
 	}
 
@@ -416,7 +416,7 @@ void Tetris::LockGhostPiece()
 	mNextShapeWindow.ChangeShape(mNextShapeType);
 
 	CheckAndRemoveLine();
-	CompletedLines = 0;
+	mCompletedLines = 0;
 
 
 }

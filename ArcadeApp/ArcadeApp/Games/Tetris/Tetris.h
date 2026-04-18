@@ -50,7 +50,7 @@ private:
 
 	const int PointsPerLine = 100;
 	int mPoints = 0;
-	int CompletedLines = 0;
+	int mCompletedLines = 0;
 	const int PointMultiplier = 4;
 
 	static constexpr int BOARD_COLS = 14;
@@ -68,4 +68,7 @@ private:
 	const uint32_t PLAYEBALE_AREA_WIDTH = 150;
 	const uint32_t PLAYEBALE_AREA_HEIGHT = 280;
 
+	Score mScore;
+	const std::string mFileName = "TetrisScoreTable.txt";
+	HighScoreFile mScoreTable;
 };
