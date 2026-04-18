@@ -318,6 +318,7 @@ void Tetris::CheckAndRemoveLine()
 		if (mCompletedLines >= 4) 
 		{
 			mPoints += PointsPerLine * PointMultiplier;
+			mCompletedLines = 0;
 		}
 		else {
 			mPoints += PointsPerLine;
