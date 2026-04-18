@@ -48,6 +48,11 @@ private:
 
 	Vec2D SHAPE_START_POS;
 
+	const int PointsPerLine = 100;
+	int mPoints = 0;
+	int CompletedLines = 0;
+	const int PointMultiplier = 4;
+
 	static constexpr int BOARD_COLS = 14;
 	static constexpr int BOARD_ROWS = 28;
 

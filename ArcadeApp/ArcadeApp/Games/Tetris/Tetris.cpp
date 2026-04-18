@@ -165,6 +165,9 @@ void Tetris::Update(uint32_t dt)
 			}
 		}
 
+		CheckAndRemoveLine();
+		CompletedLines = 0;
+
 		if (IsGameOver()) return;
 
 		Tetromino OldShape = mCurrentTetromino;
@@ -177,7 +180,6 @@ void Tetris::Update(uint32_t dt)
 		mNextShapeType = GetRandomShape();
 		mNextShapeWindow.ChangeShape(mNextShapeType);
 
-		CheckAndRemoveLine();
 	}
 }
 
@@ -233,6 +235,8 @@ void Tetris::ResetGame()
 
 	mLevelBoundary = { levelBoundary };
 	mCurrentTetromino.InitLevelBoundary(levelBoundary);
+	mPoints = 0;
+	CompletedLines = 0;
 
 	if(IsGameOver())
 	{
@@ -309,10 +313,22 @@ void Tetris::CheckAndRemoveLine()
 
 		}
 		
+		CompletedLines++;
+
+		if (CompletedLine >= 4) 
+		{
+			mPoints += PointsPerLine * PointMultiplier;
+		}
+		else {
+			mPoints += PointsPerLine;
+		}
+
+		std::cout << "Points: " << mPoints << std::endl;
+		std::cout << "Completed lines: " << CompletedLine << std::endl;
 		CheckAndRemoveLine();
 	}
 
-	
+
 }
 
 TetrisShapeType Tetris::GetRandomShape()
@@ -400,6 +416,7 @@ void Tetris::LockGhostPiece()
 	mNextShapeWindow.ChangeShape(mNextShapeType);
 
 	CheckAndRemoveLine();
+	CompletedLines = 0;
 
 
 }
@@ -407,6 +424,8 @@ void Tetris::LockGhostPiece()
 
 bool Tetris::CanRotate()
 {
+	if (mCurrentTetromino.GetType() == TT_O) return false;
+
 	std::vector<AARectangle> rotation = mCurrentTetromino.GetTetrisRects();
 	std::vector<AARectangle> CurrentShapeRects = mCurrentTetromino.GetTetrisRects();
 
