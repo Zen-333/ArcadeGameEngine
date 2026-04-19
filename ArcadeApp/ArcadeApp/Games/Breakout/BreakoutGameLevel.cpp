@@ -56,7 +56,7 @@ void BreakoutGameLevel::Update(uint32_t dt, Ball& ball, Score& score)
 	{
 		noptrBlockToBounceOffOf->Bounce(ball, edgeToBounceOffOf);
 		noptrBlockToBounceOffOf->ReduceHp();
-		score.IncreaseScore();
+		score.IncreaseScore(points);
 		std::cout << score.GetScore() << std::endl;
 	}
 

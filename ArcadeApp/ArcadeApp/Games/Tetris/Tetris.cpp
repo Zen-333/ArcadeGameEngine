@@ -235,7 +235,6 @@ void Tetris::ResetGame()
 
 	mLevelBoundary = { levelBoundary };
 	mCurrentTetromino.InitLevelBoundary(levelBoundary);
-	mPoints = 0;
 	mCompletedLines = 0;
 
 	if(IsGameOver())
@@ -256,7 +255,11 @@ void Tetris::ResetGame()
 		mNextShapeWindow.ChangeShape(mNextShapeType);
 
 		mGameState = TT_IN_PLAY;
+		//mScoreTable.NewScore(mPoints);
+		mScore.IncreaseScore(mPoints);
+		mScore.SaveScore(mScoreTable);
 	}
+	mPoints = 0;
 }
 
 bool Tetris::IsGameOver() const

@@ -5,6 +5,7 @@
 #include <vector>
 #include "Tetromino.h"
 #include "ShapeWindow.h"
+#include "HighScoreFile.h"
 
 enum TetrisGameStates
 {

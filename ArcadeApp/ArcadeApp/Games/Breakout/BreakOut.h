@@ -15,16 +15,6 @@ enum BreakoutGameStates
 	IN_GAME_OVER
 };
 
-struct Score
-{
-	int points = 10;
-	int mScore = 0;
-	inline int GetScore() const { return mScore; }
-	inline void IncreaseScore() { mScore += points; }
-	inline void ResetScore() { mScore = 0; }
-	inline void SaveScore(HighScoreFile file) { file.NewScore(mScore); ResetScore(); }
-};
-
 class BreakOut: public Game
 {
 
@@ -47,8 +37,6 @@ private:
 	bool IsBallPassedCutoffY() const;
 	void ReduceLifeByOne();
 	bool IsGameOver() const { return mLives < 0; }
-
-
 
 	BreakoutGameLevel& GetCurrentLevel() { return mLevels[mCurrentLevel]; }
 
