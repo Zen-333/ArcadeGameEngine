@@ -166,6 +166,7 @@ void Tetris::Update(uint32_t dt)
 		}
 
 		CheckAndRemoveLine();
+		ResetGhostPos();
 		mCompletedLines = 0;
 
 		if (IsGameOver()) return;
@@ -176,6 +177,7 @@ void Tetris::Update(uint32_t dt)
 		mGhostTetromino.SetStartPos(Vec2D(20, 20));
 		mGhostTetromino.SetType(mNextShapeType);
 		mGhostTetromino.Reset();
+		ResetGhostPos();
 		MoveGhostDown();
 		mNextShapeType = GetRandomShape();
 		mNextShapeWindow.ChangeShape(mNextShapeType);
@@ -251,11 +253,15 @@ void Tetris::ResetGame()
 		Tetromino OldShape = mCurrentTetromino;
 
 		mCurrentTetromino = Tetromino({ mNextShapeType, Vec2D(20,20) });
+		mGhostTetromino.SetStartPos(Vec2D(20, 20));
+		mGhostTetromino.SetType(mNextShapeType);
+		mGhostTetromino.Reset();
+		ResetGhostPos();
+		MoveGhostDown();
 		mNextShapeType = GetRandomShape();
 		mNextShapeWindow.ChangeShape(mNextShapeType);
 
 		mGameState = TT_IN_PLAY;
-		//mScoreTable.NewScore(mPoints);
 		mScore.IncreaseScore(mPoints);
 		mScore.SaveScore(mScoreTable);
 	}
@@ -415,11 +421,12 @@ void Tetris::LockGhostPiece()
 	mGhostTetromino.SetStartPos(Vec2D(20, 20));
 	mGhostTetromino.SetType(mNextShapeType);
 	mGhostTetromino.Reset();
-	MoveGhostDown();
 	mNextShapeType = GetRandomShape();
 	mNextShapeWindow.ChangeShape(mNextShapeType);
 
 	CheckAndRemoveLine();
+	ResetGhostPos();
+	MoveGhostDown();
 	mCompletedLines = 0;
 
 
