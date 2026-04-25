@@ -88,7 +88,7 @@ bool SpriteSheet::LoadSpritesSections(const std::string& path)
 	fileLoader.AddCommand(widthCommand);
 
 	Command heightCommand;
-	heightCommand.command = "heigth";
+	heightCommand.command = "height";
 
 	heightCommand.parseFunc = [&](ParseFuncParams params) {
 		mSections.back().sprite.height = FileCommandLoader::ReadInt(params);
