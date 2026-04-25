@@ -164,9 +164,11 @@
     <ClCompile Include="Games\Tetris\Tetris.cpp" />
     <ClCompile Include="Games\Tetris\TetrisShapes.cpp" />
     <ClCompile Include="Games\Tetris\Tetromino.cpp" />
+    <ClCompile Include="Graphics\BMPImage.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="Graphics\Screen.cpp" />
     <ClCompile Include="Graphics\ScreenBuffer.cpp" />
+    <ClCompile Include="Graphics\SpriteSheet.cpp" />
     <ClCompile Include="Input\GameController.cpp" />
     <ClCompile Include="Input\InputController.cpp" />
     <ClCompile Include="Note.cpp" />
@@ -207,9 +209,11 @@
     <ClInclude Include="Games\Tetris\Tetris.h" />
     <ClInclude Include="Games\Tetris\TetrisShapes.h" />
     <ClInclude Include="Games\Tetris\Tetromino.h" />
+    <ClInclude Include="Graphics\BMPImage.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Graphics\Screen.h" />
     <ClInclude Include="Graphics\ScreenBuffer.h" />
+    <ClInclude Include="Graphics\SpriteSheet.h" />
     <ClInclude Include="Input\GameController.h" />
     <ClInclude Include="Input\InputAction.h" />
     <ClInclude Include="Input\InputController.h" />

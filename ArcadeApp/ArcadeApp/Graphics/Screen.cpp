@@ -10,6 +10,8 @@
 #include "Utils.h"
 #include <cmath> 
 #include <algorithm> // to use std::sort 
+#include "BMPImage.h"
+#include "SpriteSheet.h"
 
 
 Screen::Screen() : mWidth(0), mHeight(0), moptrWindow(nullptr), mnoptrWindowSurface(nullptr)
@@ -262,6 +264,25 @@ void Screen::Draw(const Circle& circle, const Color& color, bool fill, const Col
 		Draw(line, color);
 	}
 
+}
+
+void Screen::Draw(const BMPImage& image, const Sprite& sprite, const Vec2D& pos)
+{
+	uint32_t width = sprite.width;
+	uint32_t height = sprite.height;
+
+	for(uint32_t r = 0; r < height; r++)
+	{
+		for (uint32_t c = 0; c < width; c++) 
+		{
+			Draw(c + pos.GetX(), r + pos.GetY(), image.GetPixels()[GetIndex(image.GetWidth(), r + sprite.yPos, c + sprite.xPos)]);
+		}
+	}
+}
+
+void Screen::Draw(const SpriteSheet& ss, const std::string& spriteName, const Vec2D& pos)
+{
+	Draw(ss.GetBMPImage(), ss.GetSprite(spriteName), pos);
 }
 
 void Screen::ClearScreen() 

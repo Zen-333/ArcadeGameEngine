@@ -5,6 +5,7 @@
 #include "Color.h"
 #include "GameController.h"
 #include <iostream>
+#include "App.h"
 
 ArcadeScene::ArcadeScene()
 {
@@ -12,6 +13,8 @@ ArcadeScene::ArcadeScene()
 
 void ArcadeScene::Init()
 {
+	mTempSS.Load("ArcadeFont");
+
 	ButtonAction action;
 	action.Key = GameController::ActionKey();
 	action.action = [](uint32_t dt, InputState state)
@@ -38,7 +41,7 @@ void ArcadeScene::Init()
 
 	mGameController.SetMouseMovedAction([](const MousePosition& mousePosition)
 	{
-			std::cout << "Mouse position x: " << mousePosition.xPos << " y: " << mousePosition.yPos << std::endl;
+			//std::cout << "Mouse position x: " << mousePosition.xPos << " y: " << mousePosition.yPos << std::endl;
 
 	});
 
@@ -50,9 +53,11 @@ void ArcadeScene::Update(uint32_t dt)
 
 void ArcadeScene::Draw(Screen& theScreen)
 {
-	Line2D line = { Vec2D(0,0), Vec2D(100, 100) };
+	//Line2D line = { Vec2D(0,0), Vec2D(100, 100) };
 
-	theScreen.Draw(line, Color::Cyan());
+	//theScreen.Draw(line, Color::Cyan());
+
+	theScreen.Draw(mTempSS, "z", Vec2D::Zero);
 }
 
 const std::string& ArcadeScene::GetSceneName() const
