@@ -1,9 +1,4 @@
-/*
- * FileCommandLoader.cpp
- *
- *  Created on: Jan. 14, 2019
- *      Author: serge
- */
+
 #include "FileCommandLoader.h"
 #include <fstream>
 #include <iostream>
@@ -29,25 +24,31 @@ bool FileCommandLoader::LoadFile(const std::string& filePath)
 		return false;
 	}
 
-	while (!inFile.eof())
+	while (!inFile.eof()) // end of file
 	{
-		std::getline(inFile, line);
+		std::getline(inFile, line); // reads the next line from the file into line
 
+		// Special static member constant value representing "no position" or "not found"
 		size_t commandPos = std::string::npos;
 
-		if ((commandPos = line.find(":")) != std::string::npos)
+		if ((commandPos = line.find(":")) != std::string::npos) // we assign commandPos and check it all in the if statement returns an index
 		{
+			// starting from commandPos, find the first space character
 			size_t dilimitPos = line.find_first_of(" ", commandPos);
 
+			// looking for where the line ends and the data begins
 			if (dilimitPos == std::string::npos)
 			{
+				//If there's no space (e.g. just :level with nothing after), dilimitPos is set to the length of the string (pointing just past the end)
 				dilimitPos = line.length();
 			}
 			else
 			{
+				// If there is a space, it backs up one: dilimitPos -= 1, so it now points to the last character of the keyword itself (the r in fillcolor)
 				dilimitPos -= 1;
 			}
 
+			// substr(startPos, length) gets the command string example ":fillcolor"
 			std::string commandStr = line.substr(commandPos + 1, dilimitPos);
 			dilimitPos += 1;
 
@@ -65,8 +66,8 @@ bool FileCommandLoader::LoadFile(const std::string& filePath)
 					}
 					else
 					{
-						std::string numLines = line.substr(dilimitPos + 1);
-						int totalLines = std::stoi(numLines);
+						std::string numLines = line.substr(dilimitPos + 1); //  grabs the number after the keyword (e.g. "14")
+						int totalLines = std::stoi(numLines); // converts std::string to int (stoi = string to int)
 						int lineNum = 0;
 
 						while (lineNum < totalLines)
@@ -137,6 +138,7 @@ std::string FileCommandLoader::ReadString(const ParseFuncParams& params)
 
 char FileCommandLoader::ReadChar(const ParseFuncParams& params)
 {
+	// [0] so it only takes the first character
 	return params.line.substr(params.dilimitPos + 1)[0];
 }
 

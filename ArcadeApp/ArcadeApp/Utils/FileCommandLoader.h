@@ -1,9 +1,3 @@
-/*
- * FileCommandLoader.h
- *
- *  Created on: Jan. 14, 2019
- *      Author: serge
- */
 
 #ifndef UTILS_FILECOMMANDLOADER_H_
 #define UTILS_FILECOMMANDLOADER_H_
@@ -12,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <stdint.h>
+
 class Color;
 class Vec2D;
 
@@ -23,9 +18,9 @@ enum CommandType
 
 struct ParseFuncParams
 {
-	std::string line;
-	size_t dilimitPos;
-	uint32_t lineNum;
+	std::string line; // The full current line of text from the file
+	size_t dilimitPos; // The position (index) where the keyword ends
+	uint32_t lineNum; // Which line number we're on (for multi-line commands)
 };
 
 using ParseFunc = std::function<void(const ParseFuncParams& params)>;
@@ -44,6 +39,7 @@ public:
 	void AddCommand(const Command& command);
 	bool LoadFile(const std::string& filePath);
 
+	// static meaning they dont need an instance of the class to be called
 	static Color ReadColor(const ParseFuncParams& params);
 	static Vec2D ReadSize(const ParseFuncParams& params);
 	static int ReadInt(const ParseFuncParams& params);
@@ -54,4 +50,4 @@ private:
 	std::vector<Command> mCommands;
 };
 
-#endif /* UTILS_FILECOMMANDLOADER_H_ */
+#endif 
