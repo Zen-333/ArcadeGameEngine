@@ -6,6 +6,7 @@
 #include "GameController.h"
 #include <iostream>
 #include "App.h"
+#include "AARectangle.h"
 
 ArcadeScene::ArcadeScene()
 {
@@ -13,7 +14,7 @@ ArcadeScene::ArcadeScene()
 
 void ArcadeScene::Init()
 {
-	mTempSS.Load("ArcadeFont");
+	//mTempSS.Load("ArcadeFont");
 
 	ButtonAction action;
 	action.Key = GameController::ActionKey();
@@ -57,12 +58,21 @@ void ArcadeScene::Draw(Screen& theScreen)
 
 	//theScreen.Draw(line, Color::Cyan());
 
-	theScreen.Draw(mTempSS, "z", Vec2D::Zero);
+	//theScreen.Draw(mTempSS, "z", Vec2D::Zero);
+
+	const BitmapFont& font = App::Singleton().GetFont();
+
+	AARectangle rect = { Vec2D::Zero, App::Singleton().Width(), App::Singleton().Height() };
+
+	Vec2D textDrawPosition;
+	textDrawPosition = font.GetDrawPosition(GetSceneName(), rect, BFXA_CENTER, BFYA_CENTER);
+
+	theScreen.Draw(font, GetSceneName(), textDrawPosition, Color::Red());
 }
 
 const std::string& ArcadeScene::GetSceneName() const
 {
-	static std::string sceneName = "Arcade Scene";
+	static std::string sceneName = "Arcade";
 	return sceneName;
 }
 

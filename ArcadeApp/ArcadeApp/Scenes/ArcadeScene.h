@@ -29,6 +29,6 @@ private:
 	std::unique_ptr<Scene> GetScene(eGame game);
 
 	// TEMP
-	SpriteSheet mTempSS;
+	//SpriteSheet mTempSS;
 
 };

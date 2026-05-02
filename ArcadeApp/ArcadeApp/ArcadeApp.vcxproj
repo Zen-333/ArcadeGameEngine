@@ -164,6 +164,7 @@
     <ClCompile Include="Games\Tetris\Tetris.cpp" />
     <ClCompile Include="Games\Tetris\TetrisShapes.cpp" />
     <ClCompile Include="Games\Tetris\Tetromino.cpp" />
+    <ClCompile Include="Graphics\BitmapFont.cpp" />
     <ClCompile Include="Graphics\BMPImage.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="Graphics\Screen.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="Games\Tetris\Tetris.h" />
     <ClInclude Include="Games\Tetris\TetrisShapes.h" />
     <ClInclude Include="Games\Tetris\Tetromino.h" />
+    <ClInclude Include="Graphics\BitmapFont.h" />
     <ClInclude Include="Graphics\BMPImage.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Graphics\Screen.h" />
