@@ -54,9 +54,6 @@ void ArcadeScene::Update(uint32_t dt)
 
 void ArcadeScene::Draw(Screen& theScreen)
 {
-	//Line2D line = { Vec2D(0,0), Vec2D(100, 100) };
-
-	//theScreen.Draw(line, Color::Cyan());
 
 	//theScreen.Draw(mTempSS, "z", Vec2D::Zero);
 
@@ -67,7 +64,7 @@ void ArcadeScene::Draw(Screen& theScreen)
 	Vec2D textDrawPosition;
 	textDrawPosition = font.GetDrawPosition(GetSceneName(), rect, BFXA_CENTER, BFYA_CENTER);
 
-	theScreen.Draw(font, GetSceneName(), textDrawPosition, Color::Red());
+	//theScreen.Draw(font, GetSceneName(), textDrawPosition, Color::Red());
 }
 
 const std::string& ArcadeScene::GetSceneName() const

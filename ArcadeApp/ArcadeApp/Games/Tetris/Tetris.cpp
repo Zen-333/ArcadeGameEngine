@@ -3,6 +3,8 @@
 #include "App.h"
 #include <random>
 #include "Utils.h"
+#include <string>
+#include "BitmapFont.h"
 
 Tetris::Tetris() : SHAPE_START_POS(Vec2D(App::Singleton().Width() / 2, 50)),
 mCurrentTetromino({ GetRandomShape(), Vec2D(20,20) }), mNextShapeType(GetRandomShape()), mNextShapeWindow(65, 65, Vec2D(155, 5), mNextShapeType), mGhostTetromino(mCurrentTetromino.GetTetrisShape()), mScoreTable(mFileName)
@@ -209,6 +211,17 @@ void Tetris::Draw(Screen& screen)
 			}
 		}
 	}
+
+	const BitmapFont& font = App::Singleton().GetFont();
+
+	AARectangle rect = { Vec2D::Zero, App::Singleton().Width() - 10, App::Singleton().Height() };
+
+	std::string str = "X";
+	str += std::to_string(mPoints);
+
+	Vec2D textDrawPosition;
+	textDrawPosition = font.GetDrawPosition(str, rect, BFXA_RIGHT, BFYA_CENTER);
+	screen.Draw(font, str, textDrawPosition, Color::White());
 }
 
 const std::string& Tetris::GetName() const

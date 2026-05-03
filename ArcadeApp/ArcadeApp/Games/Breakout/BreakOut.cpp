@@ -155,6 +155,17 @@ void BreakOut::Draw(Screen& screen)
 		screen.Draw(lifeCircle, Color::Red(), true, Color::Red());
 		lifeCircle.MoveBy(Vec2D(17, 0));
 	}
+
+	const BitmapFont& font = App::Singleton().GetFont();
+	AARectangle rect = { Vec2D::Zero, App::Singleton().Width() - 10, App::Singleton().Height() - 5 };
+
+
+	std::string str = "X";
+	str += std::to_string(mScore.GetScore());
+
+	Vec2D textDrawPosition;
+	textDrawPosition = font.GetDrawPosition(str, rect, BFXA_RIGHT, BFYA_BOTTOM);
+	screen.Draw(font, str, textDrawPosition, Color::White());
 }
 
 const std::string& BreakOut::GetName() const

@@ -27,17 +27,17 @@ bool App::Init(uint32_t width, uint32_t height, uint32_t mag)
 	PushScene(std::move(arcadeScene));
 
 	// Temprorary
-	//{
-		//std::unique_ptr<BreakOut> breakoutGame = std::make_unique<BreakOut>();
-		//std::unique_ptr<GameScene> breakoutScene = std::make_unique<GameScene>(std::move(breakoutGame));
+	{
+		std::unique_ptr<BreakOut> breakoutGame = std::make_unique<BreakOut>();
+		std::unique_ptr<GameScene> breakoutScene = std::make_unique<GameScene>(std::move(breakoutGame));
 
 		//std::unique_ptr<Tetris> tetrisGame = std::make_unique<Tetris>();
 		//std::unique_ptr<GameScene> tetrisScene = std::make_unique<GameScene>(std::move(tetrisGame));
 
 		//PushScene(std::move(tetrisScene));
-		//PushScene(std::move(breakoutScene));
+		PushScene(std::move(breakoutScene));
 
-	//}
+	}
 
 
 

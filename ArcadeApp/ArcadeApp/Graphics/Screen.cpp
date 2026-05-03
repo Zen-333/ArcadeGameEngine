@@ -367,7 +367,7 @@ void Screen::Draw(const BMPImage& image, const Sprite& sprite, const Vec2D& pos,
 		float u = invXAxisLengthSq * d.Dot(xAxis);
 		float v = invYAxisLengthSq * d.Dot(yAxis);
 
-		u = Clamp(u, 0.0f, 1.0f); // research how to make functions callable with no need calss
+		u = Clamp(u, 0.0f, 1.0f);
 		v = Clamp(v, 0.0f, 1.0f);
 
 		float tx = roundf(u * static_cast<float>(sprite.width));
