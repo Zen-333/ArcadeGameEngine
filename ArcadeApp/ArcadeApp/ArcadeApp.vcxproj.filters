@@ -150,7 +150,10 @@
     <ClCompile Include="App\Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="App\ButtonOptionsScene.cpp">
+    <ClCompile Include="Scenes\ButtonOptionsScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scenes\NotImplementedScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -269,11 +272,16 @@
     <ClInclude Include="App\Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="App\ButtonOptionsScene.h">
+    <ClInclude Include="Scenes\ButtonOptionsScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scenes\NotImplementedScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />

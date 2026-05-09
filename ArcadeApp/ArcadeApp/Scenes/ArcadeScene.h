@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Scene.h"
+#include "ButtonOptionsScene.h"
 #include <memory> // to use unique ptr
 #include "SpriteSheet.h"
 
@@ -15,7 +15,7 @@ enum eGame
 
 class Screen;
 
-class ArcadeScene: public Scene
+class ArcadeScene: public ButtonOptionsScene
 {
 public:
 	ArcadeScene();

@@ -153,7 +153,7 @@
   <ItemGroup>
     <ClCompile Include="App\App.cpp" />
     <ClCompile Include="App\Button.cpp" />
-    <ClCompile Include="App\ButtonOptionsScene.cpp" />
+    <ClCompile Include="Scenes\ButtonOptionsScene.cpp" />
     <ClCompile Include="ArcadeApp.cpp" />
     <ClCompile Include="Games\Breakout\Ball.cpp" />
     <ClCompile Include="Games\Breakout\Block.cpp" />
@@ -177,6 +177,7 @@
     <ClCompile Include="Note.cpp" />
     <ClCompile Include="Scenes\ArcadeScene.cpp" />
     <ClCompile Include="Scenes\GameScene.cpp" />
+    <ClCompile Include="Scenes\NotImplementedScene.cpp" />
     <ClCompile Include="Shapes\AARectangle.cpp" />
     <ClCompile Include="Shapes\Circle.cpp" />
     <ClCompile Include="Shapes\Line2D.cpp" />
@@ -200,7 +201,8 @@
   <ItemGroup>
     <ClInclude Include="App\App.h" />
     <ClInclude Include="App\Button.h" />
-    <ClInclude Include="App\ButtonOptionsScene.h" />
+    <ClInclude Include="Scenes\ButtonOptionsScene.h" />
+    <ClInclude Include="Scenes\NotImplementedScene.h" />
     <ClInclude Include="Games\Breakout\Ball.h" />
     <ClInclude Include="Games\Breakout\Block.h" />
     <ClInclude Include="Games\Breakout\BoundaryEdge.h" />

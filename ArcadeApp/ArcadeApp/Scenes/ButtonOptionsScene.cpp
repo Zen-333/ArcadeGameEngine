@@ -8,7 +8,7 @@ ButtonOptionsScene::ButtonOptionsScene(const std::vector<std::string>& optionNam
 {
 	const BitmapFont& font = App::Singleton().GetFont();
 
-	for (size_t i = 0; optionNames.size(); i++) {
+	for (size_t i = 0; i < optionNames.size(); i++) {
 		mButtons.push_back(Button(font, textColor));
 		mButtons.back().SetButtonText(optionNames[i]);
 	}
@@ -47,6 +47,41 @@ void ButtonOptionsScene::Init()
 		};
 	mGameController.AddInputActionForKey(acceptAction);
 
+
+	uint32_t height = App::Singleton().Height();
+	uint32_t width = App::Singleton().Width();
+
+	const BitmapFont& font = App::Singleton().GetFont();
+
+	Size fontSize = font.GetSizeOf(mButtons[0].GetButtonText());
+
+	const int BUTTON_PAD = 10;
+
+	unsigned int buttonHeight = fontSize.height + BUTTON_PAD * 2;
+
+	uint32_t maxButtonWidth = fontSize.width;
+
+	for(const auto& button: mButtons)
+	{
+		Size s = font.GetSizeOf(button.GetButtonText());
+		if (s.width > maxButtonWidth) {
+			maxButtonWidth = s.width;
+		}
+	}
+
+	maxButtonWidth += BUTTON_PAD * 2;
+
+	const uint32_t Y_PAD = 1;
+
+	uint32_t yOffset = height / 2 - ((buttonHeight + Y_PAD) * static_cast<uint32_t>(mButtons.size()))/2;
+
+	for (auto& button : mButtons) {
+		button.Init(Vec2D(width / 2 - maxButtonWidth / 2, yOffset), maxButtonWidth, buttonHeight);
+
+		yOffset += buttonHeight + Y_PAD;
+	}
+
+	mButtons[mHighlightedOption].SetHighlighted(true);
 
 }
 

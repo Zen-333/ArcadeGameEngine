@@ -108,6 +108,17 @@ void Tetris::Init(GameController& controller)
 
 	controller.AddInputActionForKey(rotateAction);
 
+	ButtonAction backAction;
+	backAction.Key = GameController::CancelKey();
+	backAction.action = [](uint32_t dt, InputState state) {
+
+		if (GameController::IsPressed(state)) {
+			App::Singleton().PopScene();
+		}
+		};
+
+	controller.AddInputActionForKey(backAction);
+
 	MoveGhostDown();
 }
 

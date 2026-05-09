@@ -2,9 +2,6 @@
 #include "App.h"
 #include <SDL.h>
 #include "ArcadeScene.h"
-#include "GameScene.h"
-#include "BreakOut.h"
-#include "Tetris/Tetris.h"
 #include <cassert>
 
 App& App::Singleton()
@@ -25,21 +22,6 @@ bool App::Init(uint32_t width, uint32_t height, uint32_t mag)
 	std::unique_ptr<ArcadeScene> arcadeScene = std::make_unique<ArcadeScene>();
 
 	PushScene(std::move(arcadeScene));
-
-	// Temprorary
-	{
-		std::unique_ptr<BreakOut> breakoutGame = std::make_unique<BreakOut>();
-		std::unique_ptr<GameScene> breakoutScene = std::make_unique<GameScene>(std::move(breakoutGame));
-
-		//std::unique_ptr<Tetris> tetrisGame = std::make_unique<Tetris>();
-		//std::unique_ptr<GameScene> tetrisScene = std::make_unique<GameScene>(std::move(tetrisGame));
-
-		//PushScene(std::move(tetrisScene));
-		PushScene(std::move(breakoutScene));
-
-	}
-
-
 
 	return mnoptrWindow != nullptr;
 }
