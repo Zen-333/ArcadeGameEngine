@@ -20,6 +20,8 @@ private:
 	const float mForwardSpeed = 5;
 	const float mRotationSpeed = 5;
 
+	bool bSpriteLoaded = false;
+
 	SpriteSheet mSpriteSheet;
 	AnimatedSprite mSprite;
 
