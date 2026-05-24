@@ -2,7 +2,7 @@
 #include "Spaceship.h"
 #include "App.h"
 
-Spaceship::Spaceship()
+Spaceship::Spaceship(const Vec2D SpawnPoint): mSpawnPoint(SpawnPoint)
 {
 	
 }
@@ -11,23 +11,21 @@ void Spaceship::Init()
 {
 	mSpriteSheet.Load("AsteroidsSprites");
 	mSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
-	mSprite.SetAnimation("ship", false);
-	bSpriteLoaded = true;
+	mSprite.SetAnimation("ship", true);
+	mSprite.SetPosition(mSpawnPoint);
 }
 
 void Spaceship::Draw(Screen& theScreen)
 {
-	if(bSpriteLoaded)
-	{
-		mSprite.Draw(theScreen);
-	}
+
+	mSprite.Draw(theScreen);
+	
 }
 
 void Spaceship::Update(uint32_t dt)
 {
-	if(bSpriteLoaded)
-	{
-		mSprite.Update(dt);
-	}
+
+	mSprite.Update(dt);
+	
 }
 

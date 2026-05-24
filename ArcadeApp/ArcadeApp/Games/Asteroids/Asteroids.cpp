@@ -1,7 +1,9 @@
 #include "Asteroids.h"
+#include "App.h"
 
-Asteroids::Asteroids()
+Asteroids::Asteroids(): mSpaceShip(Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f))
 {
+
 }
 
 void Asteroids::Init(GameController& controller)

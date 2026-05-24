@@ -129,6 +129,7 @@ std::vector<Animation> Animation::LoadAnimations(const std::string& animationFil
 	frameOffsetCommand.commandType = COMMAND_MULTI_LINE;
 	frameOffsetCommand.parseFunc = [&](ParseFuncParams params)
 		{
+			params.dilimitPos = 0;
 			animations.back().AddFrameOffset(FileCommandLoader::ReadSize(params));
 		};
 

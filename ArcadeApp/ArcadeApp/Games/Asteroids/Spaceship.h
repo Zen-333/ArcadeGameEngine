@@ -9,7 +9,7 @@ class Spaceship
 
 public:
 
-	Spaceship();
+	Spaceship(const Vec2D SpawnPoint);
 
 	void Init();
 	void Draw(Screen& theScreen);
@@ -20,9 +20,9 @@ private:
 	const float mForwardSpeed = 5;
 	const float mRotationSpeed = 5;
 
-	bool bSpriteLoaded = false;
-
 	SpriteSheet mSpriteSheet;
 	AnimatedSprite mSprite;
+
+	Vec2D mSpawnPoint;
 
 };
