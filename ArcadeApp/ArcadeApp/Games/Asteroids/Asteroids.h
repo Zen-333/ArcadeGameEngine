@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Game.h"
+#include "Spaceship.h"
+
 
 class Asteroids : public Game
 {
@@ -13,5 +15,9 @@ public:
 	virtual void Update(uint32_t dt) override;
 	virtual void Draw(Screen& screen) override;
 	virtual const std::string& GetName() const override;
+
+private:
+
+	Spaceship mSpaceShip;
 
 };
