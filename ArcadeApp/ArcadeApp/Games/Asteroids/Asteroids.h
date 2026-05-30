@@ -3,6 +3,11 @@
 #include "Game.h"
 #include "Spaceship.h"
 
+enum AstroidGameState
+{
+	A_PLAY,
+	A_GAME_OVER
+};
 
 class Asteroids : public Game
 {
@@ -18,6 +23,9 @@ public:
 
 private:
 
+	void ResetGame();
+
 	Spaceship mSpaceShip;
+	AstroidGameState mGameState;
 
 };

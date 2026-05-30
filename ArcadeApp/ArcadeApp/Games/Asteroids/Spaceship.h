@@ -14,6 +14,10 @@ public:
 	void Init();
 	void Draw(Screen& theScreen);
 	void Update(uint32_t dt);
+	void MoveForward();
+	void Shoot();
+	void RotateLeft();
+	void RotateRight();
 
 private:
 

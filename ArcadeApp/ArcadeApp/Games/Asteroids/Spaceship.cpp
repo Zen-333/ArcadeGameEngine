@@ -29,3 +29,21 @@ void Spaceship::Update(uint32_t dt)
 	
 }
 
+void Spaceship::MoveForward()
+{
+	mSprite.MoveBy(Vec2D(0, -mForwardSpeed));
+}
+
+
+void Spaceship::RotateLeft()
+{
+	
+}
+
+void Spaceship::RotateRight()
+{
+}
+
+void Spaceship::Shoot()
+{
+}
