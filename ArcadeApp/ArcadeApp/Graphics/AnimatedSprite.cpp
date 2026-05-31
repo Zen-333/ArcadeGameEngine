@@ -59,3 +59,8 @@ const AARectangle AnimatedSprite::GetBoundingBox() const
 
 	return bbox;
 }
+
+void AnimatedSprite::RotateBy(const float angle)
+{
+
+}
