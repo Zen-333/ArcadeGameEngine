@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Spaceship.h"
+#include "LevelBoundary.h"
 
 enum AstroidGameState
 {
@@ -27,5 +28,9 @@ private:
 
 	Spaceship mSpaceShip;
 	AstroidGameState mGameState;
+	LevelBoundary mLevelBoundary;
+
+	const uint32_t PLAYEBALE_AREA_WIDTH = 224;
+	const uint32_t PLAYEBALE_AREA_HEIGHT = 280;
 
 };

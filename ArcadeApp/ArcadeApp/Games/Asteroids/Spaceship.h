@@ -19,10 +19,19 @@ public:
 	void RotateLeft();
 	void RotateRight();
 
+	inline void SetCanMove(const bool CanMove) { mCanMove = CanMove; }
+
+	Vec2D& GetFacingDirection();
+
 private:
 
-	const float mForwardSpeed = 5;
-	const float mRotationSpeed = 5;
+	bool mCanMove = true;
+
+	const float mForwardSpeed = 100.0f;
+	const float mRotationSpeed = 3.0f;
+
+	float mAngleDegrees = 0.0f;
+	Vec2D mVelocity = Vec2D::Zero;
 
 	SpriteSheet mSpriteSheet;
 	AnimatedSprite mSprite;

@@ -29,11 +29,11 @@ void AnimatedSprite::Draw(Screen& theScreen)
 		frameColor = mColor;
 	}
 
-	theScreen.Draw(*mnoptrSpriteSheet, frame.frame, mPosition + frame.offset, frameColor);
+	theScreen.Draw(*mnoptrSpriteSheet, frame.frame, mPosition + frame.offset, frameColor, mRotation);
 
 	if(frame.overlay.size() > 0)
 	{
-		theScreen.Draw(*mnoptrSpriteSheet, frame.overlay, mPosition, frame.overlayColor);
+		theScreen.Draw(*mnoptrSpriteSheet, frame.overlay, mPosition, frame.overlayColor, mRotation);
 
 	}
 }
@@ -60,7 +60,3 @@ const AARectangle AnimatedSprite::GetBoundingBox() const
 	return bbox;
 }
 
-void AnimatedSprite::RotateBy(const float angle)
-{
-
-}
