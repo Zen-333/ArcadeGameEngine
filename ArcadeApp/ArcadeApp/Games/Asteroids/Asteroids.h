@@ -3,6 +3,8 @@
 #include "Game.h"
 #include "Spaceship.h"
 #include "LevelBoundary.h"
+#include "Missile.h"
+#include "vector"
 
 enum AstroidGameState
 {
@@ -27,6 +29,12 @@ private:
 	void ResetGame();
 
 	Spaceship mSpaceShip;
+
+	std::vector<Missile> mMissiles;
+	std::vector<Missile&> mActiveMissiles;
+	std::vector<Missile&> mNotActiveMissiles;
+	const size_t mMaxMissiles = 2;
+
 	AstroidGameState mGameState;
 	LevelBoundary mLevelBoundary;
 

@@ -76,9 +76,17 @@ void Asteroids::Init(GameController& controller)
 
 	controller.AddInputActionForKey(ShootKeyAction);
 
-
-
 	mSpaceShip.Init();
+
+	for (int i = 0; i < mMaxMissiles; i++)
+	{
+		Missile newMissile;
+		newMissile.Init();
+		mMissiles.push_back(newMissile);
+	}
+
+	mMissiles[0].Launch(Vec2D(100, 100), mSpaceShip.GetFacingDirection());
+	mActiveMissiles.push_back(mMissiles[0]);
 }
 
 void Asteroids::Update(uint32_t dt)
@@ -108,11 +116,21 @@ void Asteroids::Update(uint32_t dt)
 
 
 	mSpaceShip.Update(dt);
+
+	for (Missile& m : mActiveMissiles)
+	{
+		m.Update(dt);
+	}
 }
 
 void Asteroids::Draw(Screen& screen)
 {
 	mSpaceShip.Draw(screen);
+
+	for (Missile& m : mActiveMissiles)
+	{
+		m.Draw(screen);
+	}
 }
 
 const std::string& Asteroids::GetName() const
