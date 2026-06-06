@@ -25,6 +25,8 @@ public:
 
 private:
 
+	Vec2D& GetBackDirection();
+
 	bool mCanMove = true;
 
 	const float mForwardSpeed = 100.0f;
@@ -35,6 +37,7 @@ private:
 
 	SpriteSheet mSpriteSheet;
 	AnimatedSprite mSprite;
+	AnimatedSprite mThruster;
 
 	Vec2D mSpawnPoint;
 
