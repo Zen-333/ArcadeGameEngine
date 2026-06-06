@@ -171,6 +171,9 @@
     <ClCompile Include="Games\Asteroids\Spaceship.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Games\Asteroids\Missile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App\App.h">
@@ -308,6 +311,9 @@
     <ClInclude Include="Games\Asteroids\Spaceship.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Games\Asteroids\Missile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\**\*.*" />
@@ -319,6 +325,18 @@
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
