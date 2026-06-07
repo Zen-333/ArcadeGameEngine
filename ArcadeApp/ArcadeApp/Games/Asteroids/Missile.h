@@ -11,23 +11,21 @@ public:
 	Missile();
 	void Init();
 	void Update(uint32_t dt);
-	void Launch(Vec2D LaunchPoint, Vec2D ForwardDirection);
+	void Launch(const Vec2D& LaunchPoint, const Vec2D& ForwardDirection, const float Rotation);
 	void Draw(Screen& theScreen);
+
+	inline bool IsActive() const { return mIsActive; }
+	void Deactivate();
 
 private:
 
-	void Deactivate();
 	void Activate();
-	
-	Vec2D GetBackDirection();
 
-	const float mSpeed = 5;
+	const float mSpeed = 200.0f;
 	bool mIsActive = false;
 
 	Vec2D mVelocity = Vec2D::Zero;
-	Vec2D mLaunchPoint;
-	Vec2D mForwardDirection;
+
 	SpriteSheet mSpriteSheet;
 	AnimatedSprite mSprite;
-	AnimatedSprite mThruster;
 };

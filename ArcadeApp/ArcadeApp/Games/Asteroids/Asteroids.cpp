@@ -62,14 +62,14 @@ void Asteroids::Init(GameController& controller)
 	controller.AddInputActionForKey(RightRotationKeyAction);
 
 	ButtonAction ShootKeyAction;
-	ShootKeyAction.Key = GameController::LeftMouseButton();
+	ShootKeyAction.Key = GameController::ActionKey();
 	ShootKeyAction.action = [this](uint32_t dt, InputState state)
 		{
 			if (mGameState == A_PLAY)
 			{
 				if (GameController::IsPressed(state))
 				{
-					mSpaceShip.Shoot();
+					mSpaceShip.Shoot(mMissiles);
 				}
 			}
 		};
@@ -78,15 +78,11 @@ void Asteroids::Init(GameController& controller)
 
 	mSpaceShip.Init();
 
-	for (int i = 0; i < mMaxMissiles; i++)
+	for (Missile& m : mMissiles)
 	{
-		Missile newMissile;
-		newMissile.Init();
-		mMissiles.push_back(newMissile);
+		m.Init();
 	}
 
-	mMissiles[0].Launch(Vec2D(100, 100), mSpaceShip.GetFacingDirection());
-	mActiveMissiles.push_back(mMissiles[0]);
 }
 
 void Asteroids::Update(uint32_t dt)
@@ -117,7 +113,7 @@ void Asteroids::Update(uint32_t dt)
 
 	mSpaceShip.Update(dt);
 
-	for (Missile& m : mActiveMissiles)
+	for (Missile& m : mMissiles)
 	{
 		m.Update(dt);
 	}
@@ -127,7 +123,7 @@ void Asteroids::Draw(Screen& screen)
 {
 	mSpaceShip.Draw(screen);
 
-	for (Missile& m : mActiveMissiles)
+	for (Missile& m : mMissiles)
 	{
 		m.Draw(screen);
 	}

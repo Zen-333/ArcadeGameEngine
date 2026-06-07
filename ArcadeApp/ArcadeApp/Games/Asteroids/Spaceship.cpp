@@ -2,6 +2,8 @@
 #include "Spaceship.h"
 #include "App.h"
 #include "AARectangle.h"
+#include "Missile.h"
+#include <array>
 
 Spaceship::Spaceship(const Vec2D SpawnPoint): mSpawnPoint(SpawnPoint)
 {
@@ -86,7 +88,7 @@ void Spaceship::RotateRight()
 	if (mAngleDegrees < 0) mAngleDegrees -= 360.0f;
 }
 
-Vec2D& Spaceship::GetFacingDirection()
+Vec2D Spaceship::GetFacingDirection()
 {
 	float radians = mAngleDegrees * (3.14159f / 180.0f);
 
@@ -97,7 +99,7 @@ Vec2D& Spaceship::GetFacingDirection()
 	return forward;
 }
 
-Vec2D& Spaceship::GetBackDirection()
+Vec2D Spaceship::GetBackDirection()
 {
 	float radians = mAngleDegrees * (3.14159f / 180.0f);
 
@@ -108,6 +110,19 @@ Vec2D& Spaceship::GetBackDirection()
 	return back;
 }
 
-void Spaceship::Shoot()
+void Spaceship::Shoot(std::array<Missile, 3>& Missiles)
 {
+	for(Missile& m : Missiles)
+	{
+		if(!m.IsActive())
+		{
+			Vec2D FacingDir = GetFacingDirection();
+			Vec2D LaunchPoint = Vec2D(FacingDir.GetX() - 3.3f, FacingDir.GetY() - 4);
+			float radians = mAngleDegrees * (3.14159f / 180.0f);
+			Vec2D Direction = Vec2D(sinf(radians), -cosf(radians));
+
+			m.Launch(LaunchPoint, Direction, radians);
+			return;
+		}
+	}
 }

@@ -4,6 +4,8 @@
 #include "SpriteSheet.h"
 #include "AnimatedSprite.h"
 
+class Missile;
+
 class Spaceship
 {
 
@@ -15,17 +17,17 @@ public:
 	void Draw(Screen& theScreen);
 	void Update(uint32_t dt);
 	void MoveForward();
-	void Shoot();
+	void Shoot(std::array<Missile, 3>& Missiles);
 	void RotateLeft();
 	void RotateRight();
 
 	inline void SetCanMove(const bool CanMove) { mCanMove = CanMove; }
 
-	Vec2D& GetFacingDirection();
+	Vec2D GetFacingDirection();
 
 private:
 
-	Vec2D& GetBackDirection();
+	Vec2D GetBackDirection();
 
 	bool mCanMove = true;
 

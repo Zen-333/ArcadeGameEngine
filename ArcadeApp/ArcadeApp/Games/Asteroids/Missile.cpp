@@ -14,26 +14,28 @@ void Missile::Init()
 	mSprite.SetAnimation("missile", true);
 	//mSprite.SetPosition(mSpawnPoint);
 
-	mThruster.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
-	mThruster.SetAnimation("thrusters", true); 
+	mIsActive = false;
 }
 
 void Missile::Update(uint32_t dt)
 {
+	if (!mIsActive) return;
+
 	float dtSeconds = MillisecondsToSeconds(dt);
 
-	if(mIsActive)
-	{
-		//mSprite.MoveBy(mVelocity * dtSeconds);
-		mSprite.Update(dt);
-		mThruster.Update(dt);
-	}
+	mSprite.MoveBy(mVelocity * dtSeconds);
+	mSprite.Update(dt);
+	
 }
 
-void Missile::Launch(Vec2D LaunchPoint, Vec2D ForwardDirection)
+void Missile::Launch(const Vec2D& LaunchPoint, const Vec2D& ForwardDirection, const float Rotation)
 {
+	float NewRotation = Rotation;
+	if (NewRotation < 0) NewRotation -= 360.0f;
+
+	mVelocity = ForwardDirection * mSpeed;
 	mSprite.SetPosition(LaunchPoint);
-	mForwardDirection = ForwardDirection * mSpeed;
+	mSprite.RotateBy(NewRotation);
 	Activate();
 
 }
@@ -43,7 +45,6 @@ void Missile::Draw(Screen& theScreen)
 	if(mIsActive)
 	{
 		mSprite.Draw(theScreen);
-		mThruster.Draw(theScreen);
 	}
 }
 
@@ -57,8 +58,3 @@ void Missile::Activate()
 	mIsActive = true;
 }
 
-Vec2D Missile::GetBackDirection()
-{
-	// TODO: Return the back direction of the missile to place the thrust;
-	return Vec2D::Zero;
-}
