@@ -18,6 +18,7 @@ public:
 
 	inline bool IsActive() const { return mIsActive; }
 	void Deactivate();
+	void Explode();
 
 	inline const AARectangle GetSpriteBox() const { return mSprite.GetBoundingBox(); }
 
@@ -28,9 +29,11 @@ private:
 	const float mSpeed = 200.0f;
 	float mRotation = 0.0f;
 	bool mIsActive = false;
+	bool mIsFinishedExplosion = true;
 
 	Vec2D mVelocity = Vec2D::Zero;
 
 	SpriteSheet mSpriteSheet;
 	AnimatedSprite mSprite;
+	AnimatedSprite mExplosionSprite;
 };

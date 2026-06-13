@@ -11,20 +11,29 @@ void Missile::Init()
 	mSpriteSheet.Load("AsteroidsSprites");
 
 	mSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
+	mExplosionSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
 	mSprite.SetAnimation("missile", true);
-	//mSprite.SetPosition(mSpawnPoint);
+	mExplosionSprite.SetAnimation("explosion", false);
 
 	mIsActive = false;
+	mIsFinishedExplosion = true;
 }
 
 void Missile::Update(uint32_t dt)
 {
+	if(!mIsFinishedExplosion)
+	{
+		mExplosionSprite.Update(dt);
+		mIsFinishedExplosion = mExplosionSprite.IsFinishedPlayingAnimation();
+	}
+
 	if (!mIsActive) return;
 
 	float dtSeconds = MillisecondsToSeconds(dt);
 
 	mSprite.MoveBy(mVelocity * dtSeconds);
 	mSprite.Update(dt);
+
 	
 }
 
@@ -47,6 +56,10 @@ void Missile::Draw(Screen& theScreen)
 	{
 		mSprite.Draw(theScreen);
 	}
+	if(!mIsFinishedExplosion)
+	{
+		mExplosionSprite.Draw(theScreen);
+	}
 }
 
 void Missile::Deactivate()
@@ -55,6 +68,8 @@ void Missile::Deactivate()
 	mVelocity = Vec2D::Zero;
 	mSprite.RotateBy(-mRotation);
 	mRotation = 0.0f;
+	mExplosionSprite.SetPosition(mSprite.Position());
+	mIsFinishedExplosion = false;
 }
 
 void Missile::Activate()
