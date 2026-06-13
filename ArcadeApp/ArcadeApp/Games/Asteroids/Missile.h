@@ -4,7 +4,7 @@
 #include "SpriteSheet.h"
 #include "AnimatedSprite.h"
 #include "AARectangle.h"
-
+#include "ExplosionEffect.h"
 
 class Missile {
 
@@ -33,4 +33,6 @@ private:
 
 	SpriteSheet mSpriteSheet;
 	AnimatedSprite mSprite;
+
+	ExplosionEffect mExplosionEffect;
 };

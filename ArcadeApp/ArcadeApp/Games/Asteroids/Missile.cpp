@@ -14,10 +14,14 @@ void Missile::Init()
 	mSprite.SetAnimation("missile", true);
 
 	mIsActive = false;
+
+	mExplosionEffect.Init();
 }
 
 void Missile::Update(uint32_t dt)
 {
+
+	mExplosionEffect.Update(dt);
 
 	if (!mIsActive) return;
 
@@ -44,6 +48,8 @@ void Missile::Launch(const Vec2D& LaunchPoint, const Vec2D& ForwardDirection, co
 
 void Missile::Draw(Screen& theScreen)
 {
+	mExplosionEffect.Draw(theScreen);
+
 	if(mIsActive)
 	{
 		mSprite.Draw(theScreen);
@@ -56,6 +62,7 @@ void Missile::Deactivate()
 	mVelocity = Vec2D::Zero;
 	mSprite.RotateBy(-mRotation);
 	mRotation = 0.0f;
+	mExplosionEffect.Activate(mSprite.Position());
 }
 
 void Missile::Activate()

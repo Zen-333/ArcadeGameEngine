@@ -93,14 +93,10 @@ void Asteroids::Update(uint32_t dt)
 
 	for (Missile& m : mMissiles)
 	{
-		if(m.IsActive())
-		{
-			if(CanMissileMove(m))
-			{
-				m.Update(dt);
-			}
-			else m.Deactivate();
-		}
+		m.Update(dt);
+		
+		if (m.IsActive() && !CanMissileMove(m)) m.Deactivate();
+			
 	}
 }
 
@@ -110,10 +106,7 @@ void Asteroids::Draw(Screen& screen)
 
 	for (Missile& m : mMissiles)
 	{
-		if(m.IsActive())
-		{
-			m.Draw(screen);
-		}
+		m.Draw(screen);
 	}
 }
 
