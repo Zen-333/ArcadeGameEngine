@@ -110,7 +110,10 @@ void Asteroids::Draw(Screen& screen)
 
 	for (Missile& m : mMissiles)
 	{
-		m.Draw(screen);
+		if(m.IsActive())
+		{
+			m.Draw(screen);
+		}
 	}
 }
 
