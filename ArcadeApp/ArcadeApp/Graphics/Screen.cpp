@@ -380,8 +380,11 @@ void Screen::Draw(const BMPImage& image, const Sprite& sprite, const Vec2D& pos,
 		u = Clamp(u, 0.0f, 1.0f);
 		v = Clamp(v, 0.0f, 1.0f);
 
-		float tx = roundf(u * static_cast<float>(sprite.width));
-		float ty = roundf(v * static_cast<float>(sprite.height));
+		//float tx = roundf(u * static_cast<float>(sprite.width));
+		//float ty = roundf(v * static_cast<float>(sprite.height));
+
+		float tx = roundf(u * static_cast<float>(sprite.width - 1));
+		float ty = roundf(v * static_cast<float>(sprite.height - 1));
 
 		Color imageColor = pixels[GetIndex(image.GetWidth(), ty + sprite.yPos, tx + sprite.xPos)];
 

@@ -11,7 +11,7 @@ void ExplosionEffect::Init()
 	mSpriteSheet.Load("AsteroidsSprites");
 
 	mSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
-	mSprite.SetAnimation("explosion", false);
+	//mSprite.SetAnimation("explosion", false);
 
 	mIsFinishedExploding = true;
 }
@@ -19,6 +19,7 @@ void ExplosionEffect::Init()
 void ExplosionEffect::Activate(Vec2D Pos)
 {
 	mSprite.SetPosition(Pos);
+	mSprite.SetAnimation("explosion", false);
 	mIsFinishedExploding = false;
 }
 

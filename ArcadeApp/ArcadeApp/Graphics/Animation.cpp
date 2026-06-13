@@ -10,7 +10,7 @@ AnimationFrame Animation::GetAnimationFrame(uint32_t frameNum) const
 {
 	AnimationFrame frame;
 
-	if(frameNum > mFrames.size())
+	if(frameNum >= mFrames.size())
 	{
 		return frame;
 	}
@@ -39,6 +39,8 @@ AnimationFrame Animation::GetAnimationFrame(uint32_t frameNum) const
 	}
 
 	frame.size = mSize;
+
+	return frame;
 }
 
 std::vector<Animation> Animation::LoadAnimations(const std::string& animationFilePath)
