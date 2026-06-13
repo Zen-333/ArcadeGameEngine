@@ -27,6 +27,8 @@ public:
 private:
 
 	void ResetGame();
+	bool CanShipMove();
+	bool CanMissileMove(const Missile& m);
 
 	Spaceship mSpaceShip;
 

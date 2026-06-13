@@ -36,6 +36,7 @@ void Missile::Launch(const Vec2D& LaunchPoint, const Vec2D& ForwardDirection, co
 	mVelocity = ForwardDirection * mSpeed;
 	mSprite.SetPosition(LaunchPoint);
 	mSprite.RotateBy(NewRotation);
+	mRotation = NewRotation;
 	Activate();
 
 }
@@ -51,6 +52,9 @@ void Missile::Draw(Screen& theScreen)
 void Missile::Deactivate()
 {
 	mIsActive = false;
+	mVelocity = Vec2D::Zero;
+	mSprite.RotateBy(-mRotation);
+	mRotation = 0.0f;
 }
 
 void Missile::Activate()

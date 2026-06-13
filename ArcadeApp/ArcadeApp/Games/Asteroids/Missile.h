@@ -3,6 +3,8 @@
 #include "Vec2D.h"
 #include "SpriteSheet.h"
 #include "AnimatedSprite.h"
+#include "AARectangle.h"
+
 
 class Missile {
 
@@ -17,11 +19,14 @@ public:
 	inline bool IsActive() const { return mIsActive; }
 	void Deactivate();
 
+	inline const AARectangle GetSpriteBox() const { return mSprite.GetBoundingBox(); }
+
 private:
 
 	void Activate();
 
 	const float mSpeed = 200.0f;
+	float mRotation = 0.0f;
 	bool mIsActive = false;
 
 	Vec2D mVelocity = Vec2D::Zero;
