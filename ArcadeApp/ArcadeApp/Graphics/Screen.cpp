@@ -369,9 +369,11 @@ void Screen::Draw(const BMPImage& image, const Sprite& sprite, const Vec2D& pos,
 	const float invXAxisLengthSq = 1.0f / xAxis.Mag2();
 	const float invYAxisLengthSq = 1.0f / yAxis.Mag2();
 
+	if (xAxis.Mag2() < EPSILON || yAxis.Mag2() < EPSILON) return;
+
 	FillPoly(points, [&](uint32_t px, uint32_t py) {
-		
-		Vec2D p = { static_cast<float>(px), static_cast<float>(py)};
+
+		Vec2D p = { static_cast<float>(px), static_cast<float>(py) };
 		Vec2D d = p - topLeft;
 
 		float u = invXAxisLengthSq * d.Dot(xAxis);
@@ -380,35 +382,27 @@ void Screen::Draw(const BMPImage& image, const Sprite& sprite, const Vec2D& pos,
 		u = Clamp(u, 0.0f, 1.0f);
 		v = Clamp(v, 0.0f, 1.0f);
 
-		//float tx = roundf(u * static_cast<float>(sprite.width));
-		//float ty = roundf(v * static_cast<float>(sprite.height));
-
 		float tx = roundf(u * static_cast<float>(sprite.width - 1));
 		float ty = roundf(v * static_cast<float>(sprite.height - 1));
 
-		Color imageColor = pixels[GetIndex(image.GetWidth(), ty + sprite.yPos, tx + sprite.xPos)];
+		if (tx != tx || ty != ty) return Color::Black();
 
-		Color newColor = { static_cast<uint8_t>(imageColor.GetRed() * rVal), static_cast<uint8_t>(imageColor.GetGreen() * gVal), static_cast<uint8_t>(imageColor.GetBlue() * bVal), static_cast<uint8_t>(imageColor.GetAlpha() * aVal) };
+		uint32_t col = static_cast<uint32_t>(tx) + sprite.xPos;
+		uint32_t row = static_cast<uint32_t>(ty) + sprite.yPos;
 
+		col = std::min(col, image.GetWidth() - 1);
+		row = std::min(row, image.GetHeigth() - 1);
+
+		Color imageColor = pixels[GetIndex(image.GetWidth(), row, col)];
+
+		Color newColor = {
+			static_cast<uint8_t>(imageColor.GetRed() * rVal),
+			static_cast<uint8_t>(imageColor.GetGreen() * gVal),
+			static_cast<uint8_t>(imageColor.GetBlue() * bVal),
+			static_cast<uint8_t>(imageColor.GetAlpha() * aVal)
+		};
 		return newColor;
-		
 	});
-
-
-
-
-	//for(uint32_t r = 0; r < height; r++)
-	//{
-	//	for (uint32_t c = 0; c < width; c++) 
-	//	{
-	//		// this is full white
-	//		Color imageColor = image.GetPixels()[GetIndex(image.GetWidth(), r + sprite.yPos, c + sprite.xPos)];
-
-	//		Color newColor = {static_cast<uint8_t>( imageColor.GetRed() * rVal), static_cast<uint8_t>(imageColor.GetGreen() * gVal), static_cast<uint8_t>(imageColor.GetBlue() * bVal), static_cast<uint8_t>(imageColor.GetAlpha() * aVal )};
-
-	//		Draw(c + pos.GetX(), r + pos.GetY(), newColor);
-	//	}
-	//}
 }
 
 void Screen::Draw(const SpriteSheet& ss, const std::string& spriteName, const Vec2D& pos, const Color& overlayColor, float rotation)
