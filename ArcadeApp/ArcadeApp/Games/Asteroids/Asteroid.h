@@ -14,7 +14,7 @@ class Asteroid{
 public:
 
 	Asteroid();
-	Asteroid(EAsteroidSize Size, Vec2D SpawnPos);
+	Asteroid(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos);
 	void Int();
 
 	void Update(uint32_t dt);
@@ -27,16 +27,23 @@ public:
 
 private:
 
+	void ResetSpeedAndSpin();
+	void SetForwardDirection();
+
 	bool mIsActive = false;
 
-	const float mMaxSpeed = 150;
-	const float mMinSpeed = 50;
+	const float mMaxSpeed = 30;
+	const float mMinSpeed = 5;
 
-	const float mMaxSpin = 20;
-	const float mMinSpin = 5;
+	const float mMaxSpin = 5;
+	const float mMinSpin = 1;
 
+	float mSpeed = 0.0f;
+	float mSpin = 0.0f;
 
 	Vec2D mSpawnPos = Vec2D::Zero;
+	Vec2D mForwardDir = Vec2D::Zero;
+	Vec2D mMiddlePos = Vec2D::Zero;
 
 	SpriteSheet mSpriteSheet;
 	AnimatedSprite mSprite;

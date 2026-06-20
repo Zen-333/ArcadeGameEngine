@@ -49,3 +49,30 @@ missile_2
 
 thrusters_1
 thrusters_2
+
+:animation asteroid_small
+:sprite_sheet AsteroidsSprites
+:size 22 21
+:fps 1
+
+:frame_keys 1
+
+small_rock
+
+:animation asteroid_medium
+:sprite_sheet AsteroidsSprites
+:size 33 33
+:fps 1
+
+:frame_keys 1
+
+medium_rock
+
+:animation asteroid_large
+:sprite_sheet AsteroidsSprites
+:size 51 51
+:fps 1
+
+:frame_keys 1
+
+big_rock

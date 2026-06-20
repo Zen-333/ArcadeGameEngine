@@ -2,7 +2,7 @@
 #include "App.h"
 #include "AARectangle.h"
 
-Asteroids::Asteroids(): mSpaceShip(Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f)), mAsteroid(AS_Large, Vec2D(50, 50))
+Asteroids::Asteroids(): mSpaceShip(Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f)), mAsteroid(AS_Small, Vec2D(50, 50), Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f))
 {
 
 }
@@ -78,6 +78,7 @@ void Asteroids::Init(GameController& controller)
 
 	mSpaceShip.Init();
 	mAsteroid.Int();
+	mAsteroid.Activate();
 
 	for (Missile& m : mMissiles)
 	{
