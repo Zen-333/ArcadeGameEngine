@@ -5,6 +5,7 @@
 #include "LevelBoundary.h"
 #include "Missile.h"
 #include <array>
+#include "Asteroid.h"
 
 enum AstroidGameState
 {
@@ -31,6 +32,7 @@ private:
 	bool CanMissileMove(const Missile& m);
 
 	Spaceship mSpaceShip;
+	Asteroid mAsteroid;
 
 	static constexpr size_t MAX_MISSILES = 3;
 	std::array<Missile, MAX_MISSILES> mMissiles;
