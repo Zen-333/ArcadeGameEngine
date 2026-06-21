@@ -1,8 +1,8 @@
 #include "Asteroids.h"
-#include "App.h"
 #include "AARectangle.h"
+#include <random>
 
-Asteroids::Asteroids(): mSpaceShip(Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f)), mAsteroid(AS_Small, Vec2D(50, 50), Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f))
+Asteroids::Asteroids(): mSpaceShip(Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f))
 {
 
 }
@@ -77,13 +77,18 @@ void Asteroids::Init(GameController& controller)
 	controller.AddInputActionForKey(ShootKeyAction);
 
 	mSpaceShip.Init();
-	mAsteroid.Int();
-	mAsteroid.Activate();
 
 	for (Missile& m : mMissiles)
 	{
 		m.Init();
 	}
+
+	for(Asteroid& a : mAsteroids)
+	{
+		a.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+	}
+
+	ResetRandomSpawnTime();
 
 }
 
@@ -92,7 +97,13 @@ void Asteroids::Update(uint32_t dt)
 
 	mSpaceShip.SetCanMove(CanShipMove());
 	mSpaceShip.Update(dt);
-	mAsteroid.Update(dt);
+	float dtSeconds = MillisecondsToSeconds(dt);
+
+	if(mSpawningAsteroids)
+	{
+		mTimePassed += dtSeconds;
+	}
+	if (mTimePassed > 10.0f && mSpawningAsteroids) mSpawningAsteroids = false;
 
 	for (Missile& m : mMissiles)
 	{
@@ -101,16 +112,38 @@ void Asteroids::Update(uint32_t dt)
 		if (m.IsActive() && !CanMissileMove(m)) m.Deactivate();
 			
 	}
+
+	for (Asteroid& a : mAsteroids)
+	{
+		if (a.GetIsActive()) 
+		{
+			a.Update(dt);
+		}else
+		{
+			if(mTimePassed > mAsteroidSpawnTime)
+			{
+				a.Activate();
+				std::cout << mTimePassed << std::endl;
+				mTimePassed = 0.0f;
+				ResetRandomSpawnTime();
+			}
+		}
+
+	}
 }
 
 void Asteroids::Draw(Screen& screen)
 {
 	mSpaceShip.Draw(screen);
-	mAsteroid.Draw(screen);
 
 	for (Missile& m : mMissiles)
 	{
 		m.Draw(screen);
+	}
+
+	for (Asteroid& a : mAsteroids)
+	{
+		if (a.GetIsActive()) a.Draw(screen);
 	}
 }
 
@@ -173,4 +206,60 @@ bool Asteroids::CanMissileMove(const Missile& m)
 	}
 
 	return true;
+}
+
+void Asteroids::ResetRandomSpawnTime()
+{
+	static std::random_device r;
+	static std::default_random_engine el(r());
+
+	static std::uniform_real_distribution<float> uniform_dist(mMinSpawnTime, mMaxSpawnTime);
+
+	mAsteroidSpawnTime = uniform_dist(el);
+}
+
+Vec2D Asteroids::GetRandomAsteroidPos()
+{
+	static std::random_device r;
+	static std::default_random_engine el(r());
+
+	static std::uniform_int_distribution<int> uniform_dist(0, 3);
+	static std::uniform_int_distribution<int> uniform_dist_X(0, PLAYEBALE_AREA_WIDTH);
+	static std::uniform_int_distribution<int> uniform_dist_Y(0, PLAYEBALE_AREA_HEIGHT);
+
+	int Side = uniform_dist(el);
+
+	float x = uniform_dist_X(el);
+	float y = uniform_dist_Y(el);
+
+	switch (Side)
+	{
+		case 0:
+			y = -mAsteroidScreenPadding;
+			break;
+		case 1:
+			y = mAsteroidScreenPadding + PLAYEBALE_AREA_HEIGHT;
+			break;
+		case 2:
+			x = PLAYEBALE_AREA_WIDTH + mAsteroidScreenPadding;
+			break;
+		case 3:
+			x = -mAsteroidScreenPadding;
+			break;
+	}
+
+	return Vec2D(x, y);
+}
+
+EAsteroidSize Asteroids::GetRandomAsteroidSize()
+{
+	int Length = static_cast<int>(EAsteroidSize::AS_Count);
+
+	std::random_device r;
+	std::default_random_engine el(r());
+	std::uniform_int_distribution<int> uniform_dist(0, Length - 1);
+
+	int randomNumber = uniform_dist(el);
+
+	return static_cast<EAsteroidSize>(randomNumber);
 }

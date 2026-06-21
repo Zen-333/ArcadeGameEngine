@@ -10,8 +10,12 @@ Asteroid::Asteroid(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos): mAstero
 {
 }
 
-void Asteroid::Int()
+void Asteroid::Init(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos)
 {
+	mAsteroidSize = Size;
+	mSpawnPos = SpawnPos;
+	mMiddlePos = MiddlePos;
+
 	mSpriteSheet.Load("AsteroidsSprites");
 
 	mSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
@@ -81,8 +85,6 @@ void Asteroid::ResetSpeedAndSpin()
 
 	mSpin = uniform_dist_spin(el);
 	mSpeed = uniform_dist_speed(el);
-
-	std::cout << mSpeed << std::endl;
 
 }
 

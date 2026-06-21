@@ -376,8 +376,6 @@ TetrisShapeType Tetris::GetRandomShape()
 	int randomNumber = uniform_dist(el);
 
 	return static_cast<TetrisShapeType>(randomNumber);
-
-	//return TetrisShapeType::TT_I;
 }
 
 void Tetris::ResetGhostPos()

@@ -7,6 +7,7 @@ enum EAsteroidSize {
 	AS_Small,
 	AS_Medium,
 	AS_Large,
+	AS_Count
 };
 
 class Asteroid{
@@ -15,7 +16,7 @@ public:
 
 	Asteroid();
 	Asteroid(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos);
-	void Int();
+	void Init(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos);
 
 	void Update(uint32_t dt);
 	void Draw(Screen& theScreen);
@@ -35,7 +36,7 @@ private:
 	const float mMaxSpeed = 30;
 	const float mMinSpeed = 5;
 
-	const float mMaxSpin = 5;
+	const float mMaxSpin = 3;
 	const float mMinSpin = 1;
 
 	float mSpeed = 0.0f;
