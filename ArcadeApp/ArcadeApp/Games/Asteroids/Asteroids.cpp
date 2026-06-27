@@ -86,6 +86,7 @@ void Asteroids::Init(GameController& controller)
 	for(Asteroid& a : mAsteroids)
 	{
 		a.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+		std::cout << a.GetPosition().Distance(mMiddleScreenPos) << std::endl;
 	}
 
 	ResetRandomSpawnTime();
@@ -117,13 +118,20 @@ void Asteroids::Update(uint32_t dt)
 	{
 		if (a.GetIsActive()) 
 		{
+			if(a.GetPosition().Distance(mMiddleScreenPos) > mDistanceToScreenEntry)
+			{
+				a.Destroy();
+				mSpawningAsteroids = true;
+				a.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+				return;
+			}
+
 			a.Update(dt);
 		}else
 		{
 			if(mTimePassed > mAsteroidSpawnTime)
 			{
 				a.Activate();
-				std::cout << mTimePassed << std::endl;
 				mTimePassed = 0.0f;
 				ResetRandomSpawnTime();
 			}

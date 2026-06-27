@@ -39,8 +39,11 @@ void Asteroid::Init(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos)
 	mSprite.SetPosition(mSpawnPos);
 
 	mIsActive = false;
+	mHasEnteredTheScreen = false;
 	ResetSpeedAndSpin();
 	SetForwardDirection();
+
+	std::cout << "INIT" << std::endl;
 }
 
 void Asteroid::Update(uint32_t dt)
@@ -65,11 +68,21 @@ void Asteroid::Draw(Screen& theScreen)
 void Asteroid::Destroy()
 {
 	mIsActive = false;
+	mHasEnteredTheScreen = false;
+	std::cout << "DESTROYED!" << std::endl;
+
 }
 
 void Asteroid::Activate()
 {
 	mIsActive = true;
+	mHasEnteredTheScreen = false;
+
+	std::cout << "ACTIVATED!" << std::endl;
+	std::cout << "SIZE: " << mAsteroidSize << std::endl;
+	std::cout << "SPEED: " << mSpeed << std::endl;
+	std::cout << "SPIN: " << mSpin<< std::endl;
+
 }
 
 void Asteroid::ResetSpeedAndSpin()

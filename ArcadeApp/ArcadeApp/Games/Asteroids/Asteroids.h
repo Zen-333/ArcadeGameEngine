@@ -38,10 +38,11 @@ private:
 	Spaceship mSpaceShip;
 
 	static constexpr size_t MAX_MISSILES = 3;
-	static constexpr size_t MAX_ASTEROIDS = 6;
+	static constexpr size_t MAX_ASTEROIDS = 1;
 	std::array<Missile, MAX_MISSILES> mMissiles;
 	std::array<Asteroid, MAX_ASTEROIDS> mAsteroids;
 	const float mAsteroidScreenPadding = 50.0f;
+	const float mDistanceToScreenEntry = 250.0f;
 	bool mSpawningAsteroids = true;
 
 	float mAsteroidSpawnTime = 2.0f;

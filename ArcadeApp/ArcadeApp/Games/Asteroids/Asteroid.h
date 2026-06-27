@@ -25,6 +25,9 @@ public:
 
 	inline void SetSpawnPos(const Vec2D SpawnPos) { mSpawnPos = SpawnPos; }
 	inline const bool GetIsActive() const { return mIsActive; };
+	inline const bool GetHasEnteredTheScreen() const { return mHasEnteredTheScreen; }
+	inline void SetHasEnteredTheScreen(const bool HasEnteredTheScreen) { mHasEnteredTheScreen = HasEnteredTheScreen; }
+	inline const Vec2D GetPosition() { return mSprite.Position(); }
 
 private:
 
@@ -32,6 +35,7 @@ private:
 	void SetForwardDirection();
 
 	bool mIsActive = false;
+	bool mHasEnteredTheScreen = false;
 
 	const float mMaxSpeed = 30;
 	const float mMinSpeed = 5;
