@@ -2,6 +2,7 @@
 
 #include "SpriteSheet.h"
 #include "AnimatedSprite.h"
+#include "AARectangle.h"
 
 enum EAsteroidSize {
 	AS_Small,
@@ -25,9 +26,8 @@ public:
 
 	inline void SetSpawnPos(const Vec2D SpawnPos) { mSpawnPos = SpawnPos; }
 	inline const bool GetIsActive() const { return mIsActive; };
-	inline const bool GetHasEnteredTheScreen() const { return mHasEnteredTheScreen; }
-	inline void SetHasEnteredTheScreen(const bool HasEnteredTheScreen) { mHasEnteredTheScreen = HasEnteredTheScreen; }
 	inline const Vec2D GetPosition() { return mSprite.Position(); }
+	inline const AARectangle GetSpriteBox() const { return mSprite.GetBoundingBox(); }
 
 private:
 
@@ -35,7 +35,6 @@ private:
 	void SetForwardDirection();
 
 	bool mIsActive = false;
-	bool mHasEnteredTheScreen = false;
 
 	const float mMaxSpeed = 30;
 	const float mMinSpeed = 5;

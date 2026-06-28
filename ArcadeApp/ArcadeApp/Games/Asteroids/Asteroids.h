@@ -31,6 +31,8 @@ private:
 	void ResetGame();
 	bool CanShipMove();
 	bool CanMissileMove(const Missile& m);
+	bool AreAllAsteroidsSpawned();
+	Missile& DidMissileHitAsteroid(const Asteroid& a, bool& DidHit);
 	void ResetRandomSpawnTime();
 	Vec2D GetRandomAsteroidPos();
 	EAsteroidSize GetRandomAsteroidSize();
