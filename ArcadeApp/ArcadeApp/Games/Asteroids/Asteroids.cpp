@@ -121,7 +121,7 @@ void Asteroids::Update(uint32_t dt)
 			{
 				a.Destroy();
 				mSpawningAsteroids = true;
-				a.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+				a.Respawn(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
 				ResetRandomSpawnTime();
 				return;
 			}else
@@ -131,7 +131,7 @@ void Asteroids::Update(uint32_t dt)
 				{
 					a.Destroy();
 					mSpawningAsteroids = true;
-					a.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+					a.Respawn(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
 					ResetRandomSpawnTime();
 					m.Deactivate();
 					return;
@@ -144,7 +144,6 @@ void Asteroids::Update(uint32_t dt)
 			if(mTimePassed > mAsteroidSpawnTime)
 			{
 				a.Activate();
-				std::cout << mTimePassed << std::endl;
 				mTimePassed = 0.0f;
 				ResetRandomSpawnTime();
 			}
@@ -253,31 +252,22 @@ Missile& Asteroids::DidMissileHitAsteroid(const Asteroid& a, bool& DidHit)
 {
 	for (Missile& m : mMissiles)
 	{
-		if (IsGreaterThanOrEual(a.GetSpriteBox().GetTopLeftPoint().GetX(), m.GetSpriteBox().GetTopLeftPoint().GetX()))
-		{
-			DidHit = false;
-			return m;
-		}
-		else if (IsGreaterThanOrEual(m.GetSpriteBox().GetBottomRightPoint().GetX(), a.GetSpriteBox().GetBottomRightPoint().GetX()))
-		{
-			DidHit = false;
-			return m;
-		}
+		if (!m.IsActive()) { DidHit = false; continue; }
 
-		if (IsGreaterThanOrEual(m.GetSpriteBox().GetBottomRightPoint().GetY(), a.GetSpriteBox().GetBottomRightPoint().GetY()))
-		{
-			DidHit = false;
-			return m;
-		}
-		if (IsGreaterThanOrEual(a.GetSpriteBox().GetTopLeftPoint().GetY(), m.GetSpriteBox().GetTopLeftPoint().GetY()))
-		{
-			DidHit = false;
-			return m;
-		}
+		bool separated =
+			m.GetSpriteBox().GetBottomRightPoint().GetX() < a.GetSpriteBox().GetTopLeftPoint().GetX() ||
+			m.GetSpriteBox().GetTopLeftPoint().GetX() > a.GetSpriteBox().GetBottomRightPoint().GetX() ||
+			m.GetSpriteBox().GetBottomRightPoint().GetY() < a.GetSpriteBox().GetTopLeftPoint().GetY() ||
+			m.GetSpriteBox().GetTopLeftPoint().GetY() > a.GetSpriteBox().GetBottomRightPoint().GetY();
 
-		DidHit = true;
-		return m;
+		if (!separated)
+		{
+			DidHit = true;
+			return m;
+		}
 	}
+	DidHit = false;
+	return mMissiles[0];
 }
 
 void Asteroids::ResetRandomSpawnTime()
@@ -289,7 +279,6 @@ void Asteroids::ResetRandomSpawnTime()
 
 	mAsteroidSpawnTime = uniform_dist(el);
 
-	std::cout << mAsteroidSpawnTime << std::endl;
 }
 
 Vec2D Asteroids::GetRandomAsteroidPos()

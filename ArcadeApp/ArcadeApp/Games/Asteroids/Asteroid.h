@@ -23,10 +23,11 @@ public:
 	void Draw(Screen& theScreen);
 	void Destroy();
 	void Activate();
+	void Respawn(EAsteroidSize size, Vec2D spawnPos, Vec2D middlePos);
 
 	inline void SetSpawnPos(const Vec2D SpawnPos) { mSpawnPos = SpawnPos; }
 	inline const bool GetIsActive() const { return mIsActive; };
-	inline const Vec2D GetPosition() { return mSprite.Position(); }
+	inline Vec2D GetPosition() const { return mSprite.Position(); } 
 	inline const AARectangle GetSpriteBox() const { return mSprite.GetBoundingBox(); }
 
 private:

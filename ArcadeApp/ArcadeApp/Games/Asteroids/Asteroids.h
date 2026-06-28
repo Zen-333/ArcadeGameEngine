@@ -40,11 +40,11 @@ private:
 	Spaceship mSpaceShip;
 
 	static constexpr size_t MAX_MISSILES = 3;
-	static constexpr size_t MAX_ASTEROIDS = 1;
+	static constexpr size_t MAX_ASTEROIDS = 6;
 	std::array<Missile, MAX_MISSILES> mMissiles;
 	std::array<Asteroid, MAX_ASTEROIDS> mAsteroids;
 	const float mAsteroidScreenPadding = 50.0f;
-	const float mDistanceToScreenEntry = 250.0f;
+	const float mDistanceToScreenEntry = Vec2D(PLAYEBALE_AREA_WIDTH / 2.0f, PLAYEBALE_AREA_HEIGHT / 2.0f).Length() + mAsteroidScreenPadding + 20.0f;
 	bool mSpawningAsteroids = true;
 
 	float mAsteroidSpawnTime = 2.0f;

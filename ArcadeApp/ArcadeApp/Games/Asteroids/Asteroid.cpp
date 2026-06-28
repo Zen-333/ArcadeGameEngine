@@ -42,7 +42,6 @@ void Asteroid::Init(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos)
 	ResetSpeedAndSpin();
 	SetForwardDirection();
 
-	std::cout << "INIT" << std::endl;
 }
 
 void Asteroid::Update(uint32_t dt)
@@ -67,7 +66,6 @@ void Asteroid::Draw(Screen& theScreen)
 void Asteroid::Destroy()
 {
 	mIsActive = false;
-	std::cout << "DESTROYED!" << std::endl;
 
 }
 
@@ -75,15 +73,10 @@ void Asteroid::Activate()
 {
 	mIsActive = true;
 
-	std::cout << "ACTIVATED!" << std::endl;
-
 }
 
 void Asteroid::ResetSpeedAndSpin()
 {
-	srand((unsigned int)time(NULL)); 
-
-	float randomNum = rand() % 10;
 
 	std::random_device r; 
 	std::default_random_engine el(r()); 
@@ -102,4 +95,34 @@ void Asteroid::SetForwardDirection()
 	Direction.Normalize();
 
 	mForwardDir = Direction * mSpeed;
+}
+
+void Asteroid::Respawn(EAsteroidSize size, Vec2D spawnPos, Vec2D middlePos)
+{
+	if(size != mAsteroidSize)
+	{
+		mAsteroidSize = size;
+		switch (mAsteroidSize)
+		{
+		case AS_Small:
+			mSprite.SetAnimation("asteroid_small", true);
+			break;
+		case AS_Medium:
+			mSprite.SetAnimation("asteroid_medium", true);
+			break;
+		case AS_Large:
+			mSprite.SetAnimation("asteroid_large", true);
+			break;
+		default:
+			mSprite.SetAnimation("asteroid_small", true);
+			break;
+		}
+	}
+	mSpawnPos = spawnPos;
+	mMiddlePos = middlePos;
+	mSprite.SetPosition(mSpawnPos);
+	
+	ResetSpeedAndSpin();
+	SetForwardDirection();
+	mIsActive = false;
 }
