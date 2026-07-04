@@ -83,9 +83,11 @@ void Asteroids::Init(GameController& controller)
 		m.Init();
 	}
 
-	for(Asteroid& a : mAsteroids)
+	for(int i = 0; i < MAX_START_ASTEROIDS; i++)
 	{
-		a.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+		Asteroid newAsteroid;
+		newAsteroid.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+		mAsteroids.push_back(newAsteroid);
 	}
 
 	ResetRandomSpawnTime();
@@ -120,6 +122,7 @@ void Asteroids::Update(uint32_t dt)
 			if(a.GetPosition().Distance(mMiddleScreenPos) > mDistanceToScreenEntry)
 			{
 				a.Destroy();
+				if (!a.GetCanRespawn()) return;
 				mSpawningAsteroids = true;
 				a.Respawn(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
 				ResetRandomSpawnTime();
@@ -129,12 +132,19 @@ void Asteroids::Update(uint32_t dt)
 				Missile& m = DidMissileHitAsteroid(a, DidHit);
 				if(DidHit)
 				{
-					a.Destroy();
-					mSpawningAsteroids = true;
-					a.Respawn(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
-					ResetRandomSpawnTime();
-					m.Deactivate();
-					return;
+					if(a.GetAsteroidSize() != AS_Small)
+					{
+						BreakAsteroid(a);
+					}else
+					{
+						a.Destroy();
+						mSpawningAsteroids = true;
+						if (!a.GetCanRespawn()) return;
+						a.Respawn(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+						ResetRandomSpawnTime();
+						m.Deactivate();
+						return;
+					}
 				}
 			}
 
@@ -325,4 +335,15 @@ EAsteroidSize Asteroids::GetRandomAsteroidSize()
 	int randomNumber = uniform_dist(el);
 
 	return static_cast<EAsteroidSize>(randomNumber);
+}
+
+void Asteroids::BreakAsteroid(Asteroid& a)
+{
+	Vec2D ParentPos = a.GetPosition();
+	EAsteroidSize newSize = static_cast<EAsteroidSize>(a.GetAsteroidSize() - 1);
+	Asteroid NewAsteroid;
+	NewAsteroid.SetCanRespawn(false);
+	NewAsteroid.Init(newSize, ParentPos + Vec2D(10, 5), mMiddleScreenPos);
+	mAsteroids.push_back(NewAsteroid);
+	NewAsteroid.Activate();
 }

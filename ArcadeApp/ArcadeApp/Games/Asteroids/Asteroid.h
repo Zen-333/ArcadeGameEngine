@@ -24,11 +24,14 @@ public:
 	void Destroy();
 	void Activate();
 	void Respawn(EAsteroidSize size, Vec2D spawnPos, Vec2D middlePos);
+	void SetCanRespawn(bool CanRespawn) { mCanRespawn = CanRespawn; };
 
 	inline void SetSpawnPos(const Vec2D SpawnPos) { mSpawnPos = SpawnPos; }
 	inline const bool GetIsActive() const { return mIsActive; };
 	inline Vec2D GetPosition() const { return mSprite.Position(); } 
 	inline const AARectangle GetSpriteBox() const { return mSprite.GetBoundingBox(); }
+	inline const EAsteroidSize GetAsteroidSize() const { return mAsteroidSize; }
+	inline const bool GetCanRespawn() const { return mCanRespawn; }
 
 private:
 
@@ -36,6 +39,7 @@ private:
 	void SetForwardDirection();
 
 	bool mIsActive = false;
+	bool mCanRespawn = true;
 
 	const float mMaxSpeed = 30;
 	const float mMinSpeed = 5;
