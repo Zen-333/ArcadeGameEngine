@@ -10,15 +10,16 @@ Asteroid::Asteroid(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos): mAstero
 {
 }
 
-void Asteroid::Init(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos)
+void Asteroid::Init(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos, const SpriteSheet& spriteSheet)
 {
 	mAsteroidSize = Size;
 	mSpawnPos = SpawnPos;
 	mMiddlePos = MiddlePos;
+	mSpriteSheet = spriteSheet;
 
-	mSpriteSheet.Load("AsteroidsSprites");
-
-	mSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
+	//mSpriteSheet.Load("AsteroidsSprites");
+	mSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", spriteSheet);
+	//mSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
 
 	switch (mAsteroidSize)
 	{
@@ -67,6 +68,7 @@ void Asteroid::Destroy()
 {
 	mIsActive = false;
 
+	std::cout << "DESTROY" << std::endl;
 }
 
 void Asteroid::Activate()

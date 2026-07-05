@@ -1,5 +1,6 @@
 #include "Asteroids.h"
 #include "AARectangle.h"
+#include "SpriteSheet.h"
 #include <random>
 
 Asteroids::Asteroids(): mSpaceShip(Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f))
@@ -78,16 +79,20 @@ void Asteroids::Init(GameController& controller)
 
 	mSpaceShip.Init();
 
+	mAsteroidSpriteSheet.Load("AsteroidsSprites");   
+	mAsteroids.reserve(MAX_TOTAL_ASTEROIDS);
+
 	for (Missile& m : mMissiles)
 	{
 		m.Init();
 	}
-
-	for(int i = 0; i < MAX_START_ASTEROIDS; i++)
+	std::cout << mDistanceToScreenEntry << std::endl;
+	for (int i = 0; i < MAX_START_ASTEROIDS; i++)
 	{
 		Asteroid newAsteroid;
-		newAsteroid.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+		newAsteroid.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos, mAsteroidSpriteSheet);
 		mAsteroids.push_back(newAsteroid);
+		std::cout << newAsteroid.GetPosition().Distance(mMiddleScreenPos) << std::endl;
 	}
 
 	ResetRandomSpawnTime();
@@ -111,7 +116,6 @@ void Asteroids::Update(uint32_t dt)
 		m.Update(dt);
 		
 		if (m.IsActive() && !CanMissileMove(m)) m.Deactivate();
-			
 	}
 
 	for (Asteroid& a : mAsteroids)
@@ -135,14 +139,20 @@ void Asteroids::Update(uint32_t dt)
 					if(a.GetAsteroidSize() != AS_Small)
 					{
 						BreakAsteroid(a);
+						m.Deactivate();
+						a.Destroy();
+						if (!a.GetCanRespawn()) return;
+						mSpawningAsteroids = true;
+						a.Respawn(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+						
 					}else
 					{
 						a.Destroy();
-						mSpawningAsteroids = true;
+						m.Deactivate();
 						if (!a.GetCanRespawn()) return;
+						mSpawningAsteroids = true;
 						a.Respawn(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
 						ResetRandomSpawnTime();
-						m.Deactivate();
 						return;
 					}
 				}
@@ -151,7 +161,7 @@ void Asteroids::Update(uint32_t dt)
 			a.Update(dt);
 		}else
 		{
-			if(mTimePassed > mAsteroidSpawnTime)
+			if(a.GetCanRespawn() && mTimePassed > mAsteroidSpawnTime)
 			{
 				a.Activate();
 				mTimePassed = 0.0f;
@@ -248,7 +258,7 @@ bool Asteroids::AreAllAsteroidsSpawned()
 {
 	for (Asteroid& a : mAsteroids)
 	{
-		if(!a.GetIsActive())
+		if(!a.GetIsActive() && a.GetCanRespawn())
 		{
 			return false;
 		}
@@ -341,9 +351,15 @@ void Asteroids::BreakAsteroid(Asteroid& a)
 {
 	Vec2D ParentPos = a.GetPosition();
 	EAsteroidSize newSize = static_cast<EAsteroidSize>(a.GetAsteroidSize() - 1);
-	Asteroid NewAsteroid;
-	NewAsteroid.SetCanRespawn(false);
-	NewAsteroid.Init(newSize, ParentPos + Vec2D(10, 5), mMiddleScreenPos);
-	mAsteroids.push_back(NewAsteroid);
-	NewAsteroid.Activate();
+	Vec2D offsets[2] = { Vec2D(10.0f, 5.0f), Vec2D(-10.0f, 5.0f) };
+
+	for(int i = 0; i < 2; i++)
+	{
+		Asteroid NewAsteroid;
+		NewAsteroid.SetCanRespawn(false);
+		NewAsteroid.Init(newSize, ParentPos + offsets[i], mMiddleScreenPos, mAsteroidSpriteSheet);
+		NewAsteroid.Activate();
+		mAsteroids.push_back(NewAsteroid);
+	}
+
 }

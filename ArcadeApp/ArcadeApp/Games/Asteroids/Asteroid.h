@@ -17,7 +17,7 @@ public:
 
 	Asteroid();
 	Asteroid(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos);
-	void Init(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos);
+	void Init(EAsteroidSize Size, Vec2D SpawnPos, Vec2D MiddlePos, const SpriteSheet& spriteSheet);
 
 	void Update(uint32_t dt);
 	void Draw(Screen& theScreen);
