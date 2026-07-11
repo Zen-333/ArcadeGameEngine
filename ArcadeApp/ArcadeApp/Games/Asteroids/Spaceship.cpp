@@ -126,3 +126,10 @@ void Spaceship::Shoot(std::array<Missile, 3>& Missiles)
 		}
 	}
 }
+
+void Spaceship::Reset()
+{
+	mVelocity = Vec2D::Zero;
+	mSprite.SetPosition(mSpawnPoint);
+	mAngleDegrees = 0;
+}

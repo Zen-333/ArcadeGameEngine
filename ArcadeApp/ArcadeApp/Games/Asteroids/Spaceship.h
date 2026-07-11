@@ -3,6 +3,7 @@
 #include "Screen.h"
 #include "SpriteSheet.h"
 #include "AnimatedSprite.h"
+#include "AARectangle.h"
 
 class Missile;
 
@@ -20,8 +21,10 @@ public:
 	void Shoot(std::array<Missile, 3>& Missiles);
 	void RotateLeft();
 	void RotateRight();
+	void Reset();
 
 	inline void SetCanMove(const bool CanMove) { mCanMove = CanMove; }
+	inline const AARectangle GetSpriteBox() const { return mSprite.GetBoundingBox(); }
 
 	Vec2D GetFacingDirection();
 

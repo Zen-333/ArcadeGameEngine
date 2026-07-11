@@ -68,7 +68,6 @@ void Asteroid::Destroy()
 {
 	mIsActive = false;
 
-	std::cout << "DESTROY" << std::endl;
 }
 
 void Asteroid::Activate()

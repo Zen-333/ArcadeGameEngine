@@ -29,10 +29,12 @@ public:
 private:
 
 	void ResetGame();
+	void AddPoints(EAsteroidSize AsteroidSize);
 	bool CanShipMove();
 	bool CanMissileMove(const Missile& m);
 	bool AreAllAsteroidsSpawned();
 	Missile& DidMissileHitAsteroid(const Asteroid& a, bool& DidHit);
+	bool DidAsteroidHitPlayer(const Asteroid& a);
 	void ResetRandomSpawnTime();
 	Vec2D GetRandomAsteroidPos();
 	EAsteroidSize GetRandomAsteroidSize();
@@ -49,6 +51,15 @@ private:
 	const float mAsteroidScreenPadding = 50.0f;
 	const float mDistanceToScreenEntry = Vec2D(PLAYEBALE_AREA_WIDTH / 2.0f, PLAYEBALE_AREA_HEIGHT / 2.0f).Mag2() + mAsteroidScreenPadding + 160.0f;
 	bool mSpawningAsteroids = true;
+
+	const int mPlayerLives = 3;
+	int mCurrentPlayerLive = mPlayerLives;
+	int mPoints = 0;
+	const int mSmallAsteroidPoint = 100;
+	const int mMediumAsteroidPoint = 50;
+	const int mLargeAsteroidPoint = 10;
+
+	std::unordered_map<EAsteroidSize, int> mAsteroidPointsMap;
 
 	float mAsteroidSpawnTime = 2.0f;
 	float mTimePassed = 0.0f;

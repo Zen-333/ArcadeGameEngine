@@ -17,6 +17,10 @@ void Asteroids::Init(GameController& controller)
 
 	ResetGame();
 
+	mAsteroidPointsMap.insert(std::pair<EAsteroidSize, int>(EAsteroidSize::AS_Small, mSmallAsteroidPoint));
+	mAsteroidPointsMap.insert(std::pair<EAsteroidSize, int>(EAsteroidSize::AS_Medium, mMediumAsteroidPoint));
+	mAsteroidPointsMap.insert(std::pair<EAsteroidSize, int>(EAsteroidSize::AS_Large, mLargeAsteroidPoint));
+
 	ButtonAction ForwardKeyAction;
 	ForwardKeyAction.Key = GameController::UpKey();
 	ForwardKeyAction.action = [this](uint32_t dt, InputState state)
@@ -72,6 +76,9 @@ void Asteroids::Init(GameController& controller)
 				{
 					mSpaceShip.Shoot(mMissiles);
 				}
+			}else
+			{
+				mGameState = A_PLAY;
 			}
 		};
 
@@ -86,13 +93,12 @@ void Asteroids::Init(GameController& controller)
 	{
 		m.Init();
 	}
-	std::cout << mDistanceToScreenEntry << std::endl;
+
 	for (int i = 0; i < MAX_START_ASTEROIDS; i++)
 	{
 		Asteroid newAsteroid;
 		newAsteroid.Init(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos, mAsteroidSpriteSheet);
 		mAsteroids.push_back(newAsteroid);
-		std::cout << newAsteroid.GetPosition().Distance(mMiddleScreenPos) << std::endl;
 	}
 
 	ResetRandomSpawnTime();
@@ -101,6 +107,7 @@ void Asteroids::Init(GameController& controller)
 
 void Asteroids::Update(uint32_t dt)
 {
+	if (mGameState == A_GAME_OVER) return;
 
 	mSpaceShip.SetCanMove(CanShipMove());
 	mSpaceShip.Update(dt);
@@ -122,6 +129,15 @@ void Asteroids::Update(uint32_t dt)
 	{
 		if (a.GetIsActive()) 
 		{
+			if(DidAsteroidHitPlayer(a))
+			{
+				mCurrentPlayerLive--;
+				mGameState = A_GAME_OVER;
+				ResetGame();
+				std::cout << mCurrentPlayerLive << std::endl;
+				return;
+			}
+
 			bool DidHit = false;
 			if(a.GetPosition().Distance(mMiddleScreenPos) > mDistanceToScreenEntry)
 			{
@@ -136,6 +152,7 @@ void Asteroids::Update(uint32_t dt)
 				Missile& m = DidMissileHitAsteroid(a, DidHit);
 				if(DidHit)
 				{
+					AddPoints(a.GetAsteroidSize());
 					if(a.GetAsteroidSize() != AS_Small)
 					{
 						BreakAsteroid(a);
@@ -180,7 +197,10 @@ void Asteroids::Update(uint32_t dt)
 
 void Asteroids::Draw(Screen& screen)
 {
+
 	mSpaceShip.Draw(screen);
+
+	if (mGameState == A_GAME_OVER) return;
 
 	for (Missile& m : mMissiles)
 	{
@@ -203,6 +223,47 @@ void Asteroids::ResetGame()
 {
 	AARectangle levelBoundary = { Vec2D::Zero, PLAYEBALE_AREA_WIDTH, PLAYEBALE_AREA_HEIGHT };
 	mLevelBoundary = { levelBoundary };
+
+	for (Missile& m : mMissiles)
+	{
+		if(m.IsActive())
+		{
+			m.Deactivate();
+		}
+	}
+
+	for(Asteroid& a : mAsteroids)
+	{
+		if(a.GetIsActive())
+		{
+			if(a.GetCanRespawn())
+			{
+				a.Respawn(GetRandomAsteroidSize(), GetRandomAsteroidPos(), mMiddleScreenPos);
+			}
+			a.Destroy();
+		}
+	}
+
+	mSpawningAsteroids = true;
+	mSpaceShip.Reset();
+
+	if(mCurrentPlayerLive <= 0)
+	{
+		//TODO: End game
+	}
+}
+
+void Asteroids::AddPoints(EAsteroidSize AsteroidSize)
+{
+	for(auto& PointMap : mAsteroidPointsMap)
+	{
+		if(AsteroidSize == PointMap.first)
+		{
+			mPoints += PointMap.second;
+			return;
+		}
+	}
+
 }
 
 bool Asteroids::CanShipMove()
@@ -288,6 +349,17 @@ Missile& Asteroids::DidMissileHitAsteroid(const Asteroid& a, bool& DidHit)
 	}
 	DidHit = false;
 	return mMissiles[0];
+}
+
+bool Asteroids::DidAsteroidHitPlayer(const Asteroid& a)
+{
+	bool separated =
+		mSpaceShip.GetSpriteBox().GetBottomRightPoint().GetX() < a.GetSpriteBox().GetTopLeftPoint().GetX() ||
+		mSpaceShip.GetSpriteBox().GetTopLeftPoint().GetX() > a.GetSpriteBox().GetBottomRightPoint().GetX() ||
+		mSpaceShip.GetSpriteBox().GetBottomRightPoint().GetY() < a.GetSpriteBox().GetTopLeftPoint().GetY() ||
+		mSpaceShip.GetSpriteBox().GetTopLeftPoint().GetY() > a.GetSpriteBox().GetBottomRightPoint().GetY();
+
+	return !separated;
 }
 
 void Asteroids::ResetRandomSpawnTime()
