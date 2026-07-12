@@ -111,10 +111,9 @@ void Asteroids::Init(GameController& controller)
 
 void Asteroids::Update(uint32_t dt)
 {
-	if (mGameState == A_GAME_OVER) return;
-
-	mSpaceShip.SetCanMove(CanShipMove());
 	mSpaceShip.Update(dt);
+	if (mGameState == A_GAME_OVER) return;
+	mSpaceShip.SetCanMove(CanShipMove());
 	float dtSeconds = MillisecondsToSeconds(dt);
 
 	if(mSpawningAsteroids)
@@ -135,10 +134,9 @@ void Asteroids::Update(uint32_t dt)
 		{
 			if(DidAsteroidHitPlayer(a))
 			{
-				mCurrentPlayerLive--;
 				mGameState = A_GAME_OVER;
+				mSpaceShip.GotHit();
 				ResetGame();
-				std::cout << mCurrentPlayerLive << std::endl;
 				return;
 			}
 
@@ -256,7 +254,6 @@ void Asteroids::ResetGame()
 	}
 
 	mSpawningAsteroids = true;
-	mSpaceShip.Reset();
 
 }
 
@@ -445,11 +442,13 @@ void Asteroids::BreakAsteroid(Asteroid& a)
 
 void Asteroids::StartGame()
 {
+	mCurrentPlayerLive--;
 	if (mCurrentPlayerLive < 0)
 	{
 		mCurrentPlayerLive = mPlayerLives;
 		mPoints = 0;
 	}
 
+	mSpaceShip.Reset();
 	mGameState = A_PLAY;
 }

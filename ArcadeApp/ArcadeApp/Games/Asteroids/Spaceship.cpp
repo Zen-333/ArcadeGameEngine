@@ -20,15 +20,19 @@ void Spaceship::Init()
 
 	mThruster.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mSpriteSheet);
 	mThruster.SetAnimation("thrusters", true);
+
+	mExplosionEffect.Init();
 }
 
 void Spaceship::Draw(Screen& theScreen)
 {
+	
+	mExplosionEffect.Draw(theScreen);
+	if (mIsHit) return;
 
 	mSprite.Draw(theScreen);
 	theScreen.Draw(GetFacingDirection(), Color::Green());
 	theScreen.Draw(GetBackDirection(), Color::Red());
-	
 
 	if(mVelocity.Mag() > 1.0f)
 	{
@@ -49,6 +53,11 @@ void Spaceship::Draw(Screen& theScreen)
 
 void Spaceship::Update(uint32_t dt)
 {
+
+	mExplosionEffect.Update(dt);
+
+	if (mIsHit) return;
+
 	float dtSeconds = MillisecondsToSeconds(dt);
 
 	if(mCanMove) 
@@ -132,4 +141,11 @@ void Spaceship::Reset()
 	mVelocity = Vec2D::Zero;
 	mSprite.SetPosition(mSpawnPoint);
 	mAngleDegrees = 0;
+	mIsHit = false;
+}
+
+void Spaceship::GotHit()
+{
+	mIsHit = true;
+	mExplosionEffect.Activate(mSprite.Position());
 }

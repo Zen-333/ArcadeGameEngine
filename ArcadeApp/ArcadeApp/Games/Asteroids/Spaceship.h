@@ -4,6 +4,7 @@
 #include "SpriteSheet.h"
 #include "AnimatedSprite.h"
 #include "AARectangle.h"
+#include "ExplosionEffect.h"
 
 class Missile;
 
@@ -22,6 +23,7 @@ public:
 	void RotateLeft();
 	void RotateRight();
 	void Reset();
+	void GotHit();
 
 	inline void SetCanMove(const bool CanMove) { mCanMove = CanMove; }
 	inline const AARectangle GetSpriteBox() const { return mSprite.GetBoundingBox(); }
@@ -33,6 +35,7 @@ private:
 	Vec2D GetBackDirection();
 
 	bool mCanMove = true;
+	bool mIsHit = false;
 
 	const float mForwardSpeed = 100.0f;
 	const float mRotationSpeed = 3.0f;
@@ -45,5 +48,7 @@ private:
 	AnimatedSprite mThruster;
 
 	Vec2D mSpawnPoint;
+
+	ExplosionEffect mExplosionEffect;
 
 };
