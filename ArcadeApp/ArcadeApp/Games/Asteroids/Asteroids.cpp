@@ -78,7 +78,7 @@ void Asteroids::Init(GameController& controller)
 				}
 			}else
 			{
-				mGameState = A_PLAY;
+				StartGame();
 			}
 		};
 
@@ -88,6 +88,10 @@ void Asteroids::Init(GameController& controller)
 
 	mAsteroidSpriteSheet.Load("AsteroidsSprites");   
 	mAsteroids.reserve(MAX_TOTAL_ASTEROIDS);
+
+	mLivesSprite.Init(App::Singleton().GetBasePath() + "Assets/AsteroidsAnimations.txt", mAsteroidSpriteSheet);
+	mLivesSprite.SetAnimation("ship", true);
+	mLivesSprite.SetPosition(mLivesSpriteStartPos);
 
 	for (Missile& m : mMissiles)
 	{
@@ -199,6 +203,13 @@ void Asteroids::Draw(Screen& screen)
 {
 
 	mSpaceShip.Draw(screen);
+	mLivesSprite.SetPosition(mLivesSpriteStartPos);
+
+	for(int i = 0; i < mCurrentPlayerLive; i++)
+	{
+		mLivesSprite.Draw(screen);
+		mLivesSprite.MoveBy(mLivesSpriteIncrement);
+	}
 
 	if (mGameState == A_GAME_OVER) return;
 
@@ -247,10 +258,6 @@ void Asteroids::ResetGame()
 	mSpawningAsteroids = true;
 	mSpaceShip.Reset();
 
-	if(mCurrentPlayerLive <= 0)
-	{
-		//TODO: End game
-	}
 }
 
 void Asteroids::AddPoints(EAsteroidSize AsteroidSize)
@@ -434,4 +441,15 @@ void Asteroids::BreakAsteroid(Asteroid& a)
 		mAsteroids.push_back(NewAsteroid);
 	}
 
+}
+
+void Asteroids::StartGame()
+{
+	if (mCurrentPlayerLive < 0)
+	{
+		mCurrentPlayerLive = mPlayerLives;
+		mPoints = 0;
+	}
+
+	mGameState = A_PLAY;
 }

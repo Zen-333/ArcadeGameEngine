@@ -40,19 +40,24 @@ private:
 	EAsteroidSize GetRandomAsteroidSize();
 	void BreakAsteroid(Asteroid& a);
 
+	void StartGame();
+
 	Spaceship mSpaceShip;
 
 	static constexpr size_t MAX_MISSILES = 3;
 	static constexpr size_t MAX_START_ASTEROIDS = 2;
 	static constexpr size_t MAX_TOTAL_ASTEROIDS = 32;
 	SpriteSheet mAsteroidSpriteSheet;
+	AnimatedSprite mLivesSprite;
+	const Vec2D mLivesSpriteStartPos = {1, 5};
+	const Vec2D mLivesSpriteIncrement = { 25, 0 };
 	std::array<Missile, MAX_MISSILES> mMissiles;
 	std::vector<Asteroid> mAsteroids;
 	const float mAsteroidScreenPadding = 50.0f;
 	const float mDistanceToScreenEntry = Vec2D(PLAYEBALE_AREA_WIDTH / 2.0f, PLAYEBALE_AREA_HEIGHT / 2.0f).Mag2() + mAsteroidScreenPadding + 160.0f;
 	bool mSpawningAsteroids = true;
 
-	const int mPlayerLives = 3;
+	const int mPlayerLives = 2;
 	int mCurrentPlayerLive = mPlayerLives;
 	int mPoints = 0;
 	const int mSmallAsteroidPoint = 100;
