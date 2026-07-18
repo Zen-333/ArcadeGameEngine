@@ -7,6 +7,7 @@
 #include <array>
 #include "Asteroid.h"
 #include "App.h"
+#include "HighScoreFile.h"
 
 enum AstroidGameState
 {
@@ -63,6 +64,7 @@ private:
 	const int mSmallAsteroidPoint = 100;
 	const int mMediumAsteroidPoint = 50;
 	const int mLargeAsteroidPoint = 10;
+	const unsigned int mScoreHeightPadding = 25;
 
 	std::unordered_map<EAsteroidSize, int> mAsteroidPointsMap;
 
@@ -78,5 +80,9 @@ private:
 	const uint32_t PLAYEBALE_AREA_HEIGHT = 280;
 
 	const Vec2D mMiddleScreenPos = Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f);
+
+	Score mScore;
+	const std::string mFileName = "AsteroidsScoreTable.txt";
+	HighScoreFile mScoreTable;
 
 };

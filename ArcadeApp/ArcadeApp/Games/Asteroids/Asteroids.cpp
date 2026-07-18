@@ -3,7 +3,7 @@
 #include "SpriteSheet.h"
 #include <random>
 
-Asteroids::Asteroids(): mSpaceShip(Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f))
+Asteroids::Asteroids(): mSpaceShip(Vec2D(App::Singleton().Width() / 2.0f, App::Singleton().Height() / 2.0f)), mScoreTable(mFileName)
 {
 
 }
@@ -202,6 +202,17 @@ void Asteroids::Draw(Screen& screen)
 
 	mSpaceShip.Draw(screen);
 	mLivesSprite.SetPosition(mLivesSpriteStartPos);
+
+	const BitmapFont& font = App::Singleton().GetFont();
+
+	AARectangle rect = { Vec2D::Zero, App::Singleton().Width() - 10, mScoreHeightPadding };
+
+	std::string str = "X";
+	str += std::to_string(mPoints);
+
+	Vec2D textDrawPosition;
+	textDrawPosition = font.GetDrawPosition(str, rect, BFXA_RIGHT, BFYA_CENTER);
+	screen.Draw(font, str, textDrawPosition, Color::White());
 
 	for(int i = 0; i < mCurrentPlayerLive; i++)
 	{
@@ -445,6 +456,8 @@ void Asteroids::StartGame()
 	mCurrentPlayerLive--;
 	if (mCurrentPlayerLive < 0)
 	{
+		mScore.IncreaseScore(mPoints);
+		mScore.SaveScore(mScoreTable);
 		mCurrentPlayerLive = mPlayerLives;
 		mPoints = 0;
 	}
