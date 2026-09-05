@@ -180,6 +180,12 @@
     <ClCompile Include="Games\Asteroids\Asteroid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Games\Pacman\PacmanGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Games\Pacman\PacmanStartScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App\App.h">
@@ -326,6 +332,12 @@
     <ClInclude Include="Games\Asteroids\Asteroid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Games\Pacman\PacmanGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Games\Pacman\PacmanStartScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\**\*.*" />
@@ -337,6 +349,18 @@
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*" />
+    <None Include="Assets\**\*.*">
+      <Filter>Resource Files</Filter>
+    </None>
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
     <None Include="Assets\**\*.*" />
