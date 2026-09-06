@@ -159,6 +159,8 @@
     <ClCompile Include="Games\Asteroids\Missile.cpp" />
     <ClCompile Include="Games\Asteroids\Spaceship.cpp" />
     <ClCompile Include="Games\Pacman\PacmanGame.cpp" />
+    <ClCompile Include="Games\Pacman\PacmanGameUtils.cpp" />
+    <ClCompile Include="Games\Pacman\PacmanLevel.cpp" />
     <ClCompile Include="Games\Pacman\PacmanStartScene.cpp" />
     <ClCompile Include="Graphics\AnimatedSprite.cpp" />
     <ClCompile Include="Graphics\Animation.cpp" />
@@ -217,6 +219,8 @@
     <ClInclude Include="Games\Asteroids\Missile.h" />
     <ClInclude Include="Games\Asteroids\Spaceship.h" />
     <ClInclude Include="Games\Pacman\PacmanGame.h" />
+    <ClInclude Include="Games\Pacman\PacmanGameUtils.h" />
+    <ClInclude Include="Games\Pacman\PacmanLevel.h" />
     <ClInclude Include="Games\Pacman\PacmanStartScene.h" />
     <ClInclude Include="Graphics\AnimatedSprite.h" />
     <ClInclude Include="Graphics\Animation.h" />
