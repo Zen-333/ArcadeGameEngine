@@ -26,7 +26,7 @@ public:
 	bool Intersects(const AARectangle& otherRect) const;
 	bool ContainsPoint(const Vec2D& point);
 
-	static AARectangle Inset(const AARectangle& rect, Vec2D& insets);
+	static AARectangle Inset(const AARectangle& rect,const Vec2D& insets);
 
 	virtual std::vector<Vec2D> GetPoints() const override;
 

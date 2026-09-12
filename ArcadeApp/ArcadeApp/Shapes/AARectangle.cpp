@@ -72,7 +72,7 @@ bool AARectangle::ContainsPoint(const Vec2D& point)
 	return withinX && withnY;
 }
 
-AARectangle AARectangle::Inset(const AARectangle& rect, Vec2D& insets)
+AARectangle AARectangle::Inset(const AARectangle& rect,const Vec2D& insets)
 {
 
 	// this is a shrink function we do 2 * because we consider the 2 sides
