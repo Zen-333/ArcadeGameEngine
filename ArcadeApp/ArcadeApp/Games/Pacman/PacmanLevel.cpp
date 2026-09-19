@@ -3,11 +3,22 @@
 #include "Screen.h"
 #include "Pacman.h"
 #include <cassert>
+#include "App.h"
+#include "Circle.h"
+#include "Excluder.h"
 
 bool PacmanLevel::Init(const std::string& levelPath, Pacman* noptrPacman)
 {
 	mnoptrPacman = noptrPacman;
-	return LoadLevel(levelPath);
+
+	bool levelLoaded = LoadLevel(levelPath);
+
+	if(levelLoaded)
+	{
+		ResetLevel();
+	}
+
+	return levelLoaded;
 }
 
 void PacmanLevel::Update(uint32_t dt) 
@@ -39,6 +50,25 @@ void PacmanLevel::Update(uint32_t dt)
 			}
 		}
 	}
+
+	for(auto& pellet: mPellets)
+	{
+		if(!pellet.eaten)
+		{
+			if(mnoptrPacman->GetEactingBoundingBox().Intersects(pellet.mBBox))
+			{
+				pellet.eaten = true;
+
+				mnoptrPacman->AteItem(pellet.score);
+
+				if(pellet.powerPellet)
+				{
+					mnoptrPacman->ResetGhostEatenMultiplier();
+					// TODO: make ghosts go vulnerable
+				}
+			}
+		}
+	}
 }
 
 void PacmanLevel::Draw(Screen& screen)
@@ -46,6 +76,21 @@ void PacmanLevel::Draw(Screen& screen)
 	for(auto& wall: mWalls)
 	{
 		screen.Draw(wall.GetAARectangle(), Color::Blue());
+	}
+
+	for(const auto& pellet: mPellets)
+	{
+		if(!pellet.eaten)
+		{
+			if(!pellet.powerPellet)
+			{
+				screen.Draw(pellet.mBBox, Color::White());
+			}else
+			{
+				Circle c(pellet.mBBox.GetCenterPoint(), pellet.mBBox.GetWidth() / 2.0f);
+				screen.Draw(c, Color::White(), true, Color::White());
+			}
+		}
 	}
 }
 
@@ -67,6 +112,86 @@ bool PacmanLevel::WillCollide(const AARectangle& aBBox, PacmanMovement direction
 
 	return false;
 
+}
+
+void PacmanLevel::ResetLevel()
+{
+	ResetPellets();
+}
+
+void PacmanLevel::ResetPellets()
+{
+	mPellets.clear();
+
+	const uint32_t PELLET_SIZE = 2;
+	const uint32_t PADDING = static_cast<uint32_t>(mTileHeight);
+
+	uint32_t startingY = mLayoutOffset.GetY() + PADDING + mTileHeight - 1;
+	uint32_t startingX = PADDING + 3;
+
+	const uint32_t LEVEL_HEIGHT = mLayoutOffset.GetY() + 32 * mTileHeight;
+
+	Pellet p;
+	p.score = 10;
+
+	uint32_t row = 0;
+
+	for(uint32_t y = startingY; y < LEVEL_HEIGHT; y += PADDING, row++)
+	{
+		for(uint32_t x = startingX, col = 0; x < App::Singleton().Width(); x += PADDING, col++)
+		{
+			if(row == 0  ||  row == 22)
+			{
+				if(col == 0 || col == 25)
+				{
+					p.powerPellet = 1;
+					p.score = 50;
+					p.mBBox = AARectangle(Vec2D(x - 3, y - 3), mTileHeight, mTileHeight);
+					mPellets.push_back(p);
+
+					p.powerPellet = 0;
+					p.score = 10;
+
+					continue;
+				}
+			}
+
+			AARectangle rect = AARectangle(Vec2D(x, y), PELLET_SIZE, PELLET_SIZE);
+
+			bool found = false;
+
+			for(Excluder& wall: mWalls)
+			{
+				if(wall.GetAARectangle().Intersects(rect))
+				{
+					found = true;
+					break;
+				}
+			}
+
+			if(!found)
+			{
+				for(const Tile& excludedPelletTile: mExclusionTiles)
+				{
+					if(excludedPelletTile.excludePelletTile)
+					{
+						AARectangle tileAABB(excludedPelletTile.position, excludedPelletTile.width, mTileHeight);
+
+						if(tileAABB.Intersects(rect))
+						{
+							found = true;
+							break;
+						}
+					}
+				}
+			}
+			if(!found)
+			{
+				p.mBBox = rect;
+				mPellets.push_back(p);
+			}
+		}
+	}
 }
 
 bool PacmanLevel::LoadLevel(const std::string& levelPath)
@@ -149,6 +274,13 @@ bool PacmanLevel::LoadLevel(const std::string& levelPath)
 		};
 	fileLoader.AddCommand(tileOffsetCommand);
 
+	Command tileExcludePelletCommand;
+	tileExcludePelletCommand.command = "tile_exclude_pellet";
+	tileExcludePelletCommand.parseFunc = [this](ParseFuncParams params)
+		{
+			mTiles.back().excludePelletTile = FileCommandLoader::ReadInt(params);
+		};
+	fileLoader.AddCommand(tileExcludePelletCommand);
 
 	Command layoutCommand;
 	layoutCommand.command = "layout";
@@ -171,6 +303,11 @@ bool PacmanLevel::LoadLevel(const std::string& levelPath)
 						wall.Init(AARectangle(Vec2D(startingX, layoutOffset.GetY()), tile->width, static_cast<int>(mTileHeight)));
 						mWalls.push_back(wall);
 					}
+					if(tile->excludePelletTile > 0)
+					{
+						mExclusionTiles.push_back(*tile);
+					}
+
 					startingX += tile->width;
 				}
 			}
