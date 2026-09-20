@@ -7,8 +7,14 @@
 #include "Circle.h"
 #include "Excluder.h"
 
+namespace
+{
+	const uint32_t NUM_LEVELS = 256;
+}
+
 bool PacmanLevel::Init(const std::string& levelPath, Pacman* noptrPacman)
 {
+	mCurrentLevel = 0;
 	mnoptrPacman = noptrPacman;
 
 	bool levelLoaded = LoadLevel(levelPath);
@@ -117,6 +123,56 @@ bool PacmanLevel::WillCollide(const AARectangle& aBBox, PacmanMovement direction
 void PacmanLevel::ResetLevel()
 {
 	ResetPellets();
+
+
+	if(mnoptrPacman)
+	{
+		mnoptrPacman->MoveTo(mPacmanSpawnLocation);
+		mnoptrPacman->ResetToFirstAnimation();
+	}
+}
+
+bool PacmanLevel::IsLevelOver() const
+{
+	return HasEatenAllPellets();
+}
+
+void PacmanLevel::IncreaseLevel()
+{
+	mCurrentLevel++;
+
+	if(mCurrentLevel > NUM_LEVELS)
+	{
+		mCurrentLevel = 1;
+	}
+
+	ResetLevel();
+}
+
+void PacmanLevel::ResetToFirstLevel()
+{
+	mCurrentLevel = 1;
+	ResetLevel();
+}
+
+bool PacmanLevel::HasEatenAllPellets() const
+{
+	return NumPelletsEaten() >= mPellets.size() - 4; // 4 super pellets
+}
+
+size_t PacmanLevel::NumPelletsEaten() const 
+{
+	size_t numEaten = 0;
+
+	for(const auto& pellet: mPellets)
+	{
+		if(!pellet.powerPellet && pellet.eaten)
+		{
+			numEaten++;
+		}
+	}
+
+	return numEaten;
 }
 
 void PacmanLevel::ResetPellets()
@@ -282,6 +338,14 @@ bool PacmanLevel::LoadLevel(const std::string& levelPath)
 		};
 	fileLoader.AddCommand(tileExcludePelletCommand);
 
+	Command tilePacmanSpawnPointCommand;
+	tilePacmanSpawnPointCommand.command = "tile_pacman_spawn_point";
+	tilePacmanSpawnPointCommand.parseFunc = [this](ParseFuncParams params) 
+		{
+			mTiles.back().pacmanSpawnPoint = FileCommandLoader::ReadInt(params);
+		};
+	fileLoader.AddCommand(tilePacmanSpawnPointCommand);
+
 	Command layoutCommand;
 	layoutCommand.command = "layout";
 	layoutCommand.commandType = COMMAND_MULTI_LINE;
@@ -303,6 +367,13 @@ bool PacmanLevel::LoadLevel(const std::string& levelPath)
 						wall.Init(AARectangle(Vec2D(startingX, layoutOffset.GetY()), tile->width, static_cast<int>(mTileHeight)));
 						mWalls.push_back(wall);
 					}
+
+					if(tile->pacmanSpawnPoint > 0)
+					{
+						mPacmanSpawnLocation = Vec2D(startingX + tile->offset.GetX(), layoutOffset.GetY() + tile->offset.GetY());
+
+					}
+
 					if(tile->excludePelletTile > 0)
 					{
 						mExclusionTiles.push_back(*tile);
