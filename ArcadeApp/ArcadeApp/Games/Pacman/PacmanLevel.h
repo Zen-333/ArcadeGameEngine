@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include "PacmanGameUtils.h"
+#include "SpriteSheet.h"
+#include <random>
 
 class Screen;
 class Pacman;
@@ -13,7 +15,7 @@ class PacmanLevel {
 
 public:
 
-	bool Init(const std::string& levelPath, Pacman* noptrPacman);
+	bool Init(const std::string& levelPath,const SpriteSheet* noptrSpriteSheet, Pacman* noptrPacman);
 	void Update(uint32_t dt);
 	void Draw(Screen& screen);
 	void ResetLevel();
@@ -36,6 +38,7 @@ private:
 		int isTeleportTile = 0;
 		int excludePelletTile = 0;
 		int pacmanSpawnPoint = 0;
+		int itemSpawnPoint = 0;
 		char teleoportToSymbol = 0;
 		char symbol = '-';
 	};
@@ -48,11 +51,37 @@ private:
 		int eaten = 0;
 	};
 
+	struct BonusItem
+	{
+		uint32_t score = 0;
+		AARectangle bbox;
+		int eaten = 0;
+		int spawned = 0;
+		int spawnTime = -1;
+	};
+
+	struct BonusItemLevelProperties
+	{
+		uint32_t score = 0;
+		std::string spriteName = "";
+		uint32_t begin = 0; // which level does this item spawn at
+		uint32_t end = 0;
+	};
+
 	bool LoadLevel(const std::string& levelPath);
 	Tile* GetTileForSymbol(char symbol);
 	void ResetPellets();
 	bool HasEatenAllPellets() const;
 	size_t NumPelletsEaten() const;
+	void GetBonusItemSpriteName(std::string& spriteName, uint32_t& score) const;
+	void SpawnBonusItem();
+	bool ShouldSpawnBonusItem() const;
+
+	std::default_random_engine mGenerator;
+	BonusItem mBonusItem;
+	std::string mBonusItemSpriteName;
+	const SpriteSheet* mnoptrSpriteSheet;
+	std::vector<BonusItemLevelProperties> mBonusItemProperties;
 
 	std::vector<Excluder> mWalls;
 	std::vector<Tile> mTiles;
