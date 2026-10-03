@@ -13,9 +13,9 @@ void PacmanGame::Init(GameController& controller)
 	mPacmanSpriteSheet.Load("PacmanSprites");
 	mPacman.Init(mPacmanSpriteSheet, App::Singleton().GetBasePath() + "Assets/Pacman_animations.txt", Vec2D::Zero, PACMAN_MOVEMENT_SPEED, false);
 
-	mLevel.Init(App::Singleton().GetBasePath() + "Assets/Pacman_level.txt",&mPacmanSpriteSheet, &mPacman);
+	mLevel.Init(App::Singleton().GetBasePath() + "Assets/Pacman_level.txt",&mPacmanSpriteSheet);
 
-
+	SetupGhosts();
 	ResetGame();
 
 	ButtonAction leftAction;
@@ -56,11 +56,17 @@ void PacmanGame::Update(uint32_t dt)
 	UpdatePacmanMovement();
 	mPacman.Update(dt);
 
-	mLevel.Update(dt);
+	for(size_t i = 0; i < NUM_GHOSTS; i++)
+	{
+		mGhosts[i].Update(dt);
+	}
+
+	mLevel.Update(dt,mPacman, mGhosts);
 
 	if(mLevel.IsLevelOver())
 	{
 		mLevel.IncreaseLevel();
+		ResetLevel();
 	}
 }
 
@@ -68,6 +74,11 @@ void PacmanGame::Draw(Screen& screen)
 {
 	mLevel.Draw(screen);
 	mPacman.Draw(screen);
+
+	for (auto& ghost: mGhosts)
+	{
+		ghost.Draw(screen);
+	}
 
 	{
 		Vec2D levelOffset = mLevel.GetLayoutOffset();
@@ -114,9 +125,39 @@ void PacmanGame::ResetGame()
 	mPressedDirection = PACMAN_MOVEMENT_NONE;
 	mPacman.ResetScore();
 	mLevel.ResetToFirstLevel();
+	ResetLevel();
 }
 
+void PacmanGame::ResetLevel()
+{
+	mPacman.MoveTo(mLevel.GetPacmanSpawnLocation());
+	mPacman.ResetToFirstAnimation();
+}
 
+void PacmanGame::SetupGhosts()
+{
+	mGhosts.resize(NUM_GHOSTS);
+
+	Ghost blinky;
+	blinky.Init(mPacmanSpriteSheet, App::Singleton().GetBasePath() + "Assets/Ghost_animations.txt", mLevel.GetGhostSpawnPoints()[BLINKY], GHOST_MOVEMENT_SPEED, true, Color::Red());
+	blinky.SetMovementDirection(PACMAN_MOVEMENT_LEFT);
+	mGhosts[BLINKY] = blinky;
+
+	Ghost pinky;
+	pinky.Init(mPacmanSpriteSheet, App::Singleton().GetBasePath() + "Assets/Ghost_animations.txt", mLevel.GetGhostSpawnPoints()[PINKY], GHOST_MOVEMENT_SPEED, true, Color::Pink());
+	pinky.SetMovementDirection(PACMAN_MOVEMENT_DOWN);
+	mGhosts[PINKY] = pinky;
+
+	Ghost inky;
+	inky.Init(mPacmanSpriteSheet, App::Singleton().GetBasePath() + "Assets/Ghost_animations.txt", mLevel.GetGhostSpawnPoints()[INKY], GHOST_MOVEMENT_SPEED, true, Color::Cyan());
+	inky.SetMovementDirection(PACMAN_MOVEMENT_UP);
+	mGhosts[INKY] = inky;
+
+	Ghost clyde;
+	clyde.Init(mPacmanSpriteSheet, App::Singleton().GetBasePath() + "Assets/Ghost_animations.txt", mLevel.GetGhostSpawnPoints()[CLYDE], GHOST_MOVEMENT_SPEED, true, Color::Orange());
+	clyde.SetMovementDirection(PACMAN_MOVEMENT_UP);
+	mGhosts[CLYDE] = clyde;
+}
 
 void PacmanGame::UpdatePacmanMovement()
 {

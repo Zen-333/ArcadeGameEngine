@@ -6,6 +6,7 @@
 #include "App.h"
 #include "Circle.h"
 #include "Excluder.h"
+#include "Ghost.h"
 
 namespace
 {
@@ -14,14 +15,14 @@ namespace
 	const uint32_t SPRITE_WIDTH = 16;
 }
 
-bool PacmanLevel::Init(const std::string& levelPath, const SpriteSheet* noptrSpriteSheet, Pacman* noptrPacman)
+bool PacmanLevel::Init(const std::string& levelPath, const SpriteSheet* noptrSpriteSheet)
 {
 	mCurrentLevel = 0;
-	mnoptrPacman = noptrPacman;
 	mnoptrSpriteSheet = noptrSpriteSheet;
 	mBonusItemSpriteName = "";
 	std::random_device r;
 	mGenerator.seed(r());
+	mGhostsSpawnPoints.resize(NUM_GHOSTS);
 
 	bool levelLoaded = LoadLevel(levelPath);
 
@@ -33,17 +34,26 @@ bool PacmanLevel::Init(const std::string& levelPath, const SpriteSheet* noptrSpr
 	return levelLoaded;
 }
 
-void PacmanLevel::Update(uint32_t dt) 
+void PacmanLevel::Update(uint32_t dt, Pacman& pacman, std::vector<Ghost>& ghosts)
 {
 	for(const auto& wall : mWalls)
 	{
 		BoundaryEdge edge;
 
-		if (wall.HasCollided(mnoptrPacman->GetBoundingBox(), edge))
+		if (wall.HasCollided(pacman.GetBoundingBox(), edge))
 		{
-			Vec2D offset = wall.GetCollisionOffset(mnoptrPacman->GetBoundingBox());
-			mnoptrPacman->MoveBy(offset);
-			mnoptrPacman->Stop();
+			Vec2D offset = wall.GetCollisionOffset(pacman.GetBoundingBox());
+			pacman.MoveBy(offset);
+			pacman.Stop();
+		}
+		for(auto& ghost : ghosts)
+		{
+			if(wall.HasCollided(ghost.GetBoundingBox(), edge))
+			{
+				Vec2D offset = wall.GetCollisionOffset(ghost.GetBoundingBox());
+				ghost.MoveBy(offset);
+				ghost.Stop();
+			}
 		}
 	}
 
@@ -56,9 +66,20 @@ void PacmanLevel::Update(uint32_t dt)
 			Tile* teleportToTile = GetTileForSymbol(t.teleoportToSymbol);
 			assert(teleportToTile);
 
-			if(teleportToTile->isTeleportTile && teleportTileAABB.Intersects(mnoptrPacman->GetBoundingBox()))
+			if(teleportToTile->isTeleportTile)
 			{
-				mnoptrPacman->MoveTo(teleportToTile->position + teleportToTile->offset);
+				if(teleportTileAABB.Intersects(pacman.GetBoundingBox()))
+				{
+					pacman.MoveTo(teleportToTile->position + teleportToTile->offset);
+				}
+
+				for(auto& ghost: ghosts)
+				{
+					if (teleportTileAABB.Intersects(pacman.GetBoundingBox()))
+					{
+						ghost.MoveTo(teleportToTile->position + teleportToTile->offset);
+					}
+				}
 			}
 		}
 	}
@@ -67,15 +88,15 @@ void PacmanLevel::Update(uint32_t dt)
 	{
 		if(!pellet.eaten)
 		{
-			if(mnoptrPacman->GetEactingBoundingBox().Intersects(pellet.mBBox))
+			if(pacman.GetEactingBoundingBox().Intersects(pellet.mBBox))
 			{
 				pellet.eaten = true;
 
-				mnoptrPacman->AteItem(pellet.score);
+				pacman.AteItem(pellet.score);
 
 				if(pellet.powerPellet)
 				{
-					mnoptrPacman->ResetGhostEatenMultiplier();
+					pacman.ResetGhostEatenMultiplier();
 					// TODO: make ghosts go vulnerable
 				}
 			}
@@ -89,10 +110,10 @@ void PacmanLevel::Update(uint32_t dt)
 
 	if(mBonusItem.spawned && !mBonusItem.eaten)
 	{
-		if(mnoptrPacman->GetEactingBoundingBox().Intersects(mBonusItem.bbox))
+		if(pacman.GetEactingBoundingBox().Intersects(mBonusItem.bbox))
 		{
 			mBonusItem.eaten = true;
-			mnoptrPacman->AteItem(mBonusItem.score);
+			pacman.AteItem(mBonusItem.score);
 		}
 	}
 }
@@ -180,11 +201,6 @@ void PacmanLevel::ResetLevel()
 
 	GetBonusItemSpriteName(mBonusItemSpriteName, mBonusItem.score);
 
-	if(mnoptrPacman)
-	{
-		mnoptrPacman->MoveTo(mPacmanSpawnLocation);
-		mnoptrPacman->ResetToFirstAnimation();
-	}
 }
 
 bool PacmanLevel::IsLevelOver() const
@@ -409,6 +425,38 @@ bool PacmanLevel::LoadLevel(const std::string& levelPath)
 		};
 	fileLoader.AddCommand(tileItemSpawnPointCommand);
 
+	Command tileBlinkySpawnPointCommand;
+	tileBlinkySpawnPointCommand.command = "tile_blinky_spawn_point";
+	tileBlinkySpawnPointCommand.parseFunc = [this](ParseFuncParams params)
+		{
+			mTiles.back().blinkySpawnPoint = FileCommandLoader::ReadInt(params);
+		};
+	fileLoader.AddCommand(tileBlinkySpawnPointCommand);
+
+	Command tilePinkySpawnPointCommand;
+	tilePinkySpawnPointCommand.command = "tile_pinky_spawn_point";
+	tilePinkySpawnPointCommand.parseFunc = [this](ParseFuncParams params)
+		{
+			mTiles.back().pinkySpawnPoint = FileCommandLoader::ReadInt(params);
+		};
+	fileLoader.AddCommand(tilePinkySpawnPointCommand);
+
+	Command tileInkySpawnPointCommand;
+	tileInkySpawnPointCommand.command = "tile_inky_spawn_point";
+	tileInkySpawnPointCommand.parseFunc = [this](ParseFuncParams params)
+		{
+			mTiles.back().inkySpawnPoint = FileCommandLoader::ReadInt(params);
+		};
+	fileLoader.AddCommand(tileInkySpawnPointCommand);
+
+	Command tileClydeSpawnPointCommand;
+	tileClydeSpawnPointCommand.command = "tile_clyde_spawn_point";
+	tileClydeSpawnPointCommand.parseFunc = [this](ParseFuncParams params)
+		{
+			mTiles.back().clydeSpawnPoint = FileCommandLoader::ReadInt(params);
+		};
+	fileLoader.AddCommand(tileClydeSpawnPointCommand);
+
 	Command layoutCommand;
 	layoutCommand.command = "layout";
 	layoutCommand.commandType = COMMAND_MULTI_LINE;
@@ -439,6 +487,21 @@ bool PacmanLevel::LoadLevel(const std::string& levelPath)
 					{
 						mBonusItem.bbox = AARectangle(Vec2D(startingX + tile->offset.GetX(), layoutOffset.GetY() + tile->offset.GetY()), SPRITE_WIDTH, SPRITE_HEIGHT);
 
+					}else if(tile->blinkySpawnPoint)
+					{
+						mGhostsSpawnPoints[BLINKY] = Vec2D(startingX + tile->offset.GetX(), layoutOffset.GetY() + tile->offset.GetY());
+					}
+					else if (tile->pinkySpawnPoint)
+					{
+						mGhostsSpawnPoints[PINKY] = Vec2D(startingX + tile->offset.GetX(), layoutOffset.GetY() + tile->offset.GetY());
+					}
+					else if (tile->inkySpawnPoint)
+					{
+						mGhostsSpawnPoints[INKY] = Vec2D(startingX + tile->offset.GetX(), layoutOffset.GetY() + tile->offset.GetY());
+					}
+					else if (tile->clydeSpawnPoint)
+					{
+						mGhostsSpawnPoints[CLYDE] = Vec2D(startingX + tile->offset.GetX(), layoutOffset.GetY() + tile->offset.GetY());
 					}
 
 					if(tile->excludePelletTile > 0)

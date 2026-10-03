@@ -10,13 +10,14 @@
 
 class Screen;
 class Pacman;
+class Ghost;
 
 class PacmanLevel {
 
 public:
 
-	bool Init(const std::string& levelPath,const SpriteSheet* noptrSpriteSheet, Pacman* noptrPacman);
-	void Update(uint32_t dt);
+	bool Init(const std::string& levelPath,const SpriteSheet* noptrSpriteSheet);
+	void Update(uint32_t dt,Pacman& pacman, std::vector<Ghost>& ghosts);
 	void Draw(Screen& screen);
 	void ResetLevel();
 
@@ -27,6 +28,7 @@ public:
 	bool IsLevelOver() const;
 	void IncreaseLevel();
 	void ResetToFirstLevel();
+	inline const std::vector<Vec2D>& GetGhostSpawnPoints() { return mGhostsSpawnPoints; }
 
 private:
 
@@ -39,6 +41,10 @@ private:
 		int excludePelletTile = 0;
 		int pacmanSpawnPoint = 0;
 		int itemSpawnPoint = 0;
+		int blinkySpawnPoint = 0;
+		int inkySpawnPoint = 0;
+		int pinkySpawnPoint = 0;
+		int clydeSpawnPoint = 0;
 		char teleoportToSymbol = 0;
 		char symbol = '-';
 	};
@@ -77,6 +83,7 @@ private:
 	void SpawnBonusItem();
 	bool ShouldSpawnBonusItem() const;
 
+	std::vector<Vec2D> mGhostsSpawnPoints;
 	std::default_random_engine mGenerator;
 	BonusItem mBonusItem;
 	std::string mBonusItemSpriteName;
@@ -93,7 +100,5 @@ private:
 	Vec2D mLayoutOffset;
 	size_t mTileHeight;
 	int mCurrentLevel;
-
-	Pacman* mnoptrPacman;
 
 };

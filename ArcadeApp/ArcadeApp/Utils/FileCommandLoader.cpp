@@ -81,7 +81,7 @@ bool FileCommandLoader::LoadFile(const std::string& filePath)
 							else
 							{
 								ParseFuncParams params;
-								params.dilimitPos = dilimitPos;
+								params.dilimitPos = 0;
 								params.lineNum = lineNum;
 								params.line = line;
 								mCommands[commandIndex].parseFunc(params);

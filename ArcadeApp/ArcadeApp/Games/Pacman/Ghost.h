@@ -30,8 +30,8 @@ public:
 	static const uint32_t VULNERABILITY_ENDING_TIME = 4000;
 
 	Ghost();
-	virtual void Init(const SpriteSheet& spriteSheet, const std::string& animationsPath, const Vec2D& initialPos, uint32_t movementSpeed, bool updateSpriteOnMovement, const Color& spriteColor = Color::White());
-	virtual void Update(uint32_t dt);
+	virtual void Init(const SpriteSheet& spriteSheet, const std::string& animationsPath, const Vec2D& initialPos, uint32_t movementSpeed, bool updateSpriteOnMovement, const Color& spriteColor = Color::White()) override;
+	virtual void Update(uint32_t dt) override;
 
 	void SetStateToVulnerable();
 	virtual void SetMovementDirection(PacmanMovement direction) override;
