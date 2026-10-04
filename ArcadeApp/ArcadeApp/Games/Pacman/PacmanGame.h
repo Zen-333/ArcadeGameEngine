@@ -6,6 +6,7 @@
 #include "SpriteSheet.h"
 #include "InputAction.h"
 #include "Ghost.h"
+#include "GhostAI.h"
 
 class PacmanGame: public Game
 {
@@ -32,4 +33,5 @@ private:
 	PacmanLevel mLevel;
 	size_t mNumLives;
 	std::vector<Ghost> mGhosts;
+	std::vector<GhostAI> mGhostsAIs;
 };

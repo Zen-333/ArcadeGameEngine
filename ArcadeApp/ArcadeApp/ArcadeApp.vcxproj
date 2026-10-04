@@ -160,6 +160,7 @@
     <ClCompile Include="Games\Asteroids\Spaceship.cpp" />
     <ClCompile Include="Games\Pacman\Actor.cpp" />
     <ClCompile Include="Games\Pacman\Ghost.cpp" />
+    <ClCompile Include="Games\Pacman\GhostAI.cpp" />
     <ClCompile Include="Games\Pacman\Pacman.cpp" />
     <ClCompile Include="Games\Pacman\PacmanGame.cpp" />
     <ClCompile Include="Games\Pacman\PacmanGameUtils.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="Games\Asteroids\Spaceship.h" />
     <ClInclude Include="Games\Pacman\Actor.h" />
     <ClInclude Include="Games\Pacman\Ghost.h" />
+    <ClInclude Include="Games\Pacman\GhostAI.h" />
     <ClInclude Include="Games\Pacman\Pacman.h" />
     <ClInclude Include="Games\Pacman\PacmanGame.h" />
     <ClInclude Include="Games\Pacman\PacmanGameUtils.h" />
