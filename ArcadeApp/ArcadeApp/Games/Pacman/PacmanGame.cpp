@@ -62,9 +62,9 @@ void PacmanGame::Update(uint32_t dt)
 		{
 			GhostAI& ghostAI = mGhostsAIs[i];
 
-			auto direction = ghostAI.Update(dt, mLevel);
+			auto direction = ghostAI.Update(dt,mPacman, mLevel, mGhosts);
 
-			if(direction != mGhosts[i].GetMovementDirection())
+			if(mGhosts[i].CanChangeDirection() && direction != mGhosts[i].GetMovementDirection())
 			{
 				mGhosts[i].SetMovementDirection(direction);
 			}
@@ -152,6 +152,11 @@ void PacmanGame::ResetLevel()
 
 void PacmanGame::SetupGhosts()
 {
+	const Vec2D BLINKY_SCATTER_POS = Vec2D(App::Singleton().Width() - 24, 0);
+	const Vec2D INKY_SCATTER_POS = Vec2D(App::Singleton().Width(), App::Singleton().Height());
+	const Vec2D PINKY_SCATTER_POS = Vec2D(24, 0);
+	const Vec2D CLYDE_SCATTER_POS = Vec2D(0, App::Singleton().Height());
+
 	mGhosts.resize(NUM_GHOSTS);
 	mGhostsAIs.resize(1);
 
@@ -161,7 +166,7 @@ void PacmanGame::SetupGhosts()
 	mGhosts[BLINKY] = blinky;
 
 	auto blinkyAI = GhostAI();
-	blinkyAI.Init(mGhosts[BLINKY], BLINKY);
+	blinkyAI.Init(mGhosts[BLINKY],blinky.GetBoundingBox().GetWidth(), BLINKY_SCATTER_POS, BLINKY);
 
 	mGhostsAIs[BLINKY] = blinkyAI;
 
