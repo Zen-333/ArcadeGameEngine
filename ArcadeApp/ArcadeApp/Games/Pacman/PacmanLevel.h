@@ -7,6 +7,7 @@
 #include "PacmanGameUtils.h"
 #include "SpriteSheet.h"
 #include <random>
+#include "GhostAI.h"
 
 class Screen;
 class Pacman;
@@ -17,11 +18,12 @@ class PacmanLevel {
 public:
 
 	bool Init(const std::string& levelPath,const SpriteSheet* noptrSpriteSheet);
-	void Update(uint32_t dt,Pacman& pacman, std::vector<Ghost>& ghosts);
+	void Update(uint32_t dt,Pacman& pacman, std::vector<Ghost>& ghosts, std::vector<GhostAI>& ghostAI);
 	void Draw(Screen& screen);
 	void ResetLevel();
 
 	bool WillCollide(const AARectangle& bbox, PacmanMovement direction) const;
+	bool WillCollide(const Ghost& ghost, const GhostAI& ghostAI, PacmanMovement direction) const;
 
 	inline Vec2D GetLayoutOffset() const { return mLayoutOffset; }
 	inline Vec2D GetPacmanSpawnLocation() const { return mPacmanSpawnLocation; }
@@ -45,6 +47,7 @@ private:
 		int inkySpawnPoint = 0;
 		int pinkySpawnPoint = 0;
 		int clydeSpawnPoint = 0;
+		int isGate = 0;
 		char teleoportToSymbol = 0;
 		char symbol = '-';
 	};
@@ -92,6 +95,8 @@ private:
 
 	std::vector<Excluder> mWalls;
 	std::vector<Tile> mTiles;
+
+	std::vector<Excluder> mGate;
 
 	std::vector<Tile> mExclusionTiles;
 	std::vector<Pellet> mPellets;

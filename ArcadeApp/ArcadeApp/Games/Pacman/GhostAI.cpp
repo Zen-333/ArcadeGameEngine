@@ -17,8 +17,10 @@ GhostAI::GhostAI()
 
 }
 
-void GhostAI::Init(Ghost& ghost, uint32_t lookAheadDistance, const Vec2D& scatterTarget, GhostName name)
+void GhostAI::Init(Ghost& ghost, uint32_t lookAheadDistance, const Vec2D& scatterTarget, const Vec2D& ghostPenTarget, const Vec2D& ghostExitPenPosition, GhostName name)
 {
+	mGhostPenTarget = ghostPenTarget;
+	mGhostExitPenPosition = ghostExitPenPosition;
 	mScatterTarget = scatterTarget;
 	mLookAheadDistance = lookAheadDistance;
 	mnoptrGhost = &ghost;
@@ -34,6 +36,33 @@ PacmanMovement GhostAI::Update(uint32_t dt, const Pacman& pacman, const PacmanLe
 {
 	if(mnoptrGhost)
 	{
+		if(mState == GHOST_AI_STATE_START)
+		{
+			return PACMAN_MOVEMENT_NONE;
+		}
+
+		if(mState == GHOST_AI_STATE_IN_PEN)
+		{
+			mTimer += dt;
+
+			if(mTimer >= PEN_WAIT_DURATION)
+			{
+				SetState(GHOST_AI_STATE_EXIT_PEN);
+			}
+			return PACMAN_MOVEMENT_NONE;
+		}
+
+		if(mState == GHOST_AI_STATE_GO_TO_PEN && mnoptrGhost->Position() == mGhostPenTarget)
+		{
+			SetState(GHOST_AI_STATE_IN_PEN);
+			mnoptrGhost->SetGhostState(GHOST_STATE_ALIVE);
+			return PACMAN_MOVEMENT_NONE;
+		}
+		if(mState == GHOST_AI_STATE_EXIT_PEN && mnoptrGhost->Position() == mGhostExitPenPosition)
+		{
+			SetState(GHOST_AI_STATE_SCATTER);
+		}
+
 		if(mState == GHOST_AI_STATE_SCATTER)
 		{
 			mTimer += dt;
@@ -64,7 +93,7 @@ PacmanMovement GhostAI::Update(uint32_t dt, const Pacman& pacman, const PacmanLe
 
 		for(const auto& direction : tempDirections)
 		{
-			if(!level.WillCollide(mnoptrGhost->GetBoundingBox(), direction))
+			if(!level.WillCollide(*mnoptrGhost, *this,direction))
 			{
 				possibleDirections.push_back(direction);
 			}
@@ -185,10 +214,15 @@ void GhostAI::SetState(GhostAIState state)
 	switch(state)
 	{
 	case GHOST_AI_STATE_IN_PEN:
+		mTimer = 0;
 		break;
 	case GHOST_AI_STATE_GO_TO_PEN:
 		break;
 	case GHOST_AI_STATE_EXIT_PEN:
+	{
+		Vec2D target = { mGhostPenTarget.GetX() + mnoptrGhost->GetBoundingBox().GetWidth() / 2, mGhostPenTarget.GetY() - mnoptrGhost->GetBoundingBox().GetHeight() / 2 };
+		ChangeTarget(target);
+	}
 		break;
 	case GHOST_AI_STATE_SCATTER:
 		mTimer = 0;
