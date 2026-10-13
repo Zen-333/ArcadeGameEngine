@@ -6,7 +6,7 @@
 #include <vector>
 #include <memory>
 
-PacmanStartScene::PacmanStartScene() :ButtonOptionsScene({ "Play Gasme", "High Scores" }, Color::Yellow())
+PacmanStartScene::PacmanStartScene() :ButtonOptionsScene({ "Play Game", "High Scores" }, Color::Yellow())
 {
 }
 
