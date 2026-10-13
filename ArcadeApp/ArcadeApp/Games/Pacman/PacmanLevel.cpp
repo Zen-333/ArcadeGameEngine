@@ -220,6 +220,8 @@ bool PacmanLevel::WillCollide(const Ghost& ghost, const GhostAI& ghostAI, Pacman
 			return true;
 		}
 	}
+
+	return false;
 }
 
 bool PacmanLevel::ShouldSpawnBonusItem() const 
