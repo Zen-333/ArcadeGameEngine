@@ -72,7 +72,7 @@ void Ghost::SetMovementDirection(PacmanMovement direction)
 		{
 			SetAnimation("ghost_movement_left", true);
 		}
-	}else if(mState = GHOST_STATE_DEAD)
+	}else if(mState == GHOST_STATE_DEAD)
 	{
 		if (movementDir == PACMAN_MOVEMENT_RIGHT)
 		{

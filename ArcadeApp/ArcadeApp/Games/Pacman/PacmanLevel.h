@@ -8,6 +8,7 @@
 #include "SpriteSheet.h"
 #include <random>
 #include "GhostAI.h"
+#include "BMPImage.h"
 
 class Screen;
 class Pacman;
@@ -31,6 +32,7 @@ public:
 	void IncreaseLevel();
 	void ResetToFirstLevel();
 	inline const std::vector<Vec2D>& GetGhostSpawnPoints() { return mGhostsSpawnPoints; }
+	inline uint32_t GetInGameTextYPos() const { return mBonusItem.bbox.GetTopLeftPoint().GetY(); }
 
 private:
 
@@ -86,6 +88,7 @@ private:
 	void SpawnBonusItem();
 	bool ShouldSpawnBonusItem() const;
 
+	BMPImage mBGImage;
 	std::vector<Vec2D> mGhostsSpawnPoints;
 	std::default_random_engine mGenerator;
 	BonusItem mBonusItem;
