@@ -18,7 +18,7 @@ class PacmanLevel {
 public:
 
 	bool Init(const std::string& levelPath,const SpriteSheet* noptrSpriteSheet);
-	void Update(uint32_t dt,Pacman& pacman, std::vector<Ghost>& ghosts, std::vector<GhostAI>& ghostAI);
+	void Update(uint32_t dt,Pacman& pacman, std::vector<Ghost>& ghosts, std::vector<GhostAI>& ghostAIs);
 	void Draw(Screen& screen);
 	void ResetLevel();
 

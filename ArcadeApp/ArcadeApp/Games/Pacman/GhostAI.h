@@ -19,7 +19,7 @@ enum GhostAIState
 	GHOST_AI_STATE_GO_TO_PEN
 };
 
-class GhostAI          
+class GhostAI: public GhostDelegate
 {
 public:
 
@@ -33,6 +33,9 @@ public:
 	inline bool IsInPen() const { return mState == GHOST_AI_STATE_IN_PEN || mState == GHOST_AI_STATE_START; }
 	inline bool IsEnteringPen() const { return mState == GHOST_AI_STATE_GO_TO_PEN; }
 
+	virtual void GhostDelegateGhostStateChangedTo(GhostState lastState, GhostState state) override;
+	virtual void GhostWasReleasedFromPen() override;
+	virtual void GhostWasResetToFirstPosition() override;
 private:
 	void SetState(GhostAIState state);
 	void ChangeTarget(const Vec2D& target);

@@ -183,7 +183,7 @@ Vec2D GhostAI::GetChaseTarget(uint32_t dt, const Pacman& pacman, const PacmanLev
 	case INKY:
 	{
 		Vec2D pacmanOffsetPoint = pacman.GetBoundingBox().GetCenterPoint() + (GetMovementVector(pacman.GetMovementDirection())* pacman.GetBoundingBox().GetWidth());
-		target = (pacmanOffsetPoint = ghosts[BLINKY].GetBoundingBox().GetCenterPoint() * 2 + ghosts[BLINKY].GetBoundingBox().GetCenterPoint());
+		target = (pacmanOffsetPoint - ghosts[BLINKY].GetBoundingBox().GetCenterPoint()) * 2 + ghosts[BLINKY].GetBoundingBox().GetCenterPoint();
 	}
 		break;
 	case CLYDE:
@@ -231,4 +231,29 @@ void GhostAI::SetState(GhostAIState state)
 	default:
 		break;
 	}
+}
+void GhostAI::GhostDelegateGhostStateChangedTo(GhostState lastState, GhostState state)
+{
+	if(mnoptrGhost && mnoptrGhost->IsReleased() && (lastState == GHOST_STATE_VULNERABLE || lastState == GHOST_STATE_VULNERABLE_ENDING) && !(IsInPen() || WantsToLeavePen()))
+	{
+		mnoptrGhost->SetMovementDirection(GetOppositeDirection(mnoptrGhost->GetMovementDirection()));
+	}
+
+	if(state == GHOST_STATE_DEAD)
+	{
+		SetState(GHOST_AI_STATE_GO_TO_PEN);
+	}
+}
+
+void GhostAI::GhostWasReleasedFromPen()
+{
+	if(mState == GHOST_AI_STATE_START)
+	{
+		SetState(GHOST_AI_STATE_EXIT_PEN);
+	}
+}
+
+void GhostAI::GhostWasResetToFirstPosition()
+{
+	SetState(GHOST_AI_STATE_START);
 }

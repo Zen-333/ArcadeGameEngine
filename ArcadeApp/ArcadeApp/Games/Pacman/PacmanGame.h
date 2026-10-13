@@ -34,4 +34,5 @@ private:
 	size_t mNumLives;
 	std::vector<Ghost> mGhosts;
 	std::vector<GhostAI> mGhostsAIs;
+	uint32_t mReleaseGhostTimer;
 };

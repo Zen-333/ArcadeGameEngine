@@ -34,7 +34,7 @@ bool PacmanLevel::Init(const std::string& levelPath, const SpriteSheet* noptrSpr
 	return levelLoaded;
 }
 
-void PacmanLevel::Update(uint32_t dt, Pacman& pacman, std::vector<Ghost>& ghosts, std::vector<GhostAI>& ghostAI)
+void PacmanLevel::Update(uint32_t dt, Pacman& pacman, std::vector<Ghost>& ghosts, std::vector<GhostAI>& ghostAIs)
 {
 	for(const auto& wall : mWalls)
 	{
@@ -560,7 +560,7 @@ bool PacmanLevel::LoadLevel(const std::string& levelPath)
 
 					}else if(tile->blinkySpawnPoint)
 					{
-						mGhostsSpawnPoints[BLINKY] = Vec2D(startingX + tile->offset.GetX(), layoutOffset.GetY() + tile->offset.GetY());
+						mGhostsSpawnPoints[BLINKY] = Vec2D(startingX + tile->offset.GetX() + 1, layoutOffset.GetY() + tile->offset.GetY());
 					}
 					else if (tile->pinkySpawnPoint)
 					{
@@ -568,7 +568,7 @@ bool PacmanLevel::LoadLevel(const std::string& levelPath)
 					}
 					else if (tile->inkySpawnPoint)
 					{
-						mGhostsSpawnPoints[INKY] = Vec2D(startingX + tile->offset.GetX(), layoutOffset.GetY() + tile->offset.GetY());
+						mGhostsSpawnPoints[INKY] = Vec2D(startingX + tile->offset.GetX() + 1, layoutOffset.GetY() + tile->offset.GetY());
 					}
 					else if (tile->clydeSpawnPoint)
 					{
