@@ -31,8 +31,6 @@ void Spaceship::Draw(Screen& theScreen)
 	if (mIsHit) return;
 
 	mSprite.Draw(theScreen);
-	theScreen.Draw(GetFacingDirection(), Color::Green());
-	theScreen.Draw(GetBackDirection(), Color::Red());
 
 	if(mVelocity.Mag() > 1.0f)
 	{
